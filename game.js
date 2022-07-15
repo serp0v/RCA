@@ -1,4 +1,4 @@
-//получим элемент со страницы
+//получим элемент со страницы///////////////////////////
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");//вытащим из него холст для рисования
 
@@ -10,10 +10,8 @@ function Resize() {//меняем и размер элемента Canvas
 	canvas.height = window.innerHeight;
 }
 
-//запускаем GamePlay
-Start();
 
-//для старта игры//////////////////////////////////
+//таймер игры (запуск таймера ниже)//////////////////////////////////
 const UPDATE_TIME = 1000 / 60;
 var timer = null;
 function Start() {	
@@ -35,3 +33,6 @@ function Update() {
 	Draws();
 }
 //////////////////////////////////////////////////
+
+//запускаем GamePlay
+Start();
