@@ -9,3 +9,29 @@ function Resize() {//меняем и размер элемента Canvas
 	canvas.width = window.innerWidth;
 	canvas.height = window.innerHeight;
 }
+
+//запускаем GamePlay
+Start();
+
+//для старта игры//////////////////////////////////
+const UPDATE_TIME = 1000 / 60;
+var timer = null;
+function Start() {	
+	timer = setInterval(Update, UPDATE_TIME); 	
+}
+
+//для остановки игры 
+function Stop() {
+	clearInterval(timer); 
+	timer = null;
+}
+
+//обновление и рисование всех обьектов
+function Update() {	
+	//даем пожить каждому обьекту игры
+	Lifes();
+
+	//рисование всех обьектов игры
+	Draws();
+}
+//////////////////////////////////////////////////
