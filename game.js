@@ -1,15 +1,11 @@
-var canvas = document.getElementById("canvas"); //Getting the canvas from DOM
-var ctx = canvas.getContext("2d"); //Getting the context to work with the canvas
+//получим элемент со страницы
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");//вытащим из него холст для рисования
 
-Resize(); //Changing the canvas size on startup
-window.addEventListener("resize", Resize); //Change the canvas size with the window size
-
-function Resize() {
+//Canvas на весь размер экрана
+Resize(); 
+window.addEventListener("resize", Resize);//при смене размера экрана
+function Resize() {//меняем и размер элемента Canvas
 	canvas.width = window.innerWidth;
 	canvas.height = window.innerHeight;
-}
-
-function Draw() //Working with graphics
-{
-	ctx.clearRect(0, 0, canvas.width, canvas.height); //Clearing the canvas    
 }
