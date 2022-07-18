@@ -20,6 +20,7 @@ export default class {
   }
   //Draw
   Draw(ctx) {
+    //рисуем обьект карты
     ctx.drawImage
       (
         this.image, //Image
