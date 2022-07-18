@@ -20,8 +20,8 @@ var timer = null;
 Start();
 
 //главный игровой таймер
+var map = new Map(10,10); 
 function Start() {
-	var map = new Map(10,10); 
 	timer = setInterval(Update, UPDATE_TIME);
 }
 //для остановки игры 
@@ -40,6 +40,16 @@ function Lifes() {
 }
 //рисование всех обьектов игры
 function Draws() {
+	//очистка экрана
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+	//цвет фона
+	ctx.beginPath();
+	ctx.fillStyle = '#20F';
+	ctx.fillRect(0, 0, canvas.width, canvas.height);
+	
+	//рисуем карту
+	map.Draw(ctx);
 }
 
 

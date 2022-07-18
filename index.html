@@ -1,43 +1,49 @@
 <!DOCTYPE html>
 <html>
-    <!-- Настройки страницы - надо проверить требования яндех -->
-	<head>
-		<title>Cubic RGame</title>
-		<link rel="stylesheet" href="style.css">
-		<meta charset="utf-8">
-		<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
-		<meta name="apple-mobile-web-app-capable" content="yes">
-		<meta name="mobile-web-app-capable" content="yes">
-		<meta name="HandheldFriendly" content="true"/>
-		<!-- Yandex Games SDK -->
-		<script src="https://yandex.ru/games/sdk/v2"></script>
-	</head>    
-	<body>
-        
-        <!-- создания экрана для рисования графики -->
-        <div class="wrapper">
-			<canvas width="0" height="0" class="canvas" id="canvas">Your browser does not support JavaScript and HTML5!</canvas>
-		</div>
+<!-- Настройки страницы - надо проверить требования яндех -->
+<!-- git pull https://github.com/serp0v/RCA.git main -->
+<head>
+	<title>Cubic RGame</title>
+	<link rel="stylesheet" href="style.css">
+	<meta charset="utf-8">
+	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="HandheldFriendly" content="true" />
+	<!-- Yandex Games SDK -->
+	<!-- <script src="https://yandex.ru/games/sdk/v2"></script> -->
+</head>
 
-        <!-- запуск кода игры -->
-		<script src="game.js"></script>
-		<script>
-			YaGames
+<body>
+
+	<!-- создания экрана для рисования графики -->
+	<div class="wrapper">
+		<canvas width="0" height="0" class="canvas" id="canvas">Your browser does not support JavaScript and
+			HTML5!</canvas>
+	</div>
+
+	<!-- запуск кода игры -->
+	<script type="module" src="game.js"></script>
+
+	<!-- реклама от яндекс -->
+	<!-- <script>
+		YaGames
 			.init()
 			.then(ysdk => {
 				console.log('Yandex SDK initialized');
 				window.ysdk = ysdk;
 			});
-			ysdk.adv.showFullscreenAdv({
-				callbacks: {
-				onClose: function(wasShown) {
-				  // some action after close
-			  },
-				onError: function(error) {
-				  // some action on error
-			  }
+		ysdk.adv.showFullscreenAdv({
+			callbacks: {
+				onClose: function (wasShown) {
+					// some action after close
+				},
+				onError: function (error) {
+					// some action on error
+				}
 			}
-			})
-		</script>
-	</body>
+		})
+	</script> -->
+</body>
+
 </html>
