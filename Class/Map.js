@@ -1,56 +1,122 @@
 import MapObj from './MapObj.js';//class для работы с обьектами карты
 export default class {
 
+  //координаты левого края карты
+  xyShift = [0, 0];
+  nexttestX = 0;//когда проверять  
+
   //при создании новой карты
   constructor(sizeX, sizeY) {
     this.sizeX = sizeX;
     this.sizeY = sizeY;
     //генерация новой карты
-    this.mapArray = getNewMap(this);
+    this.mapArray = getMapNew(this);
+  }
+
+  //Life
+  Life(game) {
+    //смещаем карту
+    this.xyShift[0] += 1;
+    //для скорости проверяем координаты не каждый тик 
+    if (this.isNeedtest()) {
+      //удалим box слева которые вышли за карту      
+      this.removeBackBox();
+      //добавим новые справа      
+      putMapRight(this, this.xyShift[0] + 10 * window.widthBox);
+    }
+
+    //даем пожить каждому элементу
+    this.mapArray.forEach(function (item, index, array) {
+      item.Life();
+    });
+  }
+
+  //переиодичность проверки элементов
+  isNeedtest() {
+    let need = this.nexttestX < this.xyShift[0];
+    if (need)
+      this.nexttestX = this.xyShift[0] + window.widthBox;
+    return need;
+  }
+
+  //удалим все элементы карты которые вышли за границу
+  removeBackBox() {
+    let map = this;
+    for (let index = this.mapArray.length - 1; index >=0 ; index--) {
+      if(this.mapArray[index].isNeedRemove(map))
+        this.mapArray.splice[index, 1];      
+    }
   }
 
   //Draw
-  Draw(ctx) {  
+  Draw(ctx) {
+    let map = this;
     //рисуем все активные элементы карты      
-    this.mapArray.forEach(function(item, index, array) {      
-      item.Draw(ctx);
-    });                  
+    this.mapArray.forEach(function (item, index, array) {
+      item.Draw(ctx, map);
+    });
   }
 
 }
 
 //генерация новой карты
-function getNewMap(map) {
+function getMapNew(map) {
   let arr = [];
   for (let x = 0; x < map.sizeX; x++) {
+    //бетонное начало
+    if(x < 7){
+      let box = new MapObj("Бетон", 10, "images/beton-export.png", 1);
+      box.xy = [x * window.widthBox, 10 * window.widthBox];//самый низ
+      arr.push(box);
+      continue;
+    }
     for (let y = 0; y < map.sizeY; y++) {
       //пусто или блок
       if (getRandomInt(3) == 0) {//3 - сложность карты по Количеству блоков
         //элементы карты          
-        var blok = getRandomBlock();
-        blok.xy = [x, y];
-        arr.push(blok);
+        var box = getRandomBox();
+        box.xy = [x * window.widthBox, y * window.widthBox];
+        arr.push(box);
       }
     }
   }
   return arr;
 }
 
+//генерация карты справа
+function putMapRight(map, xShift) {
+  let arr = map.mapArray;
+  for (let y = 0; y < map.sizeY; y++) {
+    //пусто или блок
+    if (getRandomInt(3) == 0) {//3 - сложность карты по Количеству блоков
+      //элементы карты          
+      var blok = getRandomBox();
+      blok.xy = [xShift, y * window.widthBox];
+      arr.push(blok);
+    }
+  }
+}
+
 //генерация блока
-function getRandomBlock(params) {
+function getRandomBox(params) {
   //можно сделать сложность карты по Типу блоков
-  let typeid = getRandomInt(2);
+  let typeid = getRandomInt(3);
   if (typeid == 0)
-    return new MapObj("Бетон", 10, "images/beton-export.png");//тут может быть бетон
+    return new MapObj("Бетон", 10, "images/beton-export.png", 1);
   else if (typeid == 1)
-    return new MapObj("Кирпич", 2, "images/bricks.png");//тут может быть кирпич
+    return new MapObj("Кирпич", 2, "images/bricks.png", 1);
+  else if (typeid == 2)
+    return new MapObj("Техно", 2, "images/box_tehno3.png",3);
   else
     return new MapObj();// и тд.
+
 }
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
+
+
 
 
 
