@@ -15,6 +15,7 @@ function Resize() {//меняем и размер элемента Canvas
 import Map from './Class/Map.js';//class карты
 const UPDATE_TIME = 1000 / 60;
 var timer = null;
+window.widthBox = 100;
 
 //запускаем GamePlay
 Start();
@@ -37,6 +38,8 @@ function Update() {
 }
 //даем пожить каждому обьекту игры
 function Lifes() {
+	//карта
+	map.Life(this);
 }
 //рисование всех обьектов игры
 function Draws() {
@@ -51,6 +54,3 @@ function Draws() {
 	//рисуем карту
 	map.Draw(ctx);
 }
-
-
-//////////////////////////////////////////////////
