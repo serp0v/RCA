@@ -31,7 +31,7 @@ export default class {
     });
   }
 
-  //переиодичность проверки элементов
+  //переодичность проверки элементов
   isNeedtest() {
     let need = this.nexttestX < this.xyShift[0];
     if (need)

@@ -13,7 +13,7 @@ export default class {
     this.antidamage = antidamage;//устойчивость к повреждению
     this.loaded = false;//готов
     this.image = new Image();
-    this.spriteCount = sprite;
+    this.spriteCount = sprite;//колво кадров в текстуре (по горизонтали)
     this.spriteFrameIDMax = sprite - 1;
     var obj = this;
     //после загрузки картинки отметить готовность
