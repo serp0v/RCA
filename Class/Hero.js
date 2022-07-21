@@ -4,14 +4,18 @@ export default class {
     xy = [0, 0];
     gravityCur = 0;//гравитация действующая на героя    
     widthBox = 90;
+    speedReturn = 1;    
+    Xmax = 0;
     constructor(x, y, imageFileName) {
-        this.xy[0] = x;
+        this.xy[0] = this.Xmax = x;
         this.xy[1] = y;
         this.image = new Image();
         this.image.src = imageFileName;
     }
 
-
+    Jump() {
+        this.gravityCur = -10;
+    }
     //Life
     Life(map) {
         //возвращает элементы карты которые пересекаются с героем
@@ -25,7 +29,7 @@ export default class {
         //новые xy для тестирования коллизии с ГГ
         this.gravityCur += gravityEarth;//прибавим гравитацию        
         let xyHero = [
-            this.xy[0],
+            this.xy[0] + (this.xy[0] < this.Xmax ? this.speedReturn : 0),
             this.xy[1] + this.gravityCur
         ];
 
@@ -65,7 +69,7 @@ export default class {
         let vecX;
         if (herox[2] < boxx[0]) {
             collisionX = herox[1] - boxx[0];
-            vecX = 2;            
+            vecX = 2;
         }
         else {
             collisionX = boxx[1] - herox[0];//препятствие слева
@@ -104,8 +108,8 @@ export default class {
             return 0;
 
         //возвращаем вектор
-        if (collisionX < collisionY){
-            xyHero[0]-=collisionX; //box справа двигает ГГ влево
+        if (collisionX < collisionY) {
+            xyHero[0] -= collisionX; //box справа двигает ГГ влево
             return vecX;
         }
         else
@@ -121,7 +125,8 @@ export default class {
         } else
             //пересечение справа
             if (typeid == 2) {
-                xyNew[0] = this.xy[0];  //
+                //xyNew[0] = this.xy[0];  
+                //box справа двигает ГГ влево в getCollisionType()
             } else
                 //пересечение сверху
                 if (typeid == 3) {

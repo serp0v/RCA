@@ -22,8 +22,11 @@ window.widthBox = 100;
 Start();
 
 //главный игровой таймер
-var map = new Map(10, 10);
+var map = new Map(15, 10);
 var hero = new Hero(300, 300, "images/rubicAsep.png");
+window.onclick = function(event){
+	hero.Jump();
+}
 function Start() {
 	timer = setInterval(Update, UPDATE_TIME);
 }
