@@ -22,8 +22,11 @@ window.widthBox = 100;
 Start();
 
 //главный игровой таймер
-var map = new Map(10,10); 
-var hero = new Hero(300,300, "images/rubicAsep.png"); 
+var map = new Map(15, 10);
+var hero = new Hero(300, 300, "images/rubicAsep.png");
+window.onclick = function(event){
+	hero.Jump();
+}
 function Start() {
 	timer = setInterval(Update, UPDATE_TIME);
 }
@@ -42,6 +45,8 @@ function Update() {
 function Lifes() {
 	//карта
 	map.Life(this);
+	//живем героя
+	hero.Life(map);
 }
 //рисование всех обьектов игры
 function Draws() {
@@ -52,8 +57,7 @@ function Draws() {
 	ctx.beginPath();
 	ctx.fillStyle = '#20F';
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
-	
-	
+
 	//рисуем карту
 	map.Draw(ctx);
 
