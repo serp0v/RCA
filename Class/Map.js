@@ -115,13 +115,3 @@ function getRandomBox(params) {
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
-
-
-
-
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> 48828fc0b4d73d8581ffd76fefa03b7f9574822b
