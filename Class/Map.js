@@ -42,9 +42,9 @@ export default class {
   //удалим все элементы карты которые вышли за границу
   removeBackBox() {
     let map = this;
-    for (let index = this.mapArray.length - 1; index >=0 ; index--) {
-      if(this.mapArray[index].isNeedRemove(map))
-        this.mapArray.splice[index, 1];      
+    for (let index = this.mapArray.length - 1; index >= 0; index--) {
+      if (this.mapArray[index].isNeedRemove(map))
+        this.mapArray.splice[index, 1];
     }
   }
 
@@ -64,7 +64,15 @@ function getMapNew(map) {
   let arr = [];
   for (let x = 0; x < map.sizeX; x++) {
     //бетонное начало
-    if(x < 7){
+    if (x == 7) {
+      let box = new MapObj("Бетон", 10, "images/beton-export.png", 1);
+      box.xy = [x * window.widthBox, 9 * window.widthBox];//самый низ
+      arr.push(box);
+    }
+    if (x == 6)
+      continue;
+    //бетонное начало
+    if (x < 10) {
       let box = new MapObj("Бетон", 10, "images/beton-export.png", 1);
       box.xy = [x * window.widthBox, 10 * window.widthBox];//самый низ
       arr.push(box);
@@ -106,7 +114,7 @@ function getRandomBox(params) {
   else if (typeid == 1)
     return new MapObj("Кирпич", 2, "images/bricks.png", 1);
   else if (typeid == 2)
-    return new MapObj("Техно", 2, "images/box_tehno3.png",3);
+    return new MapObj("Техно", 2, "images/box_tehno3.png", 3);
   else
     return new MapObj();// и тд.
 
