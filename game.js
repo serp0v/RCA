@@ -1,3 +1,4 @@
+console.log(window.navigator.userAgent); // узнать инфо о устройстве пользователя
 //получим элемент со страницы///////////////////////////
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");//вытащим из него холст для рисования
@@ -23,8 +24,35 @@ Start();
 
 //главный игровой таймер
 var map = new Map(15, 10);
+// гг
 var hero = new Hero(300, 300, "images/rubicAsep.png");
-window.onclick = function(event){
+
+// управление стрелками
+const top = document.getElementById('top');
+const right = document.getElementById('right');
+const bottom = document.getElementById('bottom');
+const left = document.getElementById('left');
+
+document.addEventListener("keydown",function Move(e) {
+	if (e.keyCode == '38') { // up arrow
+		hero.Jump();
+		top.Pressed(); //будет подстветка кнопки
+	}
+	else if (e.keyCode == '39') { // right arrow
+		console.log('it works!');
+	}
+	else if (e.keyCode == '37') { // left arrow
+		console.log('it works!');
+	}
+	else if (e.keyCode == '40') { // down arrow
+		console.log('it works!');
+	}
+
+})
+// window.onclick = function(event){
+// 	hero.Jump();
+// }
+top.onclick = function(event){
 	hero.Jump();
 }
 function Start() {
@@ -35,7 +63,6 @@ function Stop() {
 	clearInterval(timer);
 	timer = null;
 }
-
 //обновление и рисование всех обьектов
 function Update() {
 	Lifes();

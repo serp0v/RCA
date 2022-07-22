@@ -6,6 +6,12 @@ export default class {
     widthBox = 90;
     speedReturn = 1;    
     Xmax = 0;
+
+    // top = document.getElementById('top');
+    // right = document.getElementById('right');
+    // bottom = document.getElementById('bottom');
+    // left = document.getElementById('left');
+
     constructor(x, y, imageFileName) {
         this.xy[0] = this.Xmax = x;
         this.xy[1] = y;
@@ -56,8 +62,6 @@ export default class {
 
         return colArr;//с чем пересекались 
     }
-
-
     //с какой стороны ГГ пересекается с обьектом
     getCollisionType(colArr, xyHero, box, xyShiftMap) {
 
@@ -109,13 +113,14 @@ export default class {
 
         //возвращаем вектор
         if (collisionX < collisionY) {
-            xyHero[0] -= collisionX; //box справа двигает ГГ влево
+            xyHero[0] -= collisionX; //box справа двигает ГГ влево и право
             return vecX;
         }
-        else
+        else{
+            xyHero[1] -= collisionY; //box отталкивакет ГГ вниз и верх
             return vecY;
+        }
     }
-
     //правим влияние от коллизии
     correctInfluence(typeid, xyNew) {
         //пересечение снизу
