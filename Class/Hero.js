@@ -6,13 +6,18 @@ export default class {
     widthBox = 90;
     speedReturn = 1;    
     Xmax = 0;
+
+    // top = document.getElementById('top');
+    // right = document.getElementById('right');
+    // bottom = document.getElementById('bottom');
+    // left = document.getElementById('left');
+
     constructor(x, y, imageFileName) {
         this.xy[0] = this.Xmax = x;
         this.xy[1] = y;
         this.image = new Image();
         this.image.src = imageFileName;
     }
-
     Jump() {
         this.gravityCur = -10;
     }
