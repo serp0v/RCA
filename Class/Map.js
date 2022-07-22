@@ -4,6 +4,7 @@ export default class {
   //координаты левого края карты
   xyShift = [0, 0];
   nexttestX = 0;//когда проверять  
+  speedMap = 2;
 
   //при создании новой карты
   constructor(sizeX, sizeY) {
@@ -16,7 +17,7 @@ export default class {
   //Life
   Life(game) {
     //смещаем карту
-    this.xyShift[0] += 1;
+    this.xyShift[0] += this.speedMap;
     //для скорости проверяем координаты не каждый тик 
     if (this.isNeedtest()) {
       //удалим box слева которые вышли за карту      
@@ -42,9 +43,9 @@ export default class {
   //удалим все элементы карты которые вышли за границу
   removeBackBox() {
     let map = this;
-    for (let index = this.mapArray.length - 1; index >=0 ; index--) {
-      if(this.mapArray[index].isNeedRemove(map))
-        this.mapArray.splice[index, 1];      
+    for (let index = this.mapArray.length - 1; index >= 0; index--) {
+      if (this.mapArray[index].isNeedRemove(map))
+        this.mapArray.splice[index, 1];
     }
   }
 
@@ -64,7 +65,15 @@ function getMapNew(map) {
   let arr = [];
   for (let x = 0; x < map.sizeX; x++) {
     //бетонное начало
-    if(x < 7){
+    if (x == 7) {
+      let box = new MapObj("Бетон", 10, "images/beton-export.png", 1);
+      box.xy = [x * window.widthBox, 9 * window.widthBox];//самый низ
+      arr.push(box);
+    }
+    // if (x == 6)
+    //   continue;
+    //бетонное начало
+    if (x < 10) {
       let box = new MapObj("Бетон", 10, "images/beton-export.png", 1);
       box.xy = [x * window.widthBox, 10 * window.widthBox];//самый низ
       arr.push(box);
@@ -88,7 +97,7 @@ function putMapRight(map, xShift) {
   let arr = map.mapArray;
   for (let y = 0; y < map.sizeY; y++) {
     //пусто или блок
-    if (getRandomInt(3) == 0) {//3 - сложность карты по Количеству блоков
+    if (getRandomInt(5) == 0) {//3 - сложность карты по Количеству блоков
       //элементы карты          
       var blok = getRandomBox();
       blok.xy = [xShift, y * window.widthBox];
@@ -106,7 +115,7 @@ function getRandomBox(params) {
   else if (typeid == 1)
     return new MapObj("Кирпич", 2, "images/bricks.png", 1);
   else if (typeid == 2)
-    return new MapObj("Техно", 2, "images/box_tehno3.png",3);
+    return new MapObj("Техно", 2, "images/box_tehno3.png", 3);
   else
     return new MapObj();// и тд.
 

@@ -6,6 +6,7 @@ export default class {
   needRemove = false;//удаление не требуется
   spriteFrameID = 0;//текущий кадр анимации
   spriteTimeNext =0;//таймер следующей анимации
+  phisicTransparent = false;//true - можно проходить насквозь 
 
   //для создания обьекта с параметрами
   constructor(name, antidamage, image, sprite) {
