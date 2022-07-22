@@ -13,7 +13,7 @@ function Resize() {//меняем и размер элемента Canvas
 
 //переменные для игры //////////////////////////////////
 import Map from './Class/Map.js';//class карты
-import Hero from './Class/Hero.js';//class карты
+import Hero from './Class/Hero.js';//class героя
 const UPDATE_TIME = 1000 / 60;
 var timer = null;
 window.widthBox = 100;
@@ -24,7 +24,6 @@ Start();
 //главный игровой таймер
 var map = new Map(10,10); 
 var hero = new Hero(300,300, "images/rubicAsep.png"); 
-
 function Start() {
 	timer = setInterval(Update, UPDATE_TIME);
 }
@@ -54,9 +53,10 @@ function Draws() {
 	ctx.fillStyle = '#20F';
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
 	
+	
 	//рисуем карту
 	map.Draw(ctx);
 
-	// рисуем главного героя
+	//рисуем гг
 	hero.Draw(ctx);
 }

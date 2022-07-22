@@ -4,16 +4,16 @@ export default class {
         this.xy[0] = x;
         this.xy[1] = y;
         this.image = new Image();
-        this.image.scr = imageFileName;
+        this.image.src = imageFileName;
     }
 
-    Draw(ctx){
+    Draw(ctx) {
         ctx.drawImage(
-            this.image,
-    
-            0,
-            0,
-            this.image.width, //Image
+            this.image, //Image
+
+            0, //First X on image
+            0, //First Y on image
+            this.image.width, //End X on image
             this.image.height, //End Y on image
 
             this.xy[0],//X on canvas
@@ -21,5 +21,5 @@ export default class {
             window.widthBox, //Width on canvas
             window.widthBox //Height on canvas
         );
-    };
+    }
 }
