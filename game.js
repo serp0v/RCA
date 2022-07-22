@@ -3,12 +3,13 @@ console.log(window.navigator.userAgent); // узнать инфо о устро�
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");//вытащим из него холст для рисования
 
+
 //Canvas на весь размер экрана
 Resize();
 window.addEventListener("resize", Resize);//при смене размера экрана
 function Resize() {//меняем и размер элемента Canvas
 	canvas.width = window.innerWidth;
-	canvas.height = window.innerHeight;
+	canvas.height = window.innerHeight;	
 }
 
 
@@ -18,6 +19,7 @@ import Hero from './Class/Hero.js';//class героя
 const UPDATE_TIME = 1000 / 60;
 var timer = null;
 window.widthBox = 100;
+window.screenshiftY = 400;
 
 //запускаем GamePlay
 Start();
@@ -25,7 +27,7 @@ Start();
 //главный игровой таймер
 var map = new Map(15, 10);
 // гг
-var hero = new Hero(300, 300, "images/rubicAsep.png");
+var hero = new Hero(300, 400, "images/rubicAsep.png");
 
 // управление стрелками
 const top = document.getElementById('top');
@@ -36,7 +38,7 @@ const left = document.getElementById('left');
 document.addEventListener("keydown",function Move(e) {
 	if (e.keyCode == '38') { // up arrow
 		hero.Jump();
-		top.Pressed(); //будет подстветка кнопки
+		//top.Pressed(); //будет подстветка кнопки
 	}
 	else if (e.keyCode == '39') { // right arrow
 		console.log('it works!');
@@ -71,7 +73,7 @@ function Update() {
 //даем пожить каждому обьекту игры
 function Lifes() {
 	//карта
-	map.Life(this);
+	map.Life(hero);
 	//живем героя
 	hero.Life(map);
 }
