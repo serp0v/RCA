@@ -12,7 +12,7 @@ export default class {
         this.image = new Image();
         this.image.src = imageFileName;
     }
-
+    //прыгнуть
     Jump() {
         this.gravityCur = -10;
     }
