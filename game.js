@@ -14,20 +14,20 @@ function Resize() {//меняем и размер элемента Canvas
 
 
 //переменные для игры //////////////////////////////////
-import Map from './Class/Map.js';//class карты
-import Hero from './Class/Hero.js';//class героя
 const UPDATE_TIME = 1000 / 60;
 var timer = null;
 window.widthBox = 100;
 window.screenshiftY = 400;
 
+import MapBack from './Class/MapBack.js';//class героя
+import Map from './Class/Map.js';//class карты
+import Hero from './Class/Hero.js';//class героя
+var mapBack = new MapBack();//создание заднего фона
+var map = new Map(15, 10);//карта
+var hero = new Hero(300, 400, "images/rubicAsep.png");// гг
+
 //запускаем GamePlay
 Start();
-
-//главный игровой таймер
-var map = new Map(15, 10);
-// гг
-var hero = new Hero(300, 400, "images/rubicAsep.png");
 
 // управление стрелками
 const top = document.getElementById('top');
@@ -72,6 +72,8 @@ function Update() {
 }
 //даем пожить каждому обьекту игры
 function Lifes() {
+	//mapBack
+	mapBack.Life();
 	//карта
 	map.Life(hero);
 	//живем героя
@@ -87,6 +89,9 @@ function Draws() {
 	ctx.fillStyle = '#20F';
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+    //рисуем mapBack
+    mapBack.Draw(ctx, map);
+	
 	//рисуем карту
 	map.Draw(ctx);
 

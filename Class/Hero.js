@@ -7,6 +7,7 @@ export default class {
     speedReturn = 1;    
     Xmax = 0;
     Ymax = 0;
+    health = 0;
 
     // top = document.getElementById('top');
     // right = document.getElementById('right');
