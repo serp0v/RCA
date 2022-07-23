@@ -4,7 +4,7 @@ export default class {
   //координаты левого края карты
   xyShift = [0, 0];
   nexttestX = 0;//когда проверять  
-  speedMap = 2;
+  speedMap = 4;
 
   //при создании новой карты
   constructor(sizeX, sizeY) {

@@ -32,29 +32,47 @@ const top = document.getElementById('top');
 const right = document.getElementById('right');
 const bottom = document.getElementById('bottom');
 const left = document.getElementById('left');
+const shoot = document.getElementById('shoot');
 
 document.addEventListener("keydown",function Move(e) {
 	if (e.keyCode == '38') { // up arrow
 		hero.Jump();
-		top.Pressed(); //будет подстветка кнопки
+		Pressed();
 	}
 	else if (e.keyCode == '39') { // right arrow
 		console.log('it works!');
+		Pressed();
+
 	}
 	else if (e.keyCode == '37') { // left arrow
 		console.log('it works!');
+		Pressed();
 	}
 	else if (e.keyCode == '40') { // down arrow
-		console.log('it works!');
-	}
+		hero.antiJump();
+		Pressed();
 
+	}
 })
-// window.onclick = function(event){
-// 	hero.Jump();
-// }
 top.onclick = function(event){
 	hero.Jump();
 }
+right.onclick = function(event){
+
+}
+bottom.onclick = function(event){
+	hero.antiJump();
+}
+left.onclick = function(event){
+
+}
+shoot.onclick = function(event){
+	console.log('message')
+}
+function Pressed() {
+
+}
+/////////////////////////////////////////////////
 function Start() {
 	timer = setInterval(Update, UPDATE_TIME);
 }
@@ -63,7 +81,6 @@ function Stop() {
 	clearInterval(timer);
 	timer = null;
 }
-
 //обновление и рисование всех обьектов
 function Update() {
 	Lifes();

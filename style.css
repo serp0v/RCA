@@ -25,15 +25,20 @@ body, html
 
 /* управление */
 
-.constrols {
-	display: inline-block;
-}
+/* .constrols {
+	height: 300px;
+	width: 300px;
+	border-radius: 50%;
+	position: absolute;
+	border: 1px solid rgb(255, 255, 255);
+} */
 
 [class$="-control"]{
 	position: absolute;
 	height: 100px;
 	width: 100px;
 	fill: white;
+	background-color: #fff;
 }
 
 .top-control {
@@ -56,5 +61,10 @@ body, html
 .left-control {
 	transform: rotate(-180deg);
 	left: 0px;
+	bottom: 200px;
+}
+
+.shoot-control {
+	right:0;
 	bottom: 200px;
 }
