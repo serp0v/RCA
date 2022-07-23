@@ -72,7 +72,7 @@ export default class {
         this.image.height, //End Y on image
 
         -map.xyShift[0] + this.xy[0],//X on canvas
-        -map.xyShift[1] + this.xy[1],//Y on canvas
+        window.screenshiftY -map.xyShift[1] + this.xy[1],//Y on canvas /* window.screenshift */
         window.widthBox, //Width on canvas
         window.widthBox //Height on canvas
       );

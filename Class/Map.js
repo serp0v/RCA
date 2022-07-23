@@ -1,7 +1,7 @@
 import MapObj from './MapObj.js';//class для работы с обьектами карты
 export default class {
 
-  //координаты левого края карты
+  //координаты левого верхнего края карты
   xyShift = [0, 0];
   nexttestX = 0;//когда проверять  
   speedMap = 4;
@@ -15,15 +15,16 @@ export default class {
   }
 
   //Life
-  Life(game) {
+  Life(hero) {
     //смещаем карту
     this.xyShift[0] += this.speedMap;
+    this.xyShift[1] = hero.xy[1];
     //для скорости проверяем координаты не каждый тик 
     if (this.isNeedtest()) {
       //удалим box слева которые вышли за карту      
       this.removeBackBox();
       //добавим новые справа      
-      putMapRight(this, this.xyShift[0] + 10 * window.widthBox);
+      putMapRight(this, this.xyShift[0] + this.sizeX * window.widthBox);
     }
 
     //даем пожить каждому элементу
