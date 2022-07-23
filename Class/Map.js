@@ -32,7 +32,9 @@ export default class {
 
     //даем пожить каждому элементу
     this.mapArray.forEach(function (item, index, array) {
-      item.Life();
+      //если отметка об удалении, то не используем
+      if (!item.needRemove)
+        item.Life();
     });
   }
 
@@ -59,7 +61,9 @@ export default class {
 
     //рисуем все активные элементы карты      
     this.mapArray.forEach(function (item, index, array) {
-      item.Draw(ctx, map);
+      //если отметка об удалении, то не показываем
+      if (!item.needRemove)
+        item.Draw(ctx, map);
     });
 
   }
@@ -87,7 +91,7 @@ export default class {
         //пусто или блок
         if (getRandomInt(3) == 0) {//3 - сложность карты по Количеству блоков
           //элементы карты          
-          var box = this.getRandomBox(this.textures);
+          var box = this.getRandomBox();
           box.xy = [x * window.widthBox, y * window.widthBox];
           arr.push(box);
         }
@@ -112,25 +116,31 @@ export default class {
   //генерация блока
   getRandomBox() {
     //можно сделать сложность карты по Типу блоков
-    let typeid = getRandomInt(3);
-    if (typeid == 0)
-      return this.getBoxBeton(this.textures);
-    else if (typeid == 1)
-      return this.getBoxKirpich(this.textures);
-    else if (typeid == 2)
-      return this.getBoxTechno(this.textures);
-    else
-      return new MapObj();// и тд.  
+    let typeid = getRandomInt(7);
+    if (typeid <= 3)
+      return this.getBoxBeton(typeid);
+    else if (typeid == 4)
+      return this.getBoxKirpich(typeid);
+    else if (typeid == 5)
+      return this.getBoxTechno(typeid);
+    else if (typeid == 6)//Health
+      return this.getBoxHealth(typeid);
+
   }
 
-  getBoxBeton() {
-    return new MapObj("Бетон", 10, this.textures.getBeton(-1));
+  getBoxBeton(typeid) {
+    return new MapObj("Бетон", 10, this.textures.getBeton(-1), typeid);
   }
-  getBoxKirpich() {
-    return new MapObj("Кирпич", 1, this.textures.getKirpich(-1));
+  getBoxKirpich(typeid) {
+    return new MapObj("Кирпич", 1, this.textures.getKirpich(-1), typeid);
   }
-  getBoxTechno() {
-    return new MapObj("Техно", 100, this.textures.getTechno(-1))
+  getBoxTechno(typeid) {
+    return new MapObj("Техно", 100, this.textures.getTechno(-1), typeid);
+  }
+  getBoxHealth(typeid) {
+    let box = new MapObj("Жизнь", 30, this.textures.getHealth(-1), typeid);
+    box.phisicTransparent = true;
+    return box;
   }
 }
 
