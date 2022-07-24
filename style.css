@@ -31,59 +31,59 @@ body, html
 	/* position: absolute; */
 	z-index: 9999;
 	bottom: 100px;
-	justify-content: center;
+	/* justify-content: center; */
 	display: flex;
 	position: absolute;
 	right:1%;
 	left: 1%;
+	/* flex-direction: row; */
 	/* border: 3px solid rgb(0, 0, 0); */
 }
 
 [class$="-control"]{
-	position: absolute;
-	height: 100px;
-	width: 100px;
-	fill: white;
+	height: 50%;
+	width: 50%;
+	fill: rgb(255, 255, 255);
 	background-color: #fff;
-	border-radius: 50%;
 }
 .joystick {
 	position: absolute;
-	height: 300px;
-	width: 300px;
+	height: 302px;
+	width: 302px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
 	border-radius: 50%;
 	left: 100px;
-	border-radius: 50%;
-	border: 1px solid #000;
+	transform: rotate(45deg);
+	overflow: hidden;
+	border: 3px solid #000;
 }
 .top-control {
-	transform: rotate(-90deg);
-	left: 100px;
-	bottom: 200px;
+	
 }
 
 .right-control {
-	bottom: 100px;
-	left: 200px;
+
 }
 
 .bottom-control {
-	transform: rotate(90deg);
-	left: 100px;
-	bottom:0;
-	/* bottom: 100px; */
+
 }
 
 .left-control {
-	transform: rotate(-180deg);
-	left: 0px;
-	bottom: 100px;
+
 }
 
 .shoot-control {
-	right:100px;
+	height: 100px;
+	width: 100px;
+	position: absolute;
+	right: 100px;
 	bottom: 100px;
+	border: 3px solid #000;
 	border-radius: 50%;
+
 }
 
 /* метрики */
