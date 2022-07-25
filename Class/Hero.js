@@ -131,13 +131,13 @@ export default class {
             xyHero[0] += collisionX * vecX;
         else {
             xyHero[1] += collisionY * vecY;
-            if (gravityEarth < this.gravityCur) {
-                if (vecY > 0)
-                    //удар головой
-                    this.audioHead.play();
-                    else
+            if (gravityEarth < Math.abs(this.gravityCur)) {
+                if (vecY < 0)
                     //приземление
                     this.audioStep.play();
+                else
+                    //удар головой
+                    this.audioHead.play();
             }
             this.gravityCur = 0;//сброс скорости падения
         }
