@@ -4,21 +4,28 @@ export default class {
     xy = [0, 0];
     gravityCur = 0;//гравитация действующая на героя    
     widthBox = 90;
-    speedReturn = 1;    
+    speedReturn = 1;
     Xmax = 0;
     Ymax = 0;
     health = 0;
-
-    // top = document.getElementById('top');
-    // right = document.getElementById('right');
-    // bottom = document.getElementById('bottom');
-    // left = document.getElementById('left');
-
     constructor(x, y, imageFileName) {
         this.xy[0] = this.Xmax = x;
         this.xy[1] = this.Ymax = y;
         this.image = new Image();
         this.image.src = imageFileName;
+
+        this.audioStep = new Audio();
+        this.audioStep.preload = 'auto';
+        this.audioStep.src = './sound/step.mp3';
+
+        this.audioHead = new Audio();
+        this.audioHead.preload = 'auto';
+        this.audioHead.src = './sound/head.mp3';
+
+        let audio = new Audio();
+        audio.preload = 'auto';
+        audio.src = './sound/piu.mp3';
+        this.audioStar = audio;
     }
     //прыгнуть
     Jump() {
@@ -32,8 +39,12 @@ export default class {
         //возвращает элементы карты которые пересекаются с героем
         let colArr = this.doCollisionMObjs(map);
         //далее обработка обьектов(оружие, здоровье, огонь и тд)
-        colArr.forEach(element => {
-            console.log(element.getName());
+        colArr.forEach(box => {
+            if (box.typeid == 6) {
+                this.health += box.value;
+                box.needRemove = true;
+                this.audioStar.play();
+            }
         });
         //
     }
@@ -54,6 +65,10 @@ export default class {
         let colArr = [];
         for (let id = 0; id < map.mapArray.length; id++) {
             let box = map.mapArray[id];
+
+            //если отметка об удалении, то не обрабатываем
+            if (box.needRemove)
+                continue;
 
             //с какой стороны пересекается с обьектом
             let typeid = this.getCollisionType(colArr, xyHero, box, xyShiftMap);
@@ -115,13 +130,21 @@ export default class {
             return;
 
         //box отталкивает
-        if (collisionX < collisionY) 
+        if (collisionX < collisionY)
             xyHero[0] += collisionX * vecX;
-        else{
+        else {
             xyHero[1] += collisionY * vecY;
-            this.gravityCur = 0;//сброс скорости падения            
+            if (gravityEarth < Math.abs(this.gravityCur)) {
+                if (vecY < 0)
+                    //приземление
+                    this.audioStep.play();
+                else
+                    //удар головой
+                    this.audioHead.play();
+            }
+            this.gravityCur = 0;//сброс скорости падения
         }
-    }    
+    }
 
     //Draw
     Draw(ctx) {
