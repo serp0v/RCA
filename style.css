@@ -25,36 +25,125 @@ body, html
 
 /* управление */
 
-.constrols {
-	display: inline-block;
+.controls {
+	height: 300px;
+	width: 98%;
+	/* position: absolute; */
+	z-index: 9999;
+	bottom: 100px;
+	/* justify-content: center; */
+	display: flex;
+	position: absolute;
+	right:1%;
+	left: 1%;
+	/* flex-direction: row; */
+	/* border: 3px solid rgb(0, 0, 0); */
 }
 
 [class$="-control"]{
-	position: absolute;
-	height: 100px;
-	width: 100px;
-	fill: white;
+	height: 50%;
+	width: 50%;
+	fill: rgb(255, 255, 255);
+	background-color: #fff;
 }
-
-.top-control {
-	transform: rotate(-90deg);
+.joystick {
+	position: absolute;
+	height: 302px;
+	width: 302px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	border-radius: 50%;
 	left: 100px;
-	bottom: 300px;
+	transform: rotate(45deg);
+	overflow: hidden;
+	border: 3px solid #000;
+}
+.top-control {
+	
 }
 
 .right-control {
-	bottom: 200px;
-	left: 200px;
+
 }
 
 .bottom-control {
-	transform: rotate(90deg);
-	left: 100px;
-	bottom: 100px;
+
 }
 
 .left-control {
-	transform: rotate(-180deg);
-	left: 0px;
-	bottom: 200px;
+
+}
+
+.shoot-control {
+	height: 100px;
+	width: 100px;
+	position: absolute;
+	right: 100px;
+	bottom: 100px;
+	border: 3px solid #000;
+	border-radius: 50%;
+
+}
+
+/* метрики */
+
+.metrics {
+	position: absolute;
+	z-index: 9999;
+	height: 100px;
+	width: 400px;
+	border: 1px solid #000;
+	right: 100px;
+	top: 0;
+	display: flex;
+	flex-direction: row;
+}
+
+.metric_item {
+	width: 33.3%;
+	height: 100%;
+	font-size: 48px;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+	vertical-align: middle;
+	display: flex;
+	border: 1px solid #000;
+
+}
+.titles {
+
+}
+.ammo {
+
+}
+
+.health {
+
+}
+
+.score {
+
+}
+
+/* блок с паузой и вложенные в него кнопки */
+
+.pause {
+	position: absolute;
+	left: 100px;
+	top: 0;
+	height: 100px;
+	width: 100px;
+
+}
+.pause-btn {
+	display: flex; 
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+	vertical-align: middle;
+	font-size: 36px;
+	height: 100%;
+	border: 3px solid #000;
 }
