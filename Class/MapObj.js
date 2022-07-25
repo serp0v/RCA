@@ -7,13 +7,15 @@ export default class {
   spriteTimeNext = 0;//таймер следующей анимации
   phisicTransparent = false;//true - можно проходить насквозь 
   texture;//текстура с параметрами
+  typeid = 0;//тип обьекта(стена, оружие, здоровье)
 
   //для создания обьекта с параметрами
-  constructor(name, antidamage, texture) {
+  constructor(name, value, texture, typeid) {
     this.name = name;
-    this.antidamage = antidamage;//устойчивость к повреждению
+    this.value = value;//устойчивость к повреждению
     this.loaded = false;//готов  
     this.texture = texture;          
+    this.typeid = typeid;
   }
   getName() {
     return 'i am ' + this.name;
@@ -33,7 +35,7 @@ export default class {
       var now = new Date();
       let millis = now.getTime();
       if (this.spriteTimeNext < millis) {
-        this.spriteTimeNext = millis + 100 + getRandomInt(50);
+        this.spriteTimeNext = millis + this.texture.animaSpeed + getRandomInt(50);
         this.spriteFrameID++;
         if (this.texture.spriteFrameIDMax < this.spriteFrameID)
           this.spriteFrameID = 0;
