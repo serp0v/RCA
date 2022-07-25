@@ -19,4 +19,42 @@ body, html
 	width: 100%;
 	height: 100%;
 	background: #000;
+	position: absolute;
+	z-index: -1;
+}
+
+/* управление */
+
+.constrols {
+	display: inline-block;
+}
+
+[class$="-control"]{
+	position: absolute;
+	height: 100px;
+	width: 100px;
+	fill: white;
+}
+
+.top-control {
+	transform: rotate(-90deg);
+	left: 100px;
+	bottom: 300px;
+}
+
+.right-control {
+	bottom: 200px;
+	left: 200px;
+}
+
+.bottom-control {
+	transform: rotate(90deg);
+	left: 100px;
+	bottom: 100px;
+}
+
+.left-control {
+	transform: rotate(-180deg);
+	left: 0px;
+	bottom: 200px;
 }
