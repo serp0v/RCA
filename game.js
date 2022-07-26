@@ -42,12 +42,12 @@ document.addEventListener("keydown",function Move(e) {
 		Pressed();
 	}
 	else if (e.keyCode == '39') { // right arrow
-		console.log('it works!');
+		hero.Right();
 		Pressed();
 
 	}
 	else if (e.keyCode == '37') { // left arrow
-		console.log('it works!');
+		hero.Left();
 		Pressed();
 	}
 	else if (e.keyCode == '40') { // down arrow
@@ -60,13 +60,13 @@ top.onclick = function(event){
 	hero.Jump();
 }
 right.onclick = function(event){
-
+	hero.Right();
 }
 bottom.onclick = function(event){
 	hero.antiJump();
 }
 left.onclick = function(event){
-
+	hero.Left();
 }
 shoot.onclick = function(event){
 	console.log('message')
@@ -74,6 +74,7 @@ shoot.onclick = function(event){
 function Pressed() {
 
 }
+
 /////////////////////////////////////////////////
 function Start() {
 	timer = setInterval(Update, UPDATE_TIME);
