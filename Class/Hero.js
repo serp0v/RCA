@@ -34,6 +34,12 @@ export default class {
     antiJump() {
         this.gravityCur = +10;
     }
+    Right() {
+
+    }
+    Left() {
+        
+    }
     //Life
     Life(map) {
         //возвращает элементы карты которые пересекаются с героем
