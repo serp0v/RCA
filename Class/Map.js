@@ -5,7 +5,7 @@ export default class {
   //координаты левого верхнего края карты
   xyShift = [0, 0];
   nexttestX = 0;//когда проверять  
-  speedMap = 2;
+  speedMap = 5;
   textures; //хранилище текстур карты
 
   //при создании новой карты
