@@ -1,9 +1,9 @@
 //гравитация земли
-const gravityEarth = 0.25;
+const gravityEarth = 0.5;
 export default class {
     xy = [0, 0];
     gravityCur = 0;//гравитация действующая на героя    
-    widthBox = 90;
+    widthBox = 180;
     speedReturn = 1;
     Xmax = 0;
     Ymax = 0;
@@ -140,6 +140,7 @@ export default class {
             xyHero[0] += collisionX * vecX;
         else {
             xyHero[1] += collisionY * vecY;
+            /*//звук приземления и удара головой             
             if (gravityEarth < Math.abs(this.gravityCur)) {
                 if (vecY < 0)
                     //приземление
@@ -147,7 +148,7 @@ export default class {
                 else
                     //удар головой
                     this.audioHead.play();
-            }
+            } */
             this.gravityCur = 0;//сброс скорости падения
         }
     }
@@ -162,10 +163,10 @@ export default class {
             this.image.width, //End X on image
             this.image.height, //End Y on image
 
-            this.xy[0],//X on canvas
-            window.screenshiftY + this.xy[1],//Y on canvas
-            this.widthBox, //Width on canvas
-            this.widthBox //Height on canvas
+            window.screenScale * this.xy[0],//X on canvas
+            window.screenScale * (window.screenshiftY + this.xy[1]),//Y on canvas
+            window.screenScale * this.widthBox, //Width on canvas
+            window.screenScale * this.widthBox //Height on canvas
             // window.widthBox, //Width on canvas
             // window.widthBox //Height on canvas
         );

@@ -21,7 +21,7 @@ export default class {
   Life(hero) {
     //смещаем карту
     this.xyShift[0] += this.speedMap;
-    this.xyShift[1] = hero.xy[1];
+    //this.xyShift[1] = hero.xy[1];//следование за картой
     //для скорости проверяем координаты не каждый тик 
     if (this.isNeedtest()) {
       //удалим box слева которые вышли за карту      
@@ -73,7 +73,7 @@ export default class {
     let arr = [];
     for (let x = 0; x < this.sizeX; x++) {
       //бетонное начало
-      if (x == 7) {
+      if (x == 10) {
         let box = this.getBoxBeton(this.textures);
         box.xy = [x * window.widthBox, 9 * window.widthBox];//самый низ
         arr.push(box);
@@ -81,36 +81,52 @@ export default class {
       // if (x == 6)
       //   continue;
       //бетонное начало
-      if (x < 10) {
+      if (x <= 10) {
         let box = this.getBoxBeton(this.textures);
         box.xy = [x * window.widthBox, 10 * window.widthBox];//самый низ
         arr.push(box);
         continue;
       }
-      for (let y = 0; y < this.sizeY; y++) {
-        //пусто или блок
-        if (getRandomInt(3) == 0) {//3 - сложность карты по Количеству блоков
-          //элементы карты          
-          var box = this.getRandomBox();
-          box.xy = [x * window.widthBox, y * window.widthBox];
-          arr.push(box);
-        }
-      }
+      /*       for (let y = 0; y < this.sizeY; y++) {
+              //пусто или блок
+              if (getRandomInt(3) == 0) {//3 - сложность карты по Количеству блоков
+                //элементы карты          
+                var box = this.getRandomBox();
+                box.xy = [x * window.widthBox, y * window.widthBox];
+                arr.push(box);
+              }
+            } */
     }
     return arr;
   }
   //генерация карты справа
   putMapRight(xShift) {
     let arr = this.mapArray;
-    for (let y = 0; y < this.sizeY; y++) {
-      //пусто или блок
-      if (getRandomInt(5) == 0) {//3 - сложность карты по Количеству блоков
-        //элементы карты          
-        var blok = this.getRandomBox(this.textures);
-        blok.xy = [xShift, y * window.widthBox];
-        arr.push(blok);
-      }
+    //1 этаж
+    if (getRandomInt(5) < 4) {
+      var blok = this.getBoxBeton();
+      blok.xy = [xShift, 12 * window.widthBox];
+      arr.push(blok);
     }
+    //2 этаж
+    if (getRandomInt(5) == 3) {//3 - сложность карты по Количеству блоков
+      //элементы карты          
+      var blok = this.getBoxBeton();
+      blok.xy = [xShift, 8 * window.widthBox];
+      arr.push(blok);
+    }
+    //3 этаж
+    if (getRandomInt(5) == 0) {//3 - сложность карты по Количеству блоков
+      //элементы карты          
+      var blok = this.getBoxBeton();
+      blok.xy = [xShift, 4 * window.widthBox];
+      arr.push(blok);
+    }
+    //Потолок
+    var blok = this.getBoxBeton();
+    blok.xy = [xShift, 0 * window.widthBox];
+    arr.push(blok);
+
   }
 
   //генерация блока
