@@ -1,3 +1,5 @@
+const NOTHING = 0;
+const BETON = 1;
 import Textures from './Textures.js';//для загрузки всех текстур 1 раз
 import MapObj from './MapObj.js';//class для работы с обьектами карты
 export default class {
@@ -7,6 +9,11 @@ export default class {
   nexttestX = 0;//когда проверять  
   speedMap = 5;
   textures; //хранилище текстур карты
+
+  //текущий план расстановки блоков
+  floor3 = [0, 5, NOTHING];
+  floor2 = [0, 2, BETON];
+  floor1 = [0, 3, BETON];
 
   //при создании новой карты
   constructor(sizeX, sizeY) {
@@ -71,66 +78,91 @@ export default class {
   //генерация новой карты
   getMapNew() {
     let arr = [];
+    let Y = 13;
     for (let x = 0; x < this.sizeX; x++) {
       //бетонное начало
-      if (x == 10) {
-        let box = this.getBoxBeton(this.textures);
-        box.xy = [x * window.widthBox, 9 * window.widthBox];//самый низ
-        arr.push(box);
-      }
-      // if (x == 6)
-      //   continue;
-      //бетонное начало
-      if (x <= 10) {
-        let box = this.getBoxBeton(this.textures);
-        box.xy = [x * window.widthBox, 10 * window.widthBox];//самый низ
+      if (x == 0) {
+        let box = new MapObj("Бетон", 10, this.textures.getBeton(0), BETON);
+        box.xy = [x * window.widthBox, Y * window.widthBox];//самый низ
         arr.push(box);
         continue;
       }
-      /*       for (let y = 0; y < this.sizeY; y++) {
-              //пусто или блок
-              if (getRandomInt(3) == 0) {//3 - сложность карты по Количеству блоков
-                //элементы карты          
-                var box = this.getRandomBox();
-                box.xy = [x * window.widthBox, y * window.widthBox];
-                arr.push(box);
-              }
-            } */
+      if (x <= this.sizeX) {
+        let box = new MapObj("Бетон", 10, this.textures.getBeton(1), BETON);
+        box.xy = [x * window.widthBox, Y * window.widthBox];//самый низ
+        arr.push(box);
+        continue;
+      }
+      let box = new MapObj("Бетон", 10, this.textures.getBeton(2), BETON);
+      box.xy = [x * window.widthBox, Y * window.widthBox];//самый низ
+      arr.push(box);
+
     }
     return arr;
   }
   //генерация карты справа
   putMapRight(xShift) {
     let arr = this.mapArray;
-    //1 этаж
-    if (getRandomInt(5) < 4) {
-      var blok = this.getBoxBeton();
-      blok.xy = [xShift, 12 * window.widthBox];
-      arr.push(blok);
-    }
+
+    //1 этаж [0, 3, BETON];
+    let f = this.floor1;
+    let Y = 13;
+    this.putPlanBox(arr, f, xShift, Y);
+    if (f[0] == f[1])
+      this.setNextPlan(f);
+
     //2 этаж
-    if (getRandomInt(5) == 3) {//3 - сложность карты по Количеству блоков
-      //элементы карты          
-      var blok = this.getBoxBeton();
-      blok.xy = [xShift, 8 * window.widthBox];
-      arr.push(blok);
-    }
+    f = this.floor2;
+    Y = 9;
+    this.putPlanBox(arr, f, xShift, Y);
+    if (f[0] == f[1])
+      this.setNextPlan(f);
+
     //3 этаж
-    if (getRandomInt(5) == 0) {//3 - сложность карты по Количеству блоков
-      //элементы карты          
-      var blok = this.getBoxBeton();
-      blok.xy = [xShift, 4 * window.widthBox];
-      arr.push(blok);
-    }
+    f = this.floor3;
+    Y = 5;
+    this.putPlanBox(arr, f, xShift, Y);
+    if (f[0] == f[1])
+      this.setNextPlan(f);
+
     //Потолок
     var blok = this.getBoxBeton();
     blok.xy = [xShift, 0 * window.widthBox];
     arr.push(blok);
+  }
+  //[0, 3, BETON];
+  putPlanBox(arr, f, xShift, Y) {
+    //мотаем план дальше
+    f[0]++;
+    //если ничего ставить не надо
+    if (f[2] == NOTHING)
+      return;
 
+    var blok;
+    if (f[0] == 1) //слева
+      blok = new MapObj("Бетон", 10, this.textures.getBeton(0), BETON);
+    else if (f[0] < f[1])//середина
+      blok = new MapObj("Бетон", 10, this.textures.getBeton(1), BETON);
+    else if (f[0] == f[1]) //справа
+      blok = new MapObj("Бетон", 10, this.textures.getBeton(2), BETON);
+
+    blok.xy = [xShift, Y * window.widthBox];
+    arr.push(blok);    
+  }
+  setNextPlan(f) {
+    f[0] = 0;//счетчик плана
+    if (f[2] == NOTHING){
+      f[2] = BETON;
+      f[1] = getRandomInt(7)+3;//3-10 длина бетона
+    }
+    else{
+      f[2] = NOTHING;
+      f[1] = getRandomInt(5)+3;//3-8 длина пустоты
+    }
   }
 
   //генерация блока
-  getRandomBox() {
+  getBox() {
     //можно сделать сложность карты по Типу блоков
     let typeid = getRandomInt(7);
     if (typeid <= 3)
@@ -145,7 +177,7 @@ export default class {
   }
 
   getBoxBeton(typeid) {
-    return new MapObj("Бетон", 10, this.textures.getBeton(-1), typeid);
+    return new MapObj("Бетон", 10, this.textures.getBeton(1), typeid);
   }
   getBoxKirpich(typeid) {
     return new MapObj("Кирпич", 1, this.textures.getKirpich(-1), typeid);

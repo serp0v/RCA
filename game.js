@@ -24,8 +24,8 @@ window.widthBox = 100;
 import Map from './Class/Map.js';//class карты
 import Hero from './Class/Hero.js';//class героя
 // var mapBack = new MapBack();//создание заднего фона
-var map = new Map(15, 10);//карта
-var hero = new Hero(300, 400, "images/rubicAsep.png");// гг
+var map = new Map(30, 10);//карта
+var hero = new Hero(400 * window.screenScale, 400, "images/rubicAsep.png");// гг
 
 //запускаем GamePlay
 Start();
@@ -99,7 +99,7 @@ function Lifes() {
 	//карта
 	map.Life(hero);
 	//живем героя
-	hero.Life(map);
+	hero.Life(map, score);
 }
 //рисование всех обьектов игры
 function Draws() {

@@ -1,5 +1,5 @@
 //гравитация земли
-const gravityEarth = 0.5;
+const gravityEarth = 1.0;
 export default class {
     xy = [0, 0];
     gravityCur = 0;//гравитация действующая на героя    
@@ -8,6 +8,7 @@ export default class {
     Xmax = 0;
     Ymax = 0;
     health = 0;
+    score = 0;
     constructor(x, y, imageFileName) {
         this.xy[0] = this.Xmax = x;
         this.xy[1] = this.Ymax = y;
@@ -29,10 +30,10 @@ export default class {
     }
     //прыгнуть
     Jump() {
-        this.gravityCur = -10;
+        this.gravityCur = -30;
     }
     antiJump() {
-        this.gravityCur = +10;
+        this.gravityCur = +30;
     }
     Right() {
 
@@ -41,7 +42,7 @@ export default class {
         
     }
     //Life
-    Life(map) {
+    Life(map, score) {
         //возвращает элементы карты которые пересекаются с героем
         let colArr = this.doCollisionMObjs(map);
         //далее обработка обьектов(оружие, здоровье, огонь и тд)
@@ -52,7 +53,9 @@ export default class {
                 this.audioStar.play();
             }
         });
-        //
+        //score
+        this.score+=0.01;
+        score.innerHTML = Math.round(this.score);
     }
     //обработка пересечения
     doCollisionMObjs(map) {
