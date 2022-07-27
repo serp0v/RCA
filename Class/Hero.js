@@ -1,5 +1,6 @@
 //гравитация земли
-const gravityEarth = 1.0;
+const gravityEarth = 2.3;
+
 export default class {
     xy = [0, 0];
     gravityCur = 0;//гравитация действующая на героя    
@@ -7,7 +8,7 @@ export default class {
     speedReturn = 1;
     Xmax = 0;
     Ymax = 0;
-    health = 0;
+    health = 100;
     score = 0;
     constructor(x, y, imageFileName) {
         this.xy[0] = this.Xmax = x;
@@ -30,19 +31,28 @@ export default class {
     }
     //прыгнуть
     Jump() {
-        this.gravityCur = -30;
+        this.gravityCur = -45;
     }
     antiJump() {
-        this.gravityCur = +30;
+        this.gravityCur = +20;
     }
     Right() {
 
     }
     Left() {
-        
+
     }
     //Life
     Life(map, score) {
+        //удар об верхний край карты
+        if (this.xy[1] < 100)
+            this.gravityCur = 0;
+        //упал вниз
+        if (this.xy[1] > 1300)
+            this.health = -1;
+        //ушел за левый край
+        if (this.xy[0] < 0)
+            this.health = -1;
         //возвращает элементы карты которые пересекаются с героем
         let colArr = this.doCollisionMObjs(map);
         //далее обработка обьектов(оружие, здоровье, огонь и тд)
@@ -53,8 +63,8 @@ export default class {
                 this.audioStar.play();
             }
         });
-        //score
-        this.score+=0.01;
+        //score        
+        this.score += 0.01;
         score.innerHTML = Math.round(this.score);
     }
     //обработка пересечения
@@ -143,7 +153,7 @@ export default class {
             xyHero[0] += collisionX * vecX;
         else {
             xyHero[1] += collisionY * vecY;
-            /*//звук приземления и удара головой             
+            //звук приземления и удара головой             
             if (gravityEarth < Math.abs(this.gravityCur)) {
                 if (vecY < 0)
                     //приземление
@@ -151,7 +161,7 @@ export default class {
                 else
                     //удар головой
                     this.audioHead.play();
-            } */
+            }
             this.gravityCur = 0;//сброс скорости падения
         }
     }
