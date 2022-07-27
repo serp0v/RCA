@@ -30,31 +30,34 @@ body, html
 	width: 98%;
 	/* position: absolute; */
 	z-index: 9999;
-	bottom: 100px;
+	/* bottom: 100px; */
 	/* justify-content: center; */
 	display: flex;
 	position: absolute;
-	right:1%;
-	left: 1%;
+	bottom: 0;
+	/* right:1%; */
+	/* left: 1%; */
 	/* flex-direction: row; */
 	/* border: 3px solid rgb(0, 0, 0); */
 }
 
 [class$="-control"]{
-	height: 50%;
-	width: 50%;
+	height: 48%;
+	width: 48%;
 	fill: rgb(255, 255, 255);
 	background-color: #fff;
+	border: 1px solid #000;
 }
 .joystick {
 	position: absolute;
-	height: 302px;
-	width: 302px;
+	height: 150px;
+	width: 150px;
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
 	border-radius: 50%;
-	left: 100px;
+	left: 0;
+	bottom: 0;
 	transform: rotate(45deg);
 	overflow: hidden;
 	border: 3px solid #000;

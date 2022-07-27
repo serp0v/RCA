@@ -36,6 +36,8 @@ const right = document.getElementById('right');
 const bottom = document.getElementById('bottom');
 const left = document.getElementById('left');
 const shoot = document.getElementById('shoot');
+let health = document.getElementById('health');
+let score = document.getElementById('score');
 
 document.addEventListener("keydown",function Move(e) {
 	if (e.keyCode == '38') { // up arrow
