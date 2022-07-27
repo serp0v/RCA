@@ -5,11 +5,13 @@ var ctx = canvas.getContext("2d");//вытащим из него холст дл
 
 
 //Canvas на весь размер экрана
-Resize();
+Resize(); 
 window.addEventListener("resize", Resize);//при смене размера экрана
 function Resize() {//меняем и размер элемента Canvas
 	canvas.width = window.innerWidth;
 	canvas.height = window.innerHeight;	
+	window.screenScale = canvas.height/1400;
+	window.screenshiftY = 0;
 }
 
 
@@ -17,14 +19,13 @@ function Resize() {//меняем и размер элемента Canvas
 const UPDATE_TIME = 1000 / 60;
 var timer = null;
 window.widthBox = 100;
-window.screenshiftY = 400;
 
-import MapBack from './Class/MapBack.js';//class героя
+//import MapBack from './Class/MapBack.js';//class героя
 import Map from './Class/Map.js';//class карты
 import Hero from './Class/Hero.js';//class героя
-var mapBack = new MapBack();//создание заднего фона
-var map = new Map(15, 10);//карта
-var hero = new Hero(300, 400, "images/rubicAsep.png");// гг
+// var mapBack = new MapBack();//создание заднего фона
+var map = new Map(30, 10);//карта
+var hero = new Hero(400 * window.screenScale, 400, "images/rubicAsep.png");// гг
 
 //запускаем GamePlay
 Start();
@@ -59,7 +60,7 @@ document.addEventListener("keydown",function Move(e) {
 	}
 })
 top.onclick = function(event){
-	hero.Jump();
+	hero.Jump();	//shoot.innerHTML = 
 }
 right.onclick = function(event){
 	hero.Right();
@@ -94,11 +95,11 @@ function Update() {
 //даем пожить каждому обьекту игры
 function Lifes() {
 	//mapBack
-	mapBack.Life();
+	//mapBack.Life();
 	//карта
 	map.Life(hero);
 	//живем героя
-	hero.Life(map);
+	hero.Life(map, score);
 }
 //рисование всех обьектов игры
 function Draws() {
@@ -107,11 +108,12 @@ function Draws() {
 
 	//цвет фона
 	ctx.beginPath();
-	ctx.fillStyle = '#20F';
+	ctx.fillStyle = '#FFF';
+	// ctx.fillStyle = '#20F';
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     //рисуем mapBack
-    mapBack.Draw(ctx, map);
+    //mapBack.Draw(ctx, map);
 	
 	//рисуем карту
 	map.Draw(ctx);

@@ -1,13 +1,14 @@
 //гравитация земли
-const gravityEarth = 0.25;
+const gravityEarth = 1.0;
 export default class {
     xy = [0, 0];
     gravityCur = 0;//гравитация действующая на героя    
-    widthBox = 90;
+    widthBox = 180;
     speedReturn = 1;
     Xmax = 0;
     Ymax = 0;
     health = 0;
+    score = 0;
     constructor(x, y, imageFileName) {
         this.xy[0] = this.Xmax = x;
         this.xy[1] = this.Ymax = y;
@@ -29,10 +30,10 @@ export default class {
     }
     //прыгнуть
     Jump() {
-        this.gravityCur = -10;
+        this.gravityCur = -30;
     }
     antiJump() {
-        this.gravityCur = +10;
+        this.gravityCur = +30;
     }
     Right() {
 
@@ -41,7 +42,7 @@ export default class {
         
     }
     //Life
-    Life(map) {
+    Life(map, score) {
         //возвращает элементы карты которые пересекаются с героем
         let colArr = this.doCollisionMObjs(map);
         //далее обработка обьектов(оружие, здоровье, огонь и тд)
@@ -52,7 +53,9 @@ export default class {
                 this.audioStar.play();
             }
         });
-        //
+        //score
+        this.score+=0.01;
+        score.innerHTML = Math.round(this.score);
     }
     //обработка пересечения
     doCollisionMObjs(map) {
@@ -140,6 +143,7 @@ export default class {
             xyHero[0] += collisionX * vecX;
         else {
             xyHero[1] += collisionY * vecY;
+            /*//звук приземления и удара головой             
             if (gravityEarth < Math.abs(this.gravityCur)) {
                 if (vecY < 0)
                     //приземление
@@ -147,7 +151,7 @@ export default class {
                 else
                     //удар головой
                     this.audioHead.play();
-            }
+            } */
             this.gravityCur = 0;//сброс скорости падения
         }
     }
@@ -162,10 +166,10 @@ export default class {
             this.image.width, //End X on image
             this.image.height, //End Y on image
 
-            this.xy[0],//X on canvas
-            window.screenshiftY + this.xy[1],//Y on canvas
-            this.widthBox, //Width on canvas
-            this.widthBox //Height on canvas
+            window.screenScale * this.xy[0],//X on canvas
+            window.screenScale * (window.screenshiftY + this.xy[1]),//Y on canvas
+            window.screenScale * this.widthBox, //Width on canvas
+            window.screenScale * this.widthBox //Height on canvas
             // window.widthBox, //Width on canvas
             // window.widthBox //Height on canvas
         );

@@ -17,10 +17,13 @@ export default class {
     }
     loadImagesBeton() {
         let arr = [];
-        arr.push(this.loadTexture("images/box_red.png", 1));
+        /* arr.push(this.loadTexture("images/box_red.png", 1));
         arr.push(this.loadTexture("images/box_green.png", 1));
         arr.push(this.loadTexture("images/box_yellow.png", 1));
-        arr.push(this.loadTexture("images/box_blue.png", 1));
+        arr.push(this.loadTexture("images/box_blue.png", 1)); */
+        arr.push(this.loadTexture("images/blocks/start-block.png", 1));
+        arr.push(this.loadTexture("images/blocks/mid-block.png", 1));
+        arr.push(this.loadTexture("images/blocks/end-block.png", 1));
         return arr;
     }
     loadImagesKirpich() {
