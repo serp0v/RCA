@@ -1,5 +1,6 @@
 const NOTHING = 0;
 const BETON = 1;
+const KIRPICH = 2;
 import Textures from './Textures.js';//для загрузки всех текстур 1 раз
 import MapObj from './MapObj.js';//class для работы с обьектами карты
 export default class {
@@ -7,13 +8,13 @@ export default class {
   //координаты левого верхнего края карты
   xyShift = [0, 0];
   nexttestX = 0;//когда проверять  
-  speedMap = 5;
+  speedMap = 10;
   textures; //хранилище текстур карты
 
   //текущий план расстановки блоков
   floor3 = [0, 5, NOTHING];
   floor2 = [0, 2, BETON];
-  floor1 = [0, 3, BETON];
+  floor1 = [0, 3, NOTHING];
 
   //при создании новой карты
   constructor(sizeX, sizeY) {
@@ -47,7 +48,7 @@ export default class {
 
   //переодичность проверки элементов
   isNeedtest() {
-    let need = this.nexttestX < this.xyShift[0];
+    let need = this.nexttestX <= this.xyShift[0];
     if (need)
       this.nexttestX = this.xyShift[0] + window.widthBox;
     return need;
@@ -87,7 +88,7 @@ export default class {
         arr.push(box);
         continue;
       }
-      if (x <= this.sizeX) {
+      if (x < this.sizeX - 1) {
         let box = new MapObj("Бетон", 10, this.textures.getBeton(1), BETON);
         box.xy = [x * window.widthBox, Y * window.widthBox];//самый низ
         arr.push(box);
@@ -96,39 +97,72 @@ export default class {
       let box = new MapObj("Бетон", 10, this.textures.getBeton(2), BETON);
       box.xy = [x * window.widthBox, Y * window.widthBox];//самый низ
       arr.push(box);
-
     }
     return arr;
   }
   //генерация карты справа
   putMapRight(xShift) {
     let arr = this.mapArray;
+    var now = new Date();
+    let millis = now.getTime();
 
     //1 этаж [0, 3, BETON];
     let f = this.floor1;
-    let Y = 13;
-    this.putPlanBox(arr, f, xShift, Y);
+    let Y1 = 13;
+    this.putPlanBox(arr, f, xShift, Y1);
     if (f[0] == f[1])
       this.setNextPlan(f);
 
     //2 этаж
     f = this.floor2;
-    Y = 9;
-    this.putPlanBox(arr, f, xShift, Y);
+    let Y2 = 9;
+    this.putPlanBox(arr, f, xShift, Y2);
     if (f[0] == f[1])
       this.setNextPlan(f);
 
     //3 этаж
     f = this.floor3;
-    Y = 5;
-    this.putPlanBox(arr, f, xShift, Y);
+    let Y3 = 5;
+    this.putPlanBox(arr, f, xShift, Y3);
     if (f[0] == f[1])
       this.setNextPlan(f);
 
-    //Потолок
-    var blok = this.getBoxBeton();
-    blok.xy = [xShift, 0 * window.widthBox];
-    arr.push(blok);
+
+    //стена на 3 этаже
+    if (this.lasttimegenfloar3 < millis && this.floor3[2] == BETON) {
+      if (this.floor3[0] > 2) {
+        this.trySetKirpich(arr, Y3, xShift);
+        this.lasttimegenfloar3 = millis + getRandomInt(5000) + 2000;
+      }
+    }
+    //стена на 2 этаже
+    if (this.lasttimegenfloar2 < millis && this.floor2[2] == BETON && this.floor3[2] == BETON) {
+      if (this.floor2[0] > 2 && this.floor3[0] > 2) {
+        this.trySetKirpich(arr, Y2, xShift);
+        this.lasttimegenfloar2 = millis + getRandomInt(5000) + 2000;
+      }
+    }
+    //стена на 1 этаже
+    if (this.lasttimegenfloar1 < millis && this.floor1[2] == BETON && this.floor2[2] == BETON) {
+      if (this.floor2[0] > 2 && this.floor1[0] > 2) {
+        this.trySetKirpich(arr, Y1, xShift);
+        this.lasttimegenfloar1 = millis + getRandomInt(5000) + 2000;
+      }
+    }
+  }
+  lasttimegenfloar3 = 0;
+  lasttimegenfloar2 = 0;
+  lasttimegenfloar1 = 0;
+  trySetKirpich(arr, Y, xShift) {
+    let box = new MapObj("Кирпич", 1, this.textures.getKirpich(-1), KIRPICH);
+    box.xy = [xShift, (Y - 1) * window.widthBox];
+    arr.push(box);
+    box = new MapObj("Кирпич", 1, this.textures.getKirpich(-1), KIRPICH);
+    box.xy = [xShift, (Y - 2) * window.widthBox];
+    arr.push(box);
+    box = new MapObj("Кирпич", 1, this.textures.getKirpich(-1), KIRPICH);
+    box.xy = [xShift, (Y - 3) * window.widthBox];
+    arr.push(box);
   }
   //[0, 3, BETON];
   putPlanBox(arr, f, xShift, Y) {
@@ -147,17 +181,17 @@ export default class {
       blok = new MapObj("Бетон", 10, this.textures.getBeton(2), BETON);
 
     blok.xy = [xShift, Y * window.widthBox];
-    arr.push(blok);    
+    arr.push(blok);
   }
   setNextPlan(f) {
     f[0] = 0;//счетчик плана
-    if (f[2] == NOTHING){
+    if (f[2] == NOTHING) {
       f[2] = BETON;
-      f[1] = getRandomInt(7)+3;//3-10 длина бетона
+      f[1] = getRandomInt(7) + 3;//3-10 длина бетона
     }
-    else{
+    else {
       f[2] = NOTHING;
-      f[1] = getRandomInt(5)+3;//3-8 длина пустоты
+      f[1] = getRandomInt(5) + 3;//3-8 длина пустоты
     }
   }
 
