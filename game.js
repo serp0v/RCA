@@ -44,6 +44,7 @@ const left = document.getElementById('left');
 const shoot = document.getElementById('shoot');
 let health = document.getElementById('health');
 let score = document.getElementById('score');
+const pause = document.getElementById('pause');
 
 document.addEventListener("keydown",function Move(e) {
 	if (e.keyCode == '38') { // up arrow
@@ -65,25 +66,34 @@ document.addEventListener("keydown",function Move(e) {
 
 	}
 })
-top.onclick = function(event){
-	hero.Jump();	//shoot.innerHTML = 
-}
-right.onclick = function(event){
-	hero.Right();
-}
-bottom.onclick = function(event){
-	hero.antiJump();
-}
-left.onclick = function(event){
-	hero.Left();
-}
-shoot.onclick = function(event){
-	console.log('message')
-}
+// top.onclick = function(event){
+// 	hero.Jump();	//shoot.innerHTML = 
+// }
+// right.onclick = function(event){
+// 	hero.Right();
+// }
+// bottom.onclick = function(event){
+// 	hero.antiJump();
+// }
+// left.onclick = function(event){
+// 	hero.Left();
+// }
+// shoot.onclick = function(event){
+// 	console.log('message')
+// }
 function Pressed() {
 
 }
+// пауза
 
+pause.onclick = () => {
+	map.speed = 0;
+	score = 0;
+	pauseMenu();
+}
+function pauseMenu() {
+
+}
 /////////////////////////////////////////////////
 function Start() {
 	timer = setInterval(Update, UPDATE_TIME);
