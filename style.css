@@ -157,7 +157,7 @@ body, html
 }
 
 .pauseMenu {
-	backdrop-filter: blur(8px); 
+	/* backdrop-filter: blur(8px);  */
 	width: 100%;
 	height: 100vh;
 	display: flex;

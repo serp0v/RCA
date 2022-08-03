@@ -15,6 +15,17 @@ function Resize() {//меняем и размер элемента Canvas
 }
 
 
+// управление стрелками
+const top = document.getElementById('top');
+const right = document.getElementById('right');
+const bottom = document.getElementById('bottom');
+const left = document.getElementById('left');
+const shoot = document.getElementById('shoot');
+const health = document.getElementById('health');
+const score = document.getElementById('score');
+const pause = document.getElementById('pause');
+const pauseMenu = document.getElementById('pauseMenu1');
+
 //переменные для игры //////////////////////////////////
 const UPDATE_TIME = 1000 / 60;
 var timer = null;
@@ -30,23 +41,12 @@ var hero;// гг
 restartGame();
 function restartGame(){
 	map = new Map(30, 10);//карта
-	hero = new Hero(200 / window.screenScale, 400, "images/rubicAsep.png");// гг
+	hero = new Hero(health, 200 / window.screenScale, 400, "images/rubicAsep.png");// гг
 }
 
 //запускаем GamePlay
 Start();
 
-// управление стрелками
-const top = document.getElementById('top');
-const right = document.getElementById('right');
-const bottom = document.getElementById('bottom');
-const left = document.getElementById('left');
-const shoot = document.getElementById('shoot');
-let health = document.getElementById('health');
-let score = document.getElementById('score');
-const pause = document.getElementById('pause');
-const pauseMenu = document.getElementById('pauseMenu1');
-//pauseMenu.hidden = true;
 
 document.addEventListener("keydown",function Move(e) {
 	if (e.keyCode == '38') { // up arrow

@@ -10,7 +10,9 @@ export default class {
     Ymax = 0;
     health = 100;
     score = 0;
-    constructor(x, y, imageFileName) {
+    healthDom;
+    constructor(healthDom, x, y, imageFileName) {
+        this.healthDom = healthDom;
         this.xy[0] = this.Xmax = x;
         this.xy[1] = this.Ymax = y;
         this.image = new Image();
@@ -57,15 +59,16 @@ export default class {
         let colArr = this.doCollisionMObjs(map);
         //далее обработка обьектов(оружие, здоровье, огонь и тд)
         colArr.forEach(box => {
-            if (box.typeid == 6) {
+            if (box.typeid == window.HEALTH) {
                 this.health += box.value;
                 box.needRemove = true;
                 this.audioStar.play();
+                this.healthDom.innerHTML = this.health;
             }
         });
         //score        
         this.score += 0.01;
-        score.innerHTML = Math.round(this.score);
+        score.innerHTML = Math.round(this.score);                
     }
     //обработка пересечения
     doCollisionMObjs(map) {
@@ -90,7 +93,7 @@ export default class {
                 continue;
 
             //с какой стороны пересекается с обьектом
-            let typeid = this.getCollisionType(colArr, xyHero, box, xyShiftMap);
+            this.getCollisionType(colArr, xyHero, box, xyShiftMap);
 
         };
 

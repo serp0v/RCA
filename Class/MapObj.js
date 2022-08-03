@@ -12,7 +12,7 @@ export default class {
   //для создания обьекта с параметрами
   constructor(name, value, texture, typeid) {
     this.name = name;
-    this.value = value;//устойчивость к повреждению
+    this.value = value;//возможное значение
     this.loaded = false;//готов  
     this.texture = texture;          
     this.typeid = typeid;
