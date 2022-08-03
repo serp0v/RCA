@@ -8,7 +8,7 @@ export default class {
     speedReturn = 1;
     Xmax = 0;
     Ymax = 0;
-    health = 100;
+    health = 3;
     score = 0;
     healthDom;
     constructor(healthDom, x, y, imageFileName) {
