@@ -78,9 +78,9 @@ document.addEventListener("keydown",function Move(e) {
 // left.onclick = function(event){
 // 	hero.Left();
 // }
-// shoot.onclick = function(event){
-// 	console.log('message')
-// }
+shoot.onclick = function(event){
+	console.log('message')
+}
 function Pressed() {
 
 }
@@ -139,4 +139,13 @@ function Draws() {
 
 	//рисуем гг
 	hero.Draw(ctx);
+}
+const welcomePlayBtn = document.getElementById('welcomePlayBtn');
+const metricscontrolspause = document.getElementById('metricscontrolspause');
+const welcomeContainer = document.getElementById('welcomeContainer');
+
+welcomePlayBtn.onclick = () => {
+	canvas.classList.remove('off');
+	metricscontrolspause.classList.remove('off');
+	welcomeContainer.classList.add('off');
 }
