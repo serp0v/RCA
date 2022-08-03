@@ -45,6 +45,8 @@ const shoot = document.getElementById('shoot');
 let health = document.getElementById('health');
 let score = document.getElementById('score');
 const pause = document.getElementById('pause');
+const pauseMenu = document.getElementById('pauseMenu1');
+//pauseMenu.hidden = true;
 
 document.addEventListener("keydown",function Move(e) {
 	if (e.keyCode == '38') { // up arrow
@@ -79,20 +81,20 @@ document.addEventListener("keydown",function Move(e) {
 // 	hero.Left();
 // }
 shoot.onclick = function(event){
-	console.log('message')
+	hero.shot();
 }
 function Pressed() {
 
 }
 // пауза
-
+var isPause = false;//
+pauseMenu.style.visibility = "hidden";
 pause.onclick = () => {
-	map.speed = 0;
-	score = 0;
-	pauseMenu();
-}
-function pauseMenu() {
-
+	isPause = !isPause;	
+	if(isPause)
+		pauseMenu.style.visibility = "visible";
+	else
+		pauseMenu.style.visibility = "hidden";
 }
 /////////////////////////////////////////////////
 function Start() {
@@ -105,6 +107,8 @@ function Stop() {
 }
 //обновление и рисование всех обьектов
 function Update() {
+	if(isPause)
+		return;
 	Lifes();
 	Draws();
 }
