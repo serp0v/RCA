@@ -38,7 +38,7 @@ export default class {
     }
     loadImagesHealth() {
         let arr = [];        
-        arr.push(this.loadTexture("images/health.png", 3, 50));
+        arr.push(this.loadTexture("images/health n ammo.png", 1));
         return arr;
     }
     getBeton(id) {
