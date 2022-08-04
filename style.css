@@ -165,3 +165,6 @@ body, html
 	top: 40%; */
 	margin: auto auto;
 }
+.off {
+	display: none;
+}
