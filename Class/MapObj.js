@@ -1,7 +1,7 @@
 export default class {
 
   //координаты обьекта устанавливаются при генерации карты
-  xy = [0, 0];
+  xy = [0, 0];  
   needRemove = false;//удаление не требуется
   spriteFrameID = 0;//текущий кадр анимации
   spriteTimeNext = 0;//таймер следующей анимации
@@ -22,7 +22,7 @@ export default class {
   }
   isNeedRemove(map) {
     //удаление по причине выхода за карту
-    if (this.xy[0] > map.xyShift[0])
+    if (this.xy[0] < map.xyShift[0])
       return true;
     //по другой причине
     return this.needRemove;

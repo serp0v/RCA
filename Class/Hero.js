@@ -1,6 +1,6 @@
 //гравитация земли
 const gravityEarth = 2.3;
-
+import MapObj from './MapObj.js';//class для работы с пулями
 export default class {
     xy = [0, 0];
     gravityCur = 0;//гравитация действующая на героя    
@@ -11,7 +11,10 @@ export default class {
     health = 3;
     score = 0;
     healthDom;
-    constructor(healthDom, x, y, imageFileName) {
+    bullets = [];
+    bulletSpeed = 7;
+    constructor(healthDom, x, y, imageFileName, textures) {
+        this.textures = textures;
         this.healthDom = healthDom;
         this.xy[0] = this.Xmax = x;
         this.xy[1] = this.Ymax = y;
@@ -30,6 +33,11 @@ export default class {
         audio.preload = 'auto';
         audio.src = './sound/piu.mp3';
         this.audioStar = audio;
+
+        this.audioBooh = new Audio();
+        this.audioBooh.preload = 'auto';
+        this.audioBooh.src = './sound/booh.mp3';
+
     }
     //прыгнуть
     Jump() {
@@ -44,13 +52,19 @@ export default class {
     Left() {
 
     }
+    //выстрел
+    Shot(map) {
+        let bullet = new MapObj("Bullet", 1, this.textures.getBullet(-1), window.BULLET);
+        bullet.xy = [this.xy[0] + map.xyShift[0] + this.widthBox / 2, this.xy[1] + map.xyShift[1]];
+        this.bullets.push(bullet);
+    }
     //Life
     Life(map, score) {
         //удар об верхний край карты
         if (this.xy[1] < 100)
             this.gravityCur = 0;
         //упал вниз
-        if (this.xy[1] > 1300)
+        if (this.xy[1] > 1400)
             this.health = -1;
         //ушел за левый край
         if (this.xy[0] < 0)
@@ -68,7 +82,120 @@ export default class {
         });
         //score        
         this.score += 0.01;
-        score.innerHTML = Math.round(this.score);                
+        score.innerHTML = Math.round(this.score);
+
+        //bullets
+        this.bulletsLife(map);
+    }
+    //жизнь пулек
+    bulletsLife(map) {
+
+        if (this.bullets.length == 0)
+            return;
+        this.bullets.forEach(bul => {
+            //двигаем пулю
+            bul.xy[0] += map.speedMap + this.bulletSpeed;
+
+            //обработка столкновений
+            let colArr = this.doCollisionMObjs_bullet(map, bul);
+
+            //далее обработка обьектов(оружие, здоровье, огонь и тд)
+            colArr.forEach(box => {
+                if (box.typeid == window.KIRPICH) {
+
+                    //пуля для удаления
+                    bul.needRemove = true;
+
+                    //удалим кирпич
+                    box.needRemove = true;
+                    //удалим все связаные кирпичи
+                    box.linkedBox[0].needRemove = true;
+                    box.linkedBox[1].needRemove = true;
+                    box.linkedBox[2].needRemove = true;
+                    this.audioBooh.play();
+                    this.score += 10;//добавим очков
+                } else if (box.typeid == window.BETON) {
+                    bul.needRemove = true;//пуля для удаления
+                    this.audioBooh.play();
+                }
+            });
+            //анимация
+            bul.Life();
+        });
+
+        //удалим пулю (анимации нет)
+        for (let index = this.bullets.length - 1; index >= 0; index--) {
+            let bul = this.bullets[index];
+            //надо удалить или вылетела за карту
+            if (bul.needRemove || bul.xy[0] > map.xyShift[0] + map.sizeX * window.widthBox)
+                this.bullets.splice(index, 1);
+        }
+    }
+    //обработка пересечения Bullet
+    doCollisionMObjs_bullet(map, bul) {
+
+        //проверим все элементы на карте по новым данным
+        let colArr = [];
+        for (let id = 0; id < map.mapArray.length; id++) {
+            let box = map.mapArray[id];
+
+            //если отметка об удалении, то не обрабатываем
+            if (box.needRemove)
+                continue;
+
+            //с какой стороны пересекается с обьектом
+            this.getCollisionType_Bullet(colArr, bul.xy, box);
+
+        };
+
+        return colArr;//с чем пересекались 
+    }
+    getCollisionType_Bullet(colArr, xyBullet, box) {
+
+        let herox = [xyBullet[0], xyBullet[0] + this.widthBox, xyBullet[0] + this.widthBox * 0.5];
+        let boxx = [box.xy[0], box.xy[0] + window.widthBox];
+
+        //препятствие справа
+        let collisionX;
+        let vecX;
+        if (herox[2] < boxx[0]) {
+            collisionX = herox[1] - boxx[0];
+            vecX = -1;
+        }
+        else {
+            collisionX = boxx[1] - herox[0];//препятствие слева
+            vecX = 1;
+        }
+
+        //далеко x
+        if (collisionX <= 0)
+            return;
+
+        let heroy = [xyBullet[1], xyBullet[1] + this.widthBox, xyBullet[1] + this.widthBox * 0.5];
+        let boxy = [box.xy[1], box.xy[1] + window.widthBox];
+
+        //препятствие снизу
+        let collisionY;
+        let vecY;
+        if (heroy[2] < boxy[0]) {
+            collisionY = heroy[1] - boxy[0];
+            vecY = -1;
+        }
+        else {
+            collisionY = boxy[1] - heroy[0]; //препятствие сверху
+            vecY = 1;
+        }
+
+        //далеко y
+        if (collisionY <= 0)
+            return;
+
+        //запишем обьект с которым был контакт
+        colArr.push(box);
+
+        //если физически прозрачный то контакта с физикой не показываем
+        if (box.phisicTransparent)
+            return;
     }
     //обработка пересечения
     doCollisionMObjs(map) {
@@ -169,9 +296,14 @@ export default class {
             this.gravityCur = 0;//сброс скорости падения
         }
     }
-
     //Draw
-    Draw(ctx) {
+    Draw(ctx, map) {
+        //bullets
+        this.bullets.forEach(bul => {
+            bul.Draw(ctx, map);
+        });
+
+        //hero
         ctx.drawImage(
             this.image, //Image
 
