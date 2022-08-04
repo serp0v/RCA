@@ -157,7 +157,8 @@ export default class {
             if (gravityEarth < Math.abs(this.gravityCur)) {
                 if (vecY < 0)
                     //приземление
-                    this.audioStep.play();
+                    // this.audioStep.play();
+                    console.log("problem")
                 else
                     //удар головой
                     this.audioHead.play();
