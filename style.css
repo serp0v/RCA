@@ -1,4 +1,7 @@
 /* настройки элементов страницы */
+.off {
+	display: none;
+}
 body, html
 {
 	width: 100%;

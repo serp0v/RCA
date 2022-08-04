@@ -1,91 +1,14 @@
-/* Указываем box sizing */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-/* Убираем внутренние отступы */
-ul[class],
-ol[class] {
-  padding: 0;
-}
-
-/* Убираем внешние отступы */
-body,
-h1,
-h2,
-h3,
-h4,
-p,
-ul[class],
-ol[class],
-li,
-figure,
-figcaption,
-blockquote,
-dl,
-dd {
-  margin: 0;
-}
-
-/* Выставляем основные настройки по-умолчанию для body */
-body {
-  min-height: 100vh;
-  scroll-behavior: smooth;
-  text-rendering: optimizeSpeed;
-  line-height: 1.5;
-}
-
-/* Удаляем стандартную стилизацию для всех ul и il, у которых есть атрибут class*/
-ul[class],
-ol[class] {
-  list-style: none;
-}
-
-/* Элементы a, у которых нет класса, сбрасываем до дефолтных стилей */
-a:not([class]) {
-  text-decoration-skip-ink: auto;
-}
-
-/* Упрощаем работу с изображениями */
-img {
-  max-width: 100%;
-  display: block;
-}
-
-/* Указываем понятную периодичность в потоке данных у article*/
-article > * + * {
-  margin-top: 1em;
-}
-
-/* Наследуем шрифты для инпутов и кнопок */
-input,
-button,
-textarea,
-select {
-  font: inherit;
-}
-
-/* Удаляем все анимации и переходы для людей, которые предпочитай их не использовать */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-.wrapper {
-  overflow: hidden;
-}
-.container {
+.welcome-container {
   max-width: 1396px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 /* header */
 
-.title {
+.welcome-title {
   font-size: 200px;
   font-family: 'Pompiere', cursive;
   font-weight: 200;
@@ -93,11 +16,13 @@ select {
   margin-top: 57px;
   display: flex;
   justify-content: center;
+  max-width: 100%;
+  margin: 0 auto;
 }
 
 /* main */
 
-.PlayCustomizationEmpty {
+.welcome-PlayCustomizationEmpty {
   display: flex;
   flex-direction: row;
   /* border: 1px solid #000; */
@@ -107,7 +32,7 @@ select {
   margin-bottom: 131px;
 }
 
-.PlayCustomizationEmpty > div {
+.welcome-PlayCustomizationEmpty > div {
   height: 200px;
   width: 200px;
   border-radius: 25px;
@@ -115,10 +40,10 @@ select {
   margin-top: 53px;
 }
 
-.PlayCustomizationEmpty > div ~ div {
+.welcome-PlayCustomizationEmpty > div ~ div {
   margin-left: 50px;
 }
-.play > a > svg {
+.welcome-play > a > svg {
   /* display: flex;
   justify-content: center;
   align-items: center; */
@@ -130,7 +55,7 @@ select {
   /* transform: rotate(90deg); */
   /* transform: translate(50%, 50%); */
 }
-.play {
+.welcome-play {
   transform: rotate(90deg);
 }
 
@@ -148,17 +73,17 @@ footer > div {
   /* border: 1px solid #000; */
 }
 /* middle btns */
-.circle-btns{
+.welcome-circle-btns{
   width: 34%;
   display: flex;
   flex-direction: row;
 }
-.circle-btns-cont {
+.welcome-circle-btns-cont {
   margin: auto auto;
   display: flex;
   flex-direction: row;
 }
-.circle-btn {
+.welcome-circle-btn {
   border-radius: 50%;
   display: flex;
   flex-direction: row;
@@ -166,7 +91,7 @@ footer > div {
   width: 80px;
   border: 4px solid #000;
 }
-.circle-btns-cont > div ~ div {
+.welcome-circle-btns-cont > div ~ div {
   margin-left: 20px;
 }
 
@@ -174,16 +99,16 @@ footer > div {
 
 /* social and compatyTitle */
 
-.socials {
+.welcome-socials {
   display: flex;
   flex-direction: row;
   /* justify-content: center; */
 }
-.socials > div ~ div {
+.welcome-socials > div ~ div {
   margin-left: 14px;
 }
 
-.social {
+.welcome-social {
   height: 60px;
   width: 60px;
   border: 4px solid black;
@@ -191,7 +116,7 @@ footer > div {
   flex-direction: row;
 
 }
-.companyTitle {
+.welcome-companyTitle {
   font-size: 60px;
   font-family: 'Pompiere', cursive;
   font-weight: 200;
@@ -200,12 +125,12 @@ footer > div {
 /* ///////////////////////// */
 
 /* rec btn */
-.rectangle-btns {
+.welcome-rectangle-btns {
   display: flex;
   flex-wrap: wrap;
   justify-content: end;
 }
-.rectangle-btn {
+.welcome-rectangle-btn {
   height: 61px;
   width: 296px;
   border: 4px solid #000;
@@ -213,8 +138,8 @@ footer > div {
   display: flex;
 
 }
-.rectangle-btns > div ~ div {
-  margin-top: 19px;
+.welcome-rectangle-btns > div ~ div {
+  margin-top: 7px;
 }
 /* ///////////////////////// */
 
