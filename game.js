@@ -32,21 +32,23 @@ var timer = null;
 window.widthBox = 100;
 
 //import MapBack from './Class/MapBack.js';//class героя
+import Textures from './Class/Textures.js';//для загрузки всех текстур 1 раз
 import Map from './Class/Map.js';//class карты
 import Hero from './Class/Hero.js';//class героя
 
 // var mapBack = new MapBack();//создание заднего фона
+var textures = new Textures();//для загрузки всех текстур 1 раз
 var map;//карта
 var hero;// гг
+
 restartGame();
 function restartGame(){
-	map = new Map(30, 10);//карта
-	hero = new Hero(health, 200 / window.screenScale, 400, "images/rubicAsep.png");// гг
+	map = new Map(30, 10, textures);//карта
+	hero = new Hero(health, 200 / window.screenScale, 400, "images/rubicAsep.png", textures);// гг
 }
 
 //запускаем GamePlay
 Start();
-
 
 document.addEventListener("keydown",function Move(e) {
 	if (e.keyCode == '38') { // up arrow
@@ -80,8 +82,10 @@ document.addEventListener("keydown",function Move(e) {
 // left.onclick = function(event){
 // 	hero.Left();
 // }
+
+//выстрел
 shoot.onclick = function(event){
-	hero.shot();
+	hero.Shot(map);
 }
 function Pressed() {
 
@@ -142,7 +146,7 @@ function Draws() {
 	map.Draw(ctx);
 
 	//рисуем гг
-	hero.Draw(ctx);
+	hero.Draw(ctx,map);
 }
 const welcomePlayBtn = document.getElementById('welcomePlayBtn');
 const metricscontrolspause = document.getElementById('metricscontrolspause');

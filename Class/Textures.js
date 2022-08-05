@@ -6,6 +6,7 @@ export default class {
         this.arrKirpich = this.loadImagesKirpich();
         this.arrTechno = this.loadImagesTechno();
         this.arrHealth = this.loadImagesHealth();
+        this.arrBullet = this.loadImagesBullet();
     }
     loadTexture(fileName, spriteCount) {
         return new Texture(fileName, spriteCount);
@@ -41,6 +42,11 @@ export default class {
         arr.push(this.loadTexture("images/health n ammo.png", 1));
         return arr;
     }
+    loadImagesBullet() {
+        let arr = [];        
+        arr.push(this.loadTexture("images/bullet_red.png", 4, 30));
+        return arr;
+    }
     getBeton(id) {
         //если индекс не указан то выбираем любой
         if (id == -1)
@@ -64,6 +70,12 @@ export default class {
         if (id == -1)
             id = getRandomInt(this.arrHealth.length);
         return this.arrHealth[id];
+    }
+    getBullet(id) {
+        //если индекс не указан то выбираем любой
+        if (id == -1)
+            id = getRandomInt(this.arrBullet.length);
+        return this.arrBullet[id];
     }
 }
 function getRandomInt(max) {

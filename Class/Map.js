@@ -2,14 +2,15 @@ window.NOTHING = 0;
 window.BETON = 1;
 window.KIRPICH = 2;
 window.HEALTH = 3;
-import Textures from './Textures.js';//для загрузки всех текстур 1 раз
+window.BULLET = 4;
 import MapObj from './MapObj.js';//class для работы с обьектами карты
 export default class {
 
   //координаты левого верхнего края карты
   xyShift = [0, 0];
   nexttestX = 0;//когда проверять  
-  speedMap = 10;
+  speedMap = 5;//10;
+  speedBullet = 5;//10;
   textures; //хранилище текстур карты
   lastscore = 2;//для генерации здоровья
   healthScorePeriod = 1;
@@ -20,8 +21,8 @@ export default class {
   floor1 = [0, 3, window.NOTHING];
 
   //при создании новой карты
-  constructor(sizeX, sizeY) {
-    this.textures = new Textures();
+  constructor(sizeX, sizeY,textures) {
+    this.textures = textures;
     this.sizeX = sizeX;
     this.sizeY = sizeY;
     //генерация новой карты
@@ -61,8 +62,9 @@ export default class {
   removeBackBox() {
     let map = this;
     for (let index = this.mapArray.length - 1; index >= 0; index--) {
-      if (this.mapArray[index].isNeedRemove(map))
-        this.mapArray.splice[index, 1];
+      if (this.mapArray[index].isNeedRemove(map)){
+        this.mapArray.splice(index, 1);
+      }
     }
   }
 
@@ -172,15 +174,20 @@ export default class {
   lasttimegenfloar2 = 0;
   lasttimegenfloar1 = 0;
   setKirpichBox(arr, Y, xShift) {
-    let box = new MapObj("Кирпич", 1, this.textures.getKirpich(-1), window.KIRPICH);
-    box.xy = [xShift, (Y - 1) * window.widthBox];
-    arr.push(box);
-    box = new MapObj("Кирпич", 1, this.textures.getKirpich(-1), window.KIRPICH);
-    box.xy = [xShift, (Y - 2) * window.widthBox];
-    arr.push(box);
-    box = new MapObj("Кирпич", 1, this.textures.getKirpich(-1), window.KIRPICH);
-    box.xy = [xShift, (Y - 3) * window.widthBox];
-    arr.push(box);
+    let box1 = new MapObj("Кирпич", 1, this.textures.getKirpich(-1), window.KIRPICH);
+    box1.xy = [xShift, (Y - 1) * window.widthBox];
+    arr.push(box1);
+    let box2 = new MapObj("Кирпич", 1, this.textures.getKirpich(-1), window.KIRPICH);
+    box2.xy = [xShift, (Y - 2) * window.widthBox];
+    arr.push(box2);
+    let box3 = new MapObj("Кирпич", 1, this.textures.getKirpich(-1), window.KIRPICH);
+    box3.xy = [xShift, (Y - 3) * window.widthBox];
+    arr.push(box3);
+    //свяжем элементы 
+    let linkedBox = [box1,box2,box3];
+    box1.linkedBox = linkedBox;
+    box2.linkedBox = linkedBox;
+    box3.linkedBox = linkedBox;
   }
   setHealthBox(arr, Y, xShift) {
     let box = new MapObj("Сердце", 1, this.textures.getHealth(-1), HEALTH);
