@@ -148,6 +148,9 @@ function Draws() {
 	//рисуем гг
 	hero.Draw(ctx,map);
 }
+
+// start game 
+
 const welcomePlayBtn = document.getElementById('welcomePlayBtn');
 const metricscontrolspause = document.getElementById('metricscontrolspause');
 const welcomeContainer = document.getElementById('welcomeContainer');
@@ -156,4 +159,31 @@ welcomePlayBtn.onclick = () => {
 	canvas.classList.remove('off');
 	metricscontrolspause.classList.remove('off');
 	welcomeContainer.classList.add('off');
+}
+
+// customization
+
+const customization = document.getElementById('customization');
+
+customization.onclick = () => {
+	welcomeContainer.classList.add('off');
+}
+
+// shop
+
+const shop = document.getElementById('shop');
+
+shop.onclick = () => {
+	welcomeContainer.classList.add('off');
+}
+
+// top
+
+const topContainer = document.getElementById('topContainer');
+const topbtn = document.getElementById('topbtn');
+
+topbtn.onclick = () => {
+	topContainer.classList.remove('off');
+	welcomeContainer.classList.add('off');
+
 }
