@@ -5,12 +5,12 @@ var ctx = canvas.getContext("2d");//вытащим из него холст дл
 
 
 //Canvas на весь размер экрана
-Resize(); 
+Resize();
 window.addEventListener("resize", Resize);//при смене размера экрана
 function Resize() {//меняем и размер элемента Canvas
 	canvas.width = window.innerWidth;
-	canvas.height = window.innerHeight;	
-	window.screenScale = canvas.height/1400;
+	canvas.height = window.innerHeight;
+	window.screenScale = canvas.height / 1400;
 	window.screenshiftY = 0;
 }
 
@@ -42,7 +42,7 @@ var map;//карта
 var hero;// гг
 
 restartGame();
-function restartGame(){
+function restartGame() {
 	map = new Map(30, 10, textures);//карта
 	hero = new Hero(health, 200 / window.screenScale, 400, "images/rubicAsep.png", textures);// гг
 }
@@ -50,7 +50,7 @@ function restartGame(){
 //запускаем GamePlay
 Start();
 
-document.addEventListener("keydown",function Move(e) {
+document.addEventListener("keydown", function Move(e) {
 	if (e.keyCode == '38') { // up arrow
 		hero.Jump();
 		Pressed();
@@ -84,7 +84,7 @@ document.addEventListener("keydown",function Move(e) {
 // }
 
 //выстрел
-shoot.onclick = function(event){
+shoot.onclick = function (event) {
 	hero.Shot(map);
 }
 function Pressed() {
@@ -94,8 +94,8 @@ function Pressed() {
 var isPause = false;//
 pauseMenu.style.visibility = "hidden";
 pause.onclick = () => {
-	isPause = !isPause;	
-	if(isPause)
+	isPause = !isPause;
+	if (isPause)
 		pauseMenu.style.visibility = "visible";
 	else
 		pauseMenu.style.visibility = "hidden";
@@ -111,7 +111,7 @@ function Stop() {
 }
 //обновление и рисование всех обьектов
 function Update() {
-	if(isPause)
+	if (isPause)
 		return;
 	Lifes();
 	Draws();
@@ -125,7 +125,7 @@ function Lifes() {
 	//живем героя
 	hero.Life(map, score);
 	//рестарт игры
-	if(hero.health < 0)
+	if (hero.health < 0)
 		restartGame();
 }
 //рисование всех обьектов игры
@@ -139,14 +139,14 @@ function Draws() {
 	// ctx.fillStyle = '#20F';
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    //рисуем mapBack
-    //mapBack.Draw(ctx, map);
-	
+	//рисуем mapBack
+	//mapBack.Draw(ctx, map);
+
 	//рисуем карту
 	map.Draw(ctx);
 
 	//рисуем гг
-	hero.Draw(ctx,map);
+	hero.Draw(ctx, map);
 }
 
 // start game 
@@ -181,6 +181,39 @@ shop.onclick = () => {
 
 const topContainer = document.getElementById('topContainer');
 const topbtn = document.getElementById('topbtn');
+
+//получим данные
+getDataTop();
+function getDataTop() {
+	let url = 'https://map3dpro.infobox.vip/score.php';
+
+	// var request = new XMLHttpRequest();
+	// request.open('GET', url);
+	// request.setRequestHeader
+	// request.responseType = 'text';
+	// request.onload = function() {
+	// 	topContainer.textContent = request.response;
+	// };
+	// request.send();
+
+	// fetch(url).then(
+	// 	function (text) {
+	// 		//poemDisplay.textContent = text;
+	// 		console.log(text);
+
+	// 	});
+
+	fetch(url,{
+		method: 'POST'//,
+		//body: data,
+	  }).then(function (response) {
+		response.text().then(function (text) {
+			//poemDisplay.textContent = text;
+			console.log(text);
+		});
+	});
+	//.then(console.log)
+}
 
 topbtn.onclick = () => {
 	topContainer.classList.remove('off');
