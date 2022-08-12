@@ -220,3 +220,13 @@ topbtn.onclick = () => {
 	welcomeContainer.classList.add('off');
 
 }
+
+// localstorage
+
+let date = new Date();
+const output = String(date.getDate()).padStart(2, '0') + String(date.getMonth() + 1).padStart(2, '0') + date.getFullYear() + "|" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + ":" + date.getMilliseconds();
+
+localStorage.setItem('ID', output);
+localStorage.getItem('ID', output);
+
+// 
