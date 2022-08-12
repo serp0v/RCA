@@ -185,28 +185,13 @@ const topbtn = document.getElementById('topbtn');
 //получим данные
 getDataTop();
 function getDataTop() {
-	let url = 'https://map3dpro.infobox.vip/score.php';
-
-	// var request = new XMLHttpRequest();
-	// request.open('GET', url);
-	// request.setRequestHeader
-	// request.responseType = 'text';
-	// request.onload = function() {
-	// 	topContainer.textContent = request.response;
-	// };
-	// request.send();
-
-	// fetch(url).then(
-	// 	function (text) {
-	// 		//poemDisplay.textContent = text;
-	// 		console.log(text);
-
-	// 	});
-
-	fetch(url,{
+	//получение Топ с сервера
+	let playerID = getPlayerID();
+	let url = 'https://map3dpro.infobox.vip/score.php?pid=' + playerID;
+	fetch(url, {
 		method: 'POST'//,
 		//body: data,
-	  }).then(function (response) {
+	}).then(function (response) {
 		response.text().then(function (text) {
 			//poemDisplay.textContent = text;
 			console.log(text);
@@ -214,19 +199,27 @@ function getDataTop() {
 	});
 	//.then(console.log)
 }
+// localstorage
+function getPlayerID() {
+
+	// localStorage.getItem('PlayerID', playerID);
+	let playerID = localStorage.getItem('PlayerID', 0);
+	if (playerID == null) {
+		let date = new Date();
+		playerID = date.getTime();
+		localStorage.setItem('PlayerID', playerID);
+	}
+	return playerID;
+
+	// localStorage.setItem('Time', output);
+	//const output = String(date.getDate()).padStart(2, '0') + String(date.getMonth() + 1).padStart(2, '0') + date.getFullYear() + "|" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + ":" + date.getMilliseconds();
+	//localStorage.getItem('ID', output);
+}
 
 topbtn.onclick = () => {
 	topContainer.classList.remove('off');
 	welcomeContainer.classList.add('off');
 
 }
-
-// localstorage
-
-let date = new Date();
-const output = String(date.getDate()).padStart(2, '0') + String(date.getMonth() + 1).padStart(2, '0') + date.getFullYear() + "|" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + ":" + date.getMilliseconds();
-
-localStorage.setItem('ID', output);
-localStorage.getItem('ID', output);
 
 // 
