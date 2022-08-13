@@ -193,9 +193,13 @@ function getDataTop() {
 		method: 'POST'//,
 		//body: data,
 	}).then(function (response) {
-		response.text().then(function (text) {
+		response.json().then(function (topArray) {
 			//poemDisplay.textContent = text;
-			console.log(text);
+			//console.log(topArray);
+			for (let index = topArray.length - 1; index >= 0; index--) {
+				document.getElementById('topContainer');
+				poemDisplay.textContent = text;
+			}			
 		});
 	});
 	//.then(console.log)
