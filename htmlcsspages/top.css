@@ -1,55 +1,59 @@
 .top-container {
-    max-width: 800px;
-    background-color: rgb(255, 255, 255);
-    margin: 0 auto;
+  max-width: 800px;
+  height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .top-div {
-    margin: 0 auto;
-    max-width: 800px;
-    /* flex-direction: column; */
-    flex-wrap: nowrap;
+  width: 100%;
+  flex-wrap: nowrap;
+  display: flex;
 }
 .li-top {
-    max-width: 800px;
-    height: 40px;
-    list-style:none;
-    background-color: rgb(40,40,40);
-    /* list-style-position: inside; */
-    color: azure;
-    display: flex;
-    flex-direction: row;
-    margin: 0 auto;
-    font-family: 'Pompiere', cursive;
-    font-weight: 200;
+  max-width: 800px;
+  height: 40px;
+  list-style:none;
+  background-color: rgb(40,40,40);
+  color: azure;
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  font-family: 'Pompiere', cursive;
+  font-weight: 200;
 }
 .top-div ~ .top-div {
     margin-top: 2px;
 }
 
-
+.li-top {
+  width: 100%;
+}
 .li-top > div {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
  }
 .top-number {
-    padding-left: 1%;
-    padding-right: 1%;
-    width: 5%;
+  padding-left: 1%;
+  padding-right: 1%;
+  width: 5%;
 }
 .player-nick {
-    width: 15%;
+  width: 15%;
 }
 .top-score {
-    /* width: 70%; */
-    justify-content: flex-end;
-    /* width: 200px; */
-    width: 79%;
-    padding-right: 1%;
+  justify-content: flex-end;
+  width: 79%;
+  padding-right: 1%;
 }
 
 .top-helpers-wrapper {
   background-color: rgb(40,40,40);
+  width: 100%;
+  margin-bottom: 2px;
 }
 .top-helpers {
   display: flex;
@@ -75,11 +79,9 @@
     height: 30px;
     width: 30px;
     margin: 5px;
-    /* background-color: white; */
     display: flex;
     align-items: center;
     position: absolute;
-    /* right: 5%; */
 
 }
 .top-x > svg {
@@ -171,6 +173,7 @@
 }
 
 .checkbox-wrapper {
+  width: 100%;
   margin-top: 2px;
   background-color: rgb(40,40,40);
 }
