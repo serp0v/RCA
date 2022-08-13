@@ -4,12 +4,11 @@
     // Для получения дополнительной информации посетите: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
         {
-            "type": "pwa-chrome",
+            "type": "chrome",
             "request": "launch",
             "name": "Open index.html",
-            "file": "http://127.0.0.1:5500/index.html"
-        }
+            "url": "http://127.0.0.1:5500/index.html"
+        }        
     ]
 }

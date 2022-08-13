@@ -185,8 +185,9 @@ const topbtn = document.getElementById('topbtn');
 //получим данные
 getDataTop();
 function getDataTop() {
-	//получение Топ с сервера
+	//получение playerID из браузера
 	let playerID = getPlayerID();
+	//получение Топ с сервера
 	let url = 'https://map3dpro.infobox.vip/score.php?pid=' + playerID;
 	fetch(url, {
 		method: 'POST'//,
