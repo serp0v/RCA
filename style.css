@@ -1,26 +1,23 @@
-/* настройки элементов страницы */
+/*  */
 .off {
 	display: none;
 }
-body, html
-{
+html, body {
 	width: 100%;
 	height: 100%;
-	padding: 0px;
-	margin: 0px;
-	overflow: hidden;
+	margin-left: 0px;
+	margin-top: 0px;
 	font-family: 'Pompiere', cursive;
 	font-weight: 200;
+	overflow: hidden;
 }
 
-.wrapper
-{
+.wrapper {
 	width: 100%;
 	height: 100%;
 }
 
-.canvas
-{
+.canvas {
 	width: 100%;
 	height: 100%;
 	background: #000;
