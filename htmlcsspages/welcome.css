@@ -6,10 +6,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border: 1px solid #000;
 }
 /* header */
 
 .welcome-title {
+  /* font-size: 10vw; */
   font-size: 200px;
   font-family: 'Pompiere', cursive;
   font-weight: 200;
@@ -30,7 +32,7 @@
   height: 253px;
   width: 700px;
   margin: 0 auto;
-  margin-bottom: 131px;
+  margin-bottom: 116px;
 }
 
 .welcome-PlayCustomizationEmpty > div {
@@ -39,6 +41,9 @@
   border-radius: 25px;
   border: 4px solid #000;
   margin-top: 53px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .welcome-PlayCustomizationEmpty > div ~ div {
@@ -57,7 +62,8 @@
   /* transform: translate(50%, 50%); */
 }
 .welcome-play {
-  transform: rotate(90deg);
+  /* transform: rotate(90deg); */
+  font-size: 32px;
 }
 
 /* footer */
@@ -65,8 +71,10 @@
 footer {
   /* border: 1px solid #000; */
   height: 142px;
-  width: 100%;
+  width: calc(100% - 4vh);
   display: flex;
+  /* padding-left: 2vw;
+  padding-right: 2vw; */
 }
 
 footer > div {
@@ -75,13 +83,16 @@ footer > div {
 }
 /* middle btns */
 .welcome-circle-btns{
-  width: 34%;
+  /* width: 34%; */
   display: flex;
   flex-direction: row;
 }
 .welcome-circle-btns-cont {
-  margin: auto auto;
+  /* margin: auto auto; */
   display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
   flex-direction: row;
 }
 .welcome-circle-btn {
@@ -158,4 +169,19 @@ a {
   /* height: 100px;
   width: 100px; */
   display: block;
+}
+@media (max-width: 1400px) {
+  .welcome-title {
+    font-size: 14vw;
+  }
+}
+@media (max-width: 952px) {
+  .welcome-companyTitle {
+    font-size: 6vw;
+  }
+}
+@media (max-height: 800px) {
+  .welcome-PlayCustomizationEmpty {
+    margin-bottom: 90px;
+  }
 }
