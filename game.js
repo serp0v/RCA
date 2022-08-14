@@ -182,6 +182,33 @@ shop.onclick = () => {
 const topContainer = document.getElementById('topContainer');
 const topbtn = document.getElementById('topbtn');
 
+// score
+var topScore = [
+	document.getElementById('top1Score'),
+	document.getElementById('top2Score'),
+	document.getElementById('top3Score'),
+	document.getElementById('top4Score'),
+	document.getElementById('top5Score'),//была ошибка
+	document.getElementById('top6Score'),
+	document.getElementById('top7Score'),
+	document.getElementById('top8Score'),
+	document.getElementById('top9Score'),
+	document.getElementById('top10Score'),
+	document.getElementById('playerTopScore'),
+];
+var topNick = [
+	document.getElementById('playerTop1Nick'),
+	document.getElementById('playerTop2Nick'),
+	document.getElementById('playerTop3Nick'),//была ошибка
+	document.getElementById('playerTop4Nick'),
+	document.getElementById('playerTop5Nick'),
+	document.getElementById('playerTop6Nick'),
+	document.getElementById('playerTop7Nick'),
+	document.getElementById('playerTop8Nick'),
+	document.getElementById('playerTop9Nick'),
+	document.getElementById('playerTop10Nick'),
+	document.getElementById('playerNick'),
+];
 //получим данные
 getDataTop();
 function getDataTop() {
@@ -193,13 +220,37 @@ function getDataTop() {
 		method: 'POST'//,
 		//body: data,
 	}).then(function (response) {
+		// response.text().then(function (topArray) {
 		response.json().then(function (topArray) {
-			//poemDisplay.textContent = text;
+
+			let playertopNumber = document.getElementById('playertopNumber');
 			//console.log(topArray);
-			for (let index = topArray.length - 1; index >= 0; index--) {
-				document.getElementById('');
-				poemDisplay.textContent = text;
-			}			
+			for (let index = 0; index < 10; index++) {
+				topScore[index].textContent = topArray[index][2];
+				topNick[index].textContent = "Игрок " + topArray[index][1];
+				//подкрасим в топе себя
+				if (playerID == topArray[index][1]) {
+					topScore[index].style.background = "#00f";
+					topNick[index].style.background = "#00f";					
+				}
+			}
+			//Если нет нас в топе напишем ниже себя 
+			let index = 10;//десятой строкой идем мы
+			let playerPlaceID = topArray[index][4];
+			if (playerPlaceID > 10) {
+				playertopNumber.textContent = topArray[index][4];
+				topScore[index].textContent = topArray[index][2];
+				topNick[index].textContent = "Игрок " + topArray[index][1];
+				topScore[index].style.background = "#00f";
+				topNick[index].style.background = "#00f";
+				playertopNumber.style.visibility = "visible";
+				topScore[index].style.visibility = "visible";
+				topNick[index].style.visibility = "visible";
+			} else {
+				playertopNumber.style.visibility = "hidden";
+				topScore[index].style.visibility = "hidden";
+				topNick[index].style.visibility = "hidden";
+			}
 		});
 	});
 	//.then(console.log)
@@ -227,35 +278,4 @@ topbtn.onclick = () => {
 
 }
 
-// top id
-
-// nick
-
-const playerTop1Nick = document.getElementById('playerTop1Nick');
-const playerTop2Nick = document.getElementById('playerTop2Nick');
-const playerTop3Nick = document.getElementById('playerTop3Nick');
-const playerTop4Nick = document.getElementById('playerTop4Nick');
-const playerTop5Nick = document.getElementById('playerTop5Nick');
-const playerTop6Nick = document.getElementById('playerTop6Nick');
-const playerTop7Nick = document.getElementById('playerTop7Nick');
-const playerTop8Nick = document.getElementById('playerTop8Nick');
-const playerTop9Nick = document.getElementById('playerTop9Nick');
-const playerTop10Nick = document.getElementById('playerTop10Nick');
-const playerNick = document.getElementById('playerNick');
-
-// score
-
-const top1Score = document.getElementById('top1Score');
-const top2Score = document.getElementById('top2Score');
-const top3Score = document.getElementById('top3Score');
-const top4Score = document.getElementById('top4Score');
-const top5Score = document.getElementById('top5Score');
-const top6Score = document.getElementById('top6Score');
-const top7Score = document.getElementById('top7Score');
-const top8Score = document.getElementById('top8Score');
-const top9Score = document.getElementById('top9Score');
-const top10Score = document.getElementById('top10Score');
-const playerTopScore = document.getElementById('playerTopScore');
-
-// 
 
