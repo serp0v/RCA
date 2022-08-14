@@ -222,4 +222,35 @@ topbtn.onclick = () => {
 
 }
 
+// top id
+
+// nick
+
+const playerTop1Nick = document.getElementById('playerTop1Nick');
+const playerTop2Nick = document.getElementById('playerTop2Nick');
+const playerTop3Nick = document.getElementById('playerTop3Nick');
+const playerTop4Nick = document.getElementById('playerTop4Nick');
+const playerTop5Nick = document.getElementById('playerTop5Nick');
+const playerTop6Nick = document.getElementById('playerTop6Nick');
+const playerTop7Nick = document.getElementById('playerTop7Nick');
+const playerTop8Nick = document.getElementById('playerTop8Nick');
+const playerTop9Nick = document.getElementById('playerTop9Nick');
+const playerTop10Nick = document.getElementById('playerTop10Nick');
+const playerNick = document.getElementById('playerNick');
+
+// score
+
+const top1Score = document.getElementById('top1Score');
+const top2Score = document.getElementById('top2Score');
+const top3Score = document.getElementById('top3Score');
+const top4Score = document.getElementById('top4Score');
+const top5Score = document.getElementById('top5Score');
+const top6Score = document.getElementById('top6Score');
+const top7Score = document.getElementById('top7Score');
+const top8Score = document.getElementById('top8Score');
+const top9Score = document.getElementById('top9Score');
+const top10Score = document.getElementById('top10Score');
+const playerTopScore = document.getElementById('playerTopScore');
+
 // 
+
