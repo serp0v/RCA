@@ -197,7 +197,7 @@ function getDataTop() {
 			//poemDisplay.textContent = text;
 			//console.log(topArray);
 			for (let index = topArray.length - 1; index >= 0; index--) {
-				document.getElementById('topContainer');
+				document.getElementById('');
 				poemDisplay.textContent = text;
 			}			
 		});
