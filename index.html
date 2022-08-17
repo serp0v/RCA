@@ -89,8 +89,20 @@
 			<div class="pause">
 				<button id="pause" class="pause-btn">пауза</button>
 			</div>
-			<div id="pauseMenu1" class="pauseMenu">
-				<p>Пауза</p>
+			<div id="pauseMenu1" class="pauseMenu-wrapper">
+				<div class="pauseMenu-container">
+					<div class="pause-title">Пауза</div>
+					<div class="pause-menu-buttons">
+						<div class="pause-menu-button">Вернуться в игру</div>
+					</div>
+					<div class="pause-menu-buttons">
+						<div class="pause-menu-button">Топ</div>
+					</div>
+					<div class="pause-menu-buttons">
+						<div class="pause-menu-button">В главное меню</div>
+					</div>
+
+				</div>
 			</div>
 		</div>
 	<!-- top -->
@@ -187,6 +199,9 @@
 					Не показывать топ после завершения игры
 				</div>
 			</div>
+		</div>
+		<div class="finish-game">
+
 		</div>
 	<!-- запуск кода игры -->
 	<script type="module" src="game.js"></script>

@@ -124,6 +124,7 @@ function Lifes() {
 	hero.Life(map, score);
 	//рестарт игры
 	if (hero.health < 0)
+		
 		restartGame();
 }
 //рисование всех обьектов игры
