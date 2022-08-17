@@ -14,7 +14,6 @@ function Resize() {//меняем и размер элемента Canvas
 	window.screenshiftY = 0;
 }
 
-
 // управление стрелками
 const top = document.getElementById('top');
 const bottom = document.getElementById('bottom');
@@ -40,8 +39,9 @@ var map;//карта
 var hero;// гг
 
 restartGame();
+window.testGameMode = true;
 function restartGame() {
-	map = new Map(30, 10, textures);//карта
+	map = new Map(35, 10, textures);//карта
 	hero = new Hero(health, 200 / window.screenScale, 400, "images/rubicAsep.png", textures);// гг
 }
 
@@ -49,23 +49,19 @@ function restartGame() {
 Start();
 
 document.addEventListener("keydown", function Move(e) {
-	if (e.keyCode == '38') { // up arrow
-		hero.Jump();
-		Pressed();
+	if(e.repeat)
+		return;
+	if (e.key == 'ArrowUp') { // up arrow
+		hero.Jump();		
 	}
-	else if (e.keyCode == '39') { // right arrow
-		hero.Right();
-		Pressed();
-
+	else if (e.key == 'ArrowRight') { // right arrow
+		hero.Right(map);
 	}
-	else if (e.keyCode == '37') { // left arrow
+	else if (e.key == 'ArrowLeft') { // left arrow
 		hero.Left();
-		Pressed();
 	}
-	else if (e.keyCode == '40') { // down arrow
+	else if (e.key == 'ArrowDown') { // down arrow
 		hero.antiJump();
-		Pressed();
-
 	}
 })
 top.onclick = function(event){
@@ -84,9 +80,6 @@ bottom.onclick = function(event){
 //выстрел
 shoot.onclick = function (event) {
 	hero.Shot(map);
-}
-function Pressed() {
-
 }
 // пауза
 var isPause = false;//

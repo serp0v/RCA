@@ -12,8 +12,9 @@ export default class {
   speedMap = 5;//10;
   speedBullet = 5;//10;
   textures; //хранилище текстур карты
-  lastscore = 2;//для генерации здоровья
-  healthScorePeriod = 1;
+  healthLastShift = 2;//для генерации здоровья
+  healthDistancePeriod = 3000;//каждые 3 метра генерим здоровье
+  speedMapUpNextShift = 1000;
 
   //текущий план расстановки блоков
   floor3 = [0, 5, window.NOTHING];
@@ -31,6 +32,8 @@ export default class {
 
   //Life
   Life(hero) {
+    //auto speedUp
+    this.autoSpeedUp();
     //смещаем карту
     this.xyShift[0] += this.speedMap;
     //this.xyShift[1] = hero.xy[1];//следование за картой
@@ -39,15 +42,23 @@ export default class {
       //удалим box слева которые вышли за карту      
       this.removeBackBox();
       //добавим новые справа      
-      this.putMapRight(this.xyShift[0] + this.sizeX * window.widthBox, hero);
+      let roundShift = Math.round(this.xyShift[0] / window.widthBox);
+      this.putMapRight(roundShift * window.widthBox + this.sizeX * window.widthBox, hero);
     }
-
     //даем пожить каждому элементу
     this.mapArray.forEach(function (item, index, array) {
       //если отметка об удалении, то не используем
       if (!item.needRemove)
-        item.Life();
+      item.Life();
     });
+  }
+  autoSpeedUp(){
+    if(this.xyShift[0] < this.speedMapUpNextShift)
+      return;
+    if(this.speedMap > 20)
+      return;
+    this.speedMapUpNextShift += 2000;//каждый метр повышаем скорость
+    this.speedMap += 5;
   }
 
   //переодичность проверки элементов
@@ -109,8 +120,8 @@ export default class {
   //генерация карты справа
   putMapRight(xShift, hero) {
     let arr = this.mapArray;
-    var now = new Date();
-    let millis = now.getTime();
+    //var now = new Date();
+    let millis = this.xyShift[0];//now.getTime();
 
     //1 этаж [0, 3, window.BETON];
     let f = this.floor1;
@@ -136,37 +147,38 @@ export default class {
 
     //стена на 3 этаже
     let kirpich = [false, false, false];
+    let freqBase = 3000;
     if (this.lasttimegenfloar3 < millis && this.floor3[2] == window.BETON) {
       if (this.floor3[0] > 2) {
         this.setKirpichBox(arr, Y3, xShift);
-        this.lasttimegenfloar3 = millis + getRandomInt(5000) + 2000;
-        kirpich[3] = true;
+        this.lasttimegenfloar3 = millis + getRandomInt(freqBase) + 2000;
+        kirpich[0] = true;
       }
     }
     //стена на 2 этаже
     if (this.lasttimegenfloar2 < millis && this.floor2[2] == window.BETON && this.floor3[2] == window.BETON) {
       if (this.floor2[0] > 2 && this.floor3[0] > 2) {
         this.setKirpichBox(arr, Y2, xShift);
-        this.lasttimegenfloar2 = millis + getRandomInt(5000) + 2000;
-        kirpich[2] = true;
-      }
-    }
-    //стена на 1 этаже
-    if (this.lasttimegenfloar1 < millis && this.floor1[2] == window.BETON && this.floor2[2] == window.BETON) {
-      if (this.floor2[0] > 2 && this.floor1[0] > 2) {
-        this.setKirpichBox(arr, Y1, xShift);
-        this.lasttimegenfloar1 = millis + getRandomInt(5000) + 2000;
+        this.lasttimegenfloar2 = millis + getRandomInt(freqBase) + 2000;
         kirpich[1] = true;
       }
     }
+    //стена на 1 этаже
+    if (!window.testGameMode && this.lasttimegenfloar1 < millis && this.floor1[2] == window.BETON && this.floor2[2] == window.BETON) {
+      if (this.floor2[0] > 2 && this.floor1[0] > 2) {
+        this.setKirpichBox(arr, Y1, xShift);
+        this.lasttimegenfloar1 = millis + getRandomInt(freqBase) + 2000;
+        kirpich[0] = true;
+      }
+    }
     //генерим здоровье после кирпичей!!
-    if (hero.score > this.lastscore) {
+    if (xShift > this.healthLastShift) {
       //выберем этаж для установки здоровья
       let id = getRandomInt(3)
       //проверим чтобы не было там кирпича
       if (!kirpich[id]){
-        this.setHealthBox(arr, Y1, xShift);
-        this.lastscore = hero.score + this.healthScorePeriod;//+ getRandomInt(1000)/1000
+        this.setHealthBox(arr, id * 4, xShift);
+        this.healthLastShift = xShift + this.healthDistancePeriod;//+ getRandomInt(1000)/1000
       }
     }
   }
@@ -192,7 +204,7 @@ export default class {
   setHealthBox(arr, Y, xShift) {
     let box = new MapObj("Сердце", 1, this.textures.getHealth(-1), HEALTH);
     box.phisicTransparent = true;
-    box.xy = [xShift, (Y - 2) * window.widthBox];
+    box.xy = [xShift, (Y + 3) * window.widthBox];
     arr.push(box);
   }
   //[0, 3, BETON];
