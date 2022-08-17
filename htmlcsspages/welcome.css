@@ -185,3 +185,16 @@ a {
     margin-bottom: 90px;
   }
 }
+@media (max-height: 740px) {
+  .welcome-PlayCustomizationEmpty {
+    margin-bottom: 0px;
+  }
+  .welcome-PlayCustomizationEmpty > div {
+    margin-top: 0;
+  }
+}
+@media (max-height: 645px) {
+  .welcome-PlayCustomizationEmpty {
+    height: 216px;
+  }
+}
