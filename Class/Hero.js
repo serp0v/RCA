@@ -58,8 +58,14 @@ export default class {
             else
                 map.speedMap = 20;
     }
-    Left() {
-
+    Left(map) {
+        if (window.testGameMode)
+            map.speedMap -= 10;
+        else
+            if (map.speedMap - 5 >= 5)
+                map.speedMap -= 5;
+            else
+                map.speedMap = 1;
     }
     //выстрел
     Shot(map) {
