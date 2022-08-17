@@ -41,8 +41,8 @@ export default class {
     if (this.isNeedtest()) {
       //удалим box слева которые вышли за карту      
       this.removeBackBox();
-      //добавим новые справа      
-      let roundShift = Math.round(this.xyShift[0] / window.widthBox);
+      //добавим новые справа
+      let roundShift = Math.floor(this.xyShift[0] / window.widthBox);//иначе пробелы между блоками
       this.putMapRight(roundShift * window.widthBox + this.sizeX * window.widthBox, hero);
     }
     //даем пожить каждому элементу
@@ -85,9 +85,11 @@ export default class {
 
     //рисуем все активные элементы карты      
     this.mapArray.forEach(function (item, index, array) {
+      let mapX = -map.xyShift[0];
+      let mapY = window.screenshiftY - map.xyShift[1];
       //если отметка об удалении, то не показываем
       if (!item.needRemove)
-        item.Draw(ctx, map);
+        item.Draw(ctx, mapX, mapY);
     });
 
   }

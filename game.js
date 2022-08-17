@@ -38,15 +38,16 @@ var textures = new Textures();//для загрузки всех текстур 
 var map;//карта
 var hero;// гг
 
-restartGame();
+//startGame
+var isPause = true;//
 window.testGameMode = true;
 function restartGame() {
+	Stop();	
+	timer = setInterval(Update, UPDATE_TIME);
 	map = new Map(35, 10, textures);//карта
 	hero = new Hero(health, 200 / window.screenScale, 400, "images/rubicAsep.png", textures);// гг
+	isPause = false;
 }
-
-//запускаем GamePlay
-Start();
 
 document.addEventListener("keydown", function Move(e) {
 	if(e.repeat)
@@ -58,7 +59,8 @@ document.addEventListener("keydown", function Move(e) {
 		hero.Right(map);
 	}
 	else if (e.key == 'ArrowLeft') { // left arrow
-		hero.Left();
+		hero.Left(map);
+		pauseMin = 100;
 	}
 	else if (e.key == 'ArrowDown') { // down arrow
 		hero.antiJump();
@@ -82,7 +84,6 @@ shoot.onclick = function (event) {
 	hero.Shot(map);
 }
 // пауза
-var isPause = false;//
 pauseMenu.style.visibility = "hidden";
 pause.onclick = () => {
 	isPause = !isPause;
@@ -92,9 +93,7 @@ pause.onclick = () => {
 		pauseMenu.style.visibility = "hidden";
 }
 /////////////////////////////////////////////////
-function Start() {
-	timer = setInterval(Update, UPDATE_TIME);
-}
+
 //для остановки игры 
 function Stop() {
 	clearInterval(timer);
@@ -108,7 +107,9 @@ function Update() {
 	Draws();
 }
 //даем пожить каждому обьекту игры
+var currentTime;
 function Lifes() {
+	currentTime = new Date().getTime() + 30;
 	//mapBack
 	//mapBack.Life();
 	//карта
@@ -120,6 +121,7 @@ function Lifes() {
 		restartGame();
 }
 //рисование всех обьектов игры
+var pauseMin = 100;
 function Draws() {
 	//очистка экрана
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -138,6 +140,16 @@ function Draws() {
 
 	//рисуем гг
 	hero.Draw(ctx, map);
+
+	let pause = currentTime - new Date().getTime();
+	if(pauseMin > pause){
+		pauseMin = pause;
+		health.innerHTML = pause;
+	}
+	while(pause > 0){
+		pause--;
+	}
+	
 }
 
 // start game 
@@ -150,6 +162,8 @@ welcomePlayBtn.onclick = () => {
 	canvas.classList.remove('off');
 	metricscontrolspause.classList.remove('off');
 	welcomeContainer.classList.add('off');
+	///start game
+	restartGame();
 }
 
 // customization

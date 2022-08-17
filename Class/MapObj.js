@@ -44,7 +44,7 @@ export default class {
   }
 
   //Draw
-  Draw(ctx, map) {
+  Draw(ctx, mapX, mapY) {
     //рисуем обьект карты
     let xS = this.spriteFrameID * this.texture.imageWidthSprite; //First X on image
     let xE = this.texture.imageWidthSprite; //End X on image
@@ -58,8 +58,8 @@ export default class {
         xE, //End X on image
         this.texture.imageHeight, //End Y on image
 
-        window.screenScale * (-map.xyShift[0] + this.xy[0]),//X on canvas
-        window.screenScale * (window.screenshiftY - map.xyShift[1] + this.xy[1]),//Y on canvas /* window.screenshift */
+        window.screenScale * (mapX + this.xy[0]),//X on canvas
+        window.screenScale * (mapY + this.xy[1]),//Y on canvas /* window.screenshift */
         window.screenScale * (window.widthBox), //Width on canvas
         window.screenScale * (window.widthBox) //Height on canvas
       );
