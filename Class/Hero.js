@@ -44,10 +44,19 @@ export default class {
         this.gravityCur = -45;
     }
     antiJump() {
-        this.gravityCur = +20;
-    }
-    Right() {
+        this.gravityCur = +45;
+        if (this.xy[1] < 100)
+            this.xy[1] = 110;
 
+    }
+    Right(map) {
+        if (window.testGameMode)
+            map.speedMap += 10;
+        else
+            if (map.speedMap + 5 <= 20)
+                map.speedMap += 5;
+            else
+                map.speedMap = 20;
     }
     Left() {
 
@@ -61,8 +70,10 @@ export default class {
     //Life
     Life(map, score) {
         //удар об верхний край карты
-        if (this.xy[1] < 100)
+        if (this.xy[1] < 100) {
+            this.xy[1] = 110;
             this.gravityCur = 0;
+        }
         //упал вниз
         if (this.xy[1] > 1400)
             this.health = -1;
@@ -201,7 +212,8 @@ export default class {
     doCollisionMObjs(map) {
 
         //новые xy для тестирования коллизии с ГГ
-        this.gravityCur += gravityEarth;//прибавим гравитацию        
+        if (!window.testGameMode)
+            this.gravityCur += gravityEarth;//прибавим гравитацию        
         let xyHero = [
             this.xy[0] + (this.xy[0] < this.Xmax ? this.speedReturn : 0),
             this.xy[1] + this.gravityCur
