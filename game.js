@@ -17,9 +17,7 @@ function Resize() {//меняем и размер элемента Canvas
 
 // управление стрелками
 const top = document.getElementById('top');
-const right = document.getElementById('right');
 const bottom = document.getElementById('bottom');
-const left = document.getElementById('left');
 const shoot = document.getElementById('shoot');
 const health = document.getElementById('health');
 const score = document.getElementById('score');
@@ -70,15 +68,15 @@ document.addEventListener("keydown", function Move(e) {
 
 	}
 })
-// top.onclick = function(event){
-// 	hero.Jump();	//shoot.innerHTML = 
-// }
+top.onclick = function(event){
+	hero.Jump();	//shoot.innerHTML = 
+}
 // right.onclick = function(event){
 // 	hero.Right();
 // }
-// bottom.onclick = function(event){
-// 	hero.antiJump();
-// }
+bottom.onclick = function(event){
+	hero.antiJump();
+}
 // left.onclick = function(event){
 // 	hero.Left();
 // }
@@ -188,7 +186,7 @@ var topScore = [
 	document.getElementById('top2Score'),
 	document.getElementById('top3Score'),
 	document.getElementById('top4Score'),
-	document.getElementById('top5Score'),//была ошибка
+	document.getElementById('top5Score'),
 	document.getElementById('top6Score'),
 	document.getElementById('top7Score'),
 	document.getElementById('top8Score'),
@@ -199,7 +197,7 @@ var topScore = [
 var topNick = [
 	document.getElementById('playerTop1Nick'),
 	document.getElementById('playerTop2Nick'),
-	document.getElementById('playerTop3Nick'),//была ошибка
+	document.getElementById('playerTop3Nick'),
 	document.getElementById('playerTop4Nick'),
 	document.getElementById('playerTop5Nick'),
 	document.getElementById('playerTop6Nick'),

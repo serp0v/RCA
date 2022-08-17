@@ -1,3 +1,12 @@
+* {
+	-webkit-touch-callout: none; /* iOS Safari */
+	-webkit-user-select: none;   /* Chrome/Safari/Opera */
+	-khtml-user-select: none;    /* Konqueror */
+	-moz-user-select: none;      /* Firefox */
+	-ms-user-select: none;       /* Internet Explorer/Edge */
+	user-select: none;           /* Non-prefixed version, currently
+	not supported by any browser */
+}
 /*  */
 .off {
 	display: none;
@@ -26,71 +35,43 @@ html, body {
 }
 
 /* управление */
-
-.controls {
-	height: 300px;
-	width: 98%;
-	/* position: absolute; */
+.movement-shoot-cont {
+	height: 100%;
+	width: 100%;
 	z-index: 9997;
-	/* bottom: 100px; */
-	/* justify-content: center; */
 	display: flex;
 	position: absolute;
 	bottom: 0;
-	/* right:1%; */
-	/* left: 1%; */
-	/* flex-direction: row; */
-	/* border: 3px solid rgb(0, 0, 0); */
+	border: 3px solid rgb(0, 0, 0);
 }
 
-[class$="-control"]{
-	height: 48%;
-	width: 48%;
-	fill: rgb(255, 255, 255);
-	background-color: #fff;
+.hero-movement {
+	display: flex;
+	height: 100%;
+	align-items: center;
+	width: 50%;
+	/* border-radius: 10px; */
+	border: 1px solid #000;
+	flex-direction: column;
+}
+.top {
+	width: 100%;
+	height: 50%;
+	display: flex;
+}
+.bottom {
+	width: 100%;
+	height: 50%;
+	display: flex;
+}
+.hero-shoot {
+	display: flex;
+	height: 100%;
+	align-items: center;
+	width: 50%;
+	/* border-radius: 10px; */
 	border: 1px solid #000;
 }
-.joystick {
-	position: absolute;
-	height: 150px;
-	width: 150px;
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	border-radius: 50%;
-	left: 0;
-	bottom: 0;
-	transform: rotate(45deg);
-	overflow: hidden;
-	border: 3px solid #000;
-}
-.top-control {
-	
-}
-
-.right-control {
-
-}
-
-.bottom-control {
-
-}
-
-.left-control {
-
-}
-
-.shoot-control {
-	height: 100px;
-	width: 100px;
-	position: absolute;
-	right: 100px;
-	bottom: 100px;
-	border: 3px solid #000;
-	border-radius: 50%;
-
-}
-
 /* метрики */
 
 .metrics {
