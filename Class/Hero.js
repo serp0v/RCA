@@ -44,25 +44,50 @@ export default class {
         this.gravityCur = -45;
     }
     antiJump() {
-        this.gravityCur = +20;
-    }
-    Right() {
+        this.gravityCur = +45;
+        if (this.xy[1] < 100)
+            this.xy[1] = 110;
 
     }
-    Left() {
-
+    Right(map) {
+        if (window.testGameMode)
+            map.speedMap += 10;
+        else
+            if (map.speedMap + 5 <= 20)
+                map.speedMap += 5;
+            else
+                map.speedMap = 20;
+    }
+    Left(map) {
+        if (window.testGameMode)
+            map.speedMap -= 10;
+        else
+            if (map.speedMap - 5 >= 5)
+                map.speedMap -= 5;
+            else
+                map.speedMap = 1;
     }
     //выстрел
     Shot(map) {
-        let bullet = new MapObj("Bullet", 1, this.textures.getBullet(-1), window.BULLET);
-        bullet.xy = [this.xy[0] + map.xyShift[0] + this.widthBox / 2, this.xy[1] + map.xyShift[1]];
-        this.bullets.push(bullet);
+        //выстрел если есть здоровье
+        if(this.health > 0){
+            this.editHealth(-1);
+            let bullet = new MapObj("Bullet", 1, this.textures.getBullet(-1), window.BULLET);
+            bullet.xy = [this.xy[0] + map.xyShift[0] + this.widthBox / 2, this.xy[1] + map.xyShift[1]];
+            this.bullets.push(bullet);
+        }
+    }
+    editHealth(delta){
+        this.health += delta;//отнимаем
+        this.healthDom.innerHTML = this.health;
     }
     //Life
     Life(map, score) {
         //удар об верхний край карты
-        if (this.xy[1] < 100)
+        if (this.xy[1] < 100) {
+            this.xy[1] = 110;
             this.gravityCur = 0;
+        }
         //упал вниз
         if (this.xy[1] > 1400)
             this.health = -1;
@@ -74,10 +99,9 @@ export default class {
         //далее обработка обьектов(оружие, здоровье, огонь и тд)
         colArr.forEach(box => {
             if (box.typeid == window.HEALTH) {
-                this.health += box.value;
+                this.editHealth(box.value);
                 box.needRemove = true;
                 this.audioStar.play();
-                this.healthDom.innerHTML = this.health;
             }
         });
         //score        
@@ -89,7 +113,7 @@ export default class {
     }
     //жизнь пулек
     bulletsLife(map) {
-
+ 
         if (this.bullets.length == 0)
             return;
         this.bullets.forEach(bul => {
@@ -201,7 +225,8 @@ export default class {
     doCollisionMObjs(map) {
 
         //новые xy для тестирования коллизии с ГГ
-        this.gravityCur += gravityEarth;//прибавим гравитацию        
+        if (!window.testGameMode)
+            this.gravityCur += gravityEarth;//прибавим гравитацию        
         let xyHero = [
             this.xy[0] + (this.xy[0] < this.Xmax ? this.speedReturn : 0),
             this.xy[1] + this.gravityCur
@@ -233,6 +258,7 @@ export default class {
     //с какой стороны ГГ пересекается с обьектом
     getCollisionType(colArr, xyHero, box, xyShiftMap) {
 
+        //левыйКрай, правыйКрай, центр 
         let herox = [xyHero[0] + xyShiftMap[0], xyHero[0] + xyShiftMap[0] + this.widthBox, xyHero[0] + xyShiftMap[0] + this.widthBox * 0.5];
         let boxx = [box.xy[0], box.xy[0] + window.widthBox];
 
@@ -244,14 +270,16 @@ export default class {
             vecX = -1;
         }
         else {
-            collisionX = boxx[1] - herox[0];//препятствие слева
-            vecX = 1;
+            //препятствие слева 
+            collisionX = boxx[1] - herox[0];
+            vecX = 0;//1;//0 чтобы не бежал вперед
         }
 
         //далеко x
         if (collisionX <= 0)
             return;
 
+        //верхнийКрай, нижнийКрай, центр 
         let heroy = [xyHero[1] + xyShiftMap[1], xyHero[1] + xyShiftMap[1] + this.widthBox, xyHero[1] + xyShiftMap[1] + this.widthBox * 0.5];
         let boxy = [box.xy[1], box.xy[1] + window.widthBox];
 
@@ -299,8 +327,10 @@ export default class {
     //Draw
     Draw(ctx, map) {
         //bullets
+        let mapX = -map.xyShift[0];
+        let mapY = window.screenshiftY - map.xyShift[1];
         this.bullets.forEach(bul => {
-            bul.Draw(ctx, map);
+            bul.Draw(ctx, mapX, mapY);
         });
 
         //hero
@@ -312,10 +342,10 @@ export default class {
             this.image.width, //End X on image
             this.image.height, //End Y on image
 
-            window.screenScale * this.xy[0],//X on canvas
-            window.screenScale * (window.screenshiftY + this.xy[1]),//Y on canvas
-            window.screenScale * this.widthBox, //Width on canvas
-            window.screenScale * this.widthBox //Height on canvas
+            Math.floor(window.screenScale * this.xy[0]),//X on canvas
+            Math.floor(window.screenScale * (window.screenshiftY + this.xy[1])),//Y on canvas
+            Math.floor(window.screenScale * this.widthBox), //Width on canvas
+            Math.floor(window.screenScale * this.widthBox) //Height on canvas
             // window.widthBox, //Width on canvas
             // window.widthBox //Height on canvas
         );
