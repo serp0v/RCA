@@ -22,7 +22,7 @@ export default class {
   floor1 = [0, 3, window.NOTHING];
 
   //при создании новой карты
-  constructor(sizeX, sizeY,textures) {
+  constructor(sizeX, sizeY, textures) {
     this.textures = textures;
     this.sizeX = sizeX;
     this.sizeY = sizeY;
@@ -31,6 +31,7 @@ export default class {
   }
 
   //Life
+  roundShiftLast = 0;
   Life(hero) {
     //auto speedUp
     this.autoSpeedUp();
@@ -42,20 +43,27 @@ export default class {
       //удалим box слева которые вышли за карту      
       this.removeBackBox();
       //добавим новые справа
-      let roundShift = Math.floor(this.xyShift[0] / window.widthBox);//иначе пробелы между блоками
+      let roundShift = Math.floor(this.xyShift[0] / window.widthBox);//иначе пробелы между блоками      
+      //при скорости может быть пропущено место
+      if (roundShift - this.roundShiftLast > 1) {
+        //и требуется установка пропущеных блоков 
+        this.putMapRight((roundShift-1) * window.widthBox + this.sizeX * window.widthBox, hero);
+      }
+      this.roundShiftLast = roundShift;
       this.putMapRight(roundShift * window.widthBox + this.sizeX * window.widthBox, hero);
+      //this.putMapRight(this.xyShift[0] + this.sizeX * window.widthBox, hero);
     }
     //даем пожить каждому элементу
     this.mapArray.forEach(function (item, index, array) {
       //если отметка об удалении, то не используем
       if (!item.needRemove)
-      item.Life();
+        item.Life();
     });
   }
-  autoSpeedUp(){
-    if(this.xyShift[0] < this.speedMapUpNextShift)
+  autoSpeedUp() {
+    if (this.xyShift[0] < this.speedMapUpNextShift)
       return;
-    if(this.speedMap > 20)
+    if (this.speedMap > 20)
       return;
     this.speedMapUpNextShift += 2000;//каждый метр повышаем скорость
     this.speedMap += 1;
@@ -73,7 +81,7 @@ export default class {
   removeBackBox() {
     let map = this;
     for (let index = this.mapArray.length - 1; index >= 0; index--) {
-      if (this.mapArray[index].isNeedRemove(map)){
+      if (this.mapArray[index].isNeedRemove(map)) {
         this.mapArray.splice(index, 1);
       }
     }
@@ -178,7 +186,7 @@ export default class {
       //выберем этаж для установки здоровья
       let id = getRandomInt(3)
       //проверим чтобы не было там кирпича
-      if (!kirpich[id]){
+      if (!kirpich[id]) {
         this.setHealthBox(arr, id * 4, xShift);
         this.healthLastShift = xShift + this.healthDistancePeriod;//+ getRandomInt(1000)/1000
       }
@@ -198,7 +206,7 @@ export default class {
     box3.xy = [xShift, (Y - 3) * window.widthBox];
     arr.push(box3);
     //свяжем элементы 
-    let linkedBox = [box1,box2,box3];
+    let linkedBox = [box1, box2, box3];
     box1.linkedBox = linkedBox;
     box2.linkedBox = linkedBox;
     box3.linkedBox = linkedBox;
@@ -225,6 +233,7 @@ export default class {
     else if (f[0] == f[1]) //справа
       blok = new MapObj("Бетон", 10, this.textures.getBeton(2), window.BETON);
 
+    //ставим блок на свое место1
     blok.xy = [xShift, Y * window.widthBox];
     arr.push(blok);
   }
@@ -232,11 +241,11 @@ export default class {
     f[0] = 0;//счетчик плана
     if (f[2] == window.NOTHING) {
       f[2] = window.BETON;
-      f[1] = getRandomInt(7) + 3;//3-10 длина бетона
+      f[1] = getRandomInt(7) + 6;//6 - минимум длина бетона
     }
     else {
       f[2] = window.NOTHING;
-      f[1] = getRandomInt(5) + 3;//3-8 длина пустоты
+      f[1] = getRandomInt(5) + 3;//3 - минимум пустоты
     }
   }
 

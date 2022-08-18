@@ -69,9 +69,17 @@ export default class {
     }
     //выстрел
     Shot(map) {
-        let bullet = new MapObj("Bullet", 1, this.textures.getBullet(-1), window.BULLET);
-        bullet.xy = [this.xy[0] + map.xyShift[0] + this.widthBox / 2, this.xy[1] + map.xyShift[1]];
-        this.bullets.push(bullet);
+        //выстрел если есть здоровье
+        if(this.health > 0){
+            this.editHealth(-1);
+            let bullet = new MapObj("Bullet", 1, this.textures.getBullet(-1), window.BULLET);
+            bullet.xy = [this.xy[0] + map.xyShift[0] + this.widthBox / 2, this.xy[1] + map.xyShift[1]];
+            this.bullets.push(bullet);
+        }
+    }
+    editHealth(delta){
+        this.health += delta;//отнимаем
+        this.healthDom.innerHTML = this.health;
     }
     //Life
     Life(map, score) {
@@ -91,10 +99,9 @@ export default class {
         //далее обработка обьектов(оружие, здоровье, огонь и тд)
         colArr.forEach(box => {
             if (box.typeid == window.HEALTH) {
-                this.health += box.value;
+                this.editHealth(box.value);
                 box.needRemove = true;
                 this.audioStar.play();
-                this.healthDom.innerHTML = this.health;
             }
         });
         //score        
@@ -106,7 +113,7 @@ export default class {
     }
     //жизнь пулек
     bulletsLife(map) {
-
+ 
         if (this.bullets.length == 0)
             return;
         this.bullets.forEach(bul => {
@@ -251,6 +258,7 @@ export default class {
     //с какой стороны ГГ пересекается с обьектом
     getCollisionType(colArr, xyHero, box, xyShiftMap) {
 
+        //левыйКрай, правыйКрай, центр 
         let herox = [xyHero[0] + xyShiftMap[0], xyHero[0] + xyShiftMap[0] + this.widthBox, xyHero[0] + xyShiftMap[0] + this.widthBox * 0.5];
         let boxx = [box.xy[0], box.xy[0] + window.widthBox];
 
@@ -262,14 +270,16 @@ export default class {
             vecX = -1;
         }
         else {
-            collisionX = boxx[1] - herox[0];//препятствие слева
-            vecX = 1;
+            //препятствие слева 
+            collisionX = boxx[1] - herox[0];
+            vecX = 0;//1;//0 чтобы не бежал вперед
         }
 
         //далеко x
         if (collisionX <= 0)
             return;
 
+        //верхнийКрай, нижнийКрай, центр 
         let heroy = [xyHero[1] + xyShiftMap[1], xyHero[1] + xyShiftMap[1] + this.widthBox, xyHero[1] + xyShiftMap[1] + this.widthBox * 0.5];
         let boxy = [box.xy[1], box.xy[1] + window.widthBox];
 
