@@ -1,7 +1,9 @@
+* {
+  color:rgb(0, 0, 0);
+}
 .top-container {
-  max-width: 800px;
+  max-width: 100%;
   height: 100vh;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -13,23 +15,19 @@
   display: flex;
 }
 .li-top {
-  max-width: 800px;
-  height: 40px;
+width: 100%;
+  height: 7.5vh;
   list-style:none;
-  background-color: rgb(40,40,40);
+  /* background-color: rgb(40,40,40); */
+  border-top: 1px solid #000;
   color: azure;
   display: flex;
   flex-direction: row;
-  margin: 0 auto;
   font-family: 'Pompiere', cursive;
   font-weight: 200;
+  font-size: 3vh;
 }
 .top-div ~ .top-div {
-    margin-top: 2px;
-}
-
-.li-top {
-  width: 100%;
 }
 .li-top > div {
   display: flex;
@@ -42,50 +40,50 @@
   width: 5%;
 }
 .player-nick {
-  width: 15%;
+  width: 47%;
 }
 .top-score {
   justify-content: flex-end;
-  width: 79%;
+  width: 47%;
   padding-right: 1%;
 }
 
 .top-helpers-wrapper {
-  background-color: rgb(40,40,40);
+  /* background-color: rgb(40,40,40); */
   width: 100%;
   margin-bottom: 2px;
 }
 .top-helpers {
   display: flex;
   flex-direction: row;
-  height: 81px;
-  background-color: rgb(40,40,40);
+  height: 9vh;
+  /* background-color: rgb(40,40,40); */
   align-items: center;
   justify-content: end;
   text-align: center;
   margin-bottom: 2px;
-  max-width: 97.5%;
-  margin: 2px auto;
+  max-width: 98.5%;
+  margin: 0 auto;
 }
 .table-title {
-  font-size: 32px;
+  font-size: 7vh;
   font-family: 'Pompiere', cursive;
   font-weight: 200;
   text-align: center;
   width: 100%;
-  color: #fff;
 }
 .top-x {
-    height: 30px;
-    width: 30px;
     margin: 5px;
     display: flex;
     align-items: center;
     position: absolute;
+    font-size: 2vh;
+    /* margin-right: 1vw; */
 
 }
-.top-x > svg {
-  fill: white;
+.top-x > p {
+  /* font-size: 2vh; */
+  /* margin-right: 1vw; */
 }
 /*  */
 
@@ -176,4 +174,13 @@
   width: 100%;
   margin-top: 2px;
   background-color: rgb(40,40,40);
+}
+.gold {
+  background-color: #ffd700;
+}
+.silver {
+  background-color: #c0c0c0;
+}
+.bronze {
+  background-color: #cd7f32;
 }

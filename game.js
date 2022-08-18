@@ -23,7 +23,7 @@ const shoot = document.getElementById('shoot');
 const health = document.getElementById('health');
 const score = document.getElementById('score');
 const pause = document.getElementById('pause');
-const pauseMenu = document.getElementById('pauseMenu1');
+const pauseMenu = document.getElementById('pauseMenu');
 
 //переменные для игры //////////////////////////////////
 const UPDATE_TIME = 1000 / 60;
@@ -94,7 +94,8 @@ pause.onclick = () => clickPause();
 function clickPause() {
 	isPause = !isPause;
 	if (isPause)
-		pauseMenu.style.visibility = "visible";
+		pauseMenu.style.visibility = "visible",
+		pause.style.visibility = "hidden";
 	else
 		pauseMenu.style.visibility = "hidden";
 }
@@ -124,6 +125,7 @@ function Lifes() {
 	hero.Life(map, score);
 	//рестарт игры
 	if (hero.health < 0)
+		
 		restartGame();
 }
 //рисование всех обьектов игры
@@ -231,7 +233,7 @@ function getDataTop() {
 				//подкрасим в топе себя
 				if (playerID == topArray[index][1]) {
 					topScore[index].style.background = "#00f";
-					topNick[index].style.background = "#00f";
+					topNick[index].style.background = "#00f";					
 				}
 			}
 			//Если нет нас в топе напишем ниже себя 
@@ -241,8 +243,8 @@ function getDataTop() {
 				playertopNumber.textContent = topArray[index][4];
 				topScore[index].textContent = topArray[index][2];
 				topNick[index].textContent = "Игрок " + topArray[index][1];
-				topScore[index].style.background = "#00f";
-				topNick[index].style.background = "#00f";
+				// topScore[index].style.background = "#00f";
+				// topNick[index].style.background = "#00f";
 				playertopNumber.style.visibility = "visible";
 				topScore[index].style.visibility = "visible";
 				topNick[index].style.visibility = "visible";
@@ -271,11 +273,58 @@ function getPlayerID() {
 	//const output = String(date.getDate()).padStart(2, '0') + String(date.getMonth() + 1).padStart(2, '0') + date.getFullYear() + "|" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + ":" + date.getMilliseconds();
 	//localStorage.getItem('ID', output);
 }
+// вернуться в главное меню
 
-topbtn.onclick = () => {
-	topContainer.classList.remove('off');
-	welcomeContainer.classList.add('off');
+const backToWelcome = document.getElementById('backToWelcome');
 
+backToWelcome.onclick = () => {
+	welcomeContainer.classList.remove('off');
+	canvas.classList.add('off');
+	metricscontrolspause.classList.add('off');
 }
 
+// // открытие топа с приветственной страницы
 
+// topbtn.onclick = function topbtnopener() {
+// 	let parentToggler = topWelcomeToggler();
+// }
+// const pauseTopBtn = document.getElementById('pauseTopBtn');
+// const closeTopMenu = document.getElementById('closeTopMenu');
+
+// // открытие топа с паузы
+
+// closeTopMenu.onclick = function closeTopMenuOpener() {
+// 	// parentToggler;
+// 	if (topbtn.classList == "off") {
+// 		parentToggler = topWelcomeToggler();
+// 	}
+// 	if (pauseTopBtn === 1) {
+// 		parentToggler = topPauseToggler();
+// 	}
+// }
+// pauseTopBtn.onclick = function pauseTopBtnOpener() {
+// 	let parentToggler = topPauseToggler();
+// }
+// // кнопка закрыть в топе
+// function topPauseToggler() {
+// 	console.log(123)
+// 	// pauseMenu.style.visibility = "hidden";
+// 	// canvas.style.visibility = "hidden";
+// 	// metricscontrolspause.style.visibility = "hidden";
+// 	// topContainer.classList.toggle('off');
+// }
+// let parentToggler;
+// function topWelcomeToggler() {
+// 	topContainer.classList.toggle('off');
+// 	welcomeContainer.classList.toggle('off');
+// }
+// topContainer.classList.remove('off');
+// function topFinishToggler() {
+	
+	// }
+	// pauseMenu.style.visibility = "hidden";
+	// canvas.style.visibility = "hidden";
+	// metricscontrolspause.style.visibility = "hidden";
+	// pauseMenu.style.visibility = "visible";
+	// canvas.style.visibility = "visible";
+	// metricscontrolspause.style.visibility = "visible";
