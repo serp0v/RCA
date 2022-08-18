@@ -229,8 +229,8 @@ function getDataTop() {
 				topNick[index].textContent = "Игрок " + topArray[index][1];
 				//подкрасим в топе себя
 				if (playerID == topArray[index][1]) {
-					topScore[index].style.background = "#00f";
-					topNick[index].style.background = "#00f";					
+					// topScore[index].style.background = "#00f";
+					// topNick[index].style.background = "#00f";					
 				}
 			}
 			//Если нет нас в топе напишем ниже себя 
@@ -240,8 +240,8 @@ function getDataTop() {
 				playertopNumber.textContent = topArray[index][4];
 				topScore[index].textContent = topArray[index][2];
 				topNick[index].textContent = "Игрок " + topArray[index][1];
-				topScore[index].style.background = "#00f";
-				topNick[index].style.background = "#00f";
+				// topScore[index].style.background = "#00f";
+				// topNick[index].style.background = "#00f";
 				playertopNumber.style.visibility = "visible";
 				topScore[index].style.visibility = "visible";
 				topNick[index].style.visibility = "visible";
