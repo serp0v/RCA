@@ -33,6 +33,8 @@
   width: 700px;
   margin: 0 auto;
   margin-bottom: 116px;
+  justify-content: center;
+  align-items: center;
 }
 
 .welcome-PlayCustomizationEmpty > div {
@@ -78,13 +80,16 @@ footer {
 }
 
 footer > div {
-  width: 33%;
+  /* width: 33%; */
+  justify-content: space-between;
   /* border: 1px solid #000; */
 }
 /* middle btns */
 .welcome-circle-btns{
   /* width: 34%; */
   display: flex;
+  max-width: 34%;
+  margin: 0 auto;
   flex-direction: row;
 }
 .welcome-circle-btns-cont {
@@ -121,6 +126,8 @@ footer > div {
 .welcome-socials {
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
   /* justify-content: center; */
 }
 .welcome-socials > div ~ div {
@@ -133,7 +140,8 @@ footer > div {
   border: 4px solid black;
   display: flex;
   flex-direction: row;
-
+  justify-content: center;
+  align-items: center;
 }
 .welcome-companyTitle {
   font-size: 60px;
@@ -180,6 +188,21 @@ a {
     font-size: 6vw;
   }
 }
+@media (max-width: 800px) {
+  .welcome-social {
+    height: 40px;
+    width: 40px;
+  }
+}
+@media (max-width: 720px) {
+  .welcome-social {
+    height: 40px;
+    width: 40px;
+  }
+  .welcome-PlayCustomizationEmpty > div {
+    width: 130px;
+  }
+}
 @media (max-height: 800px) {
   .welcome-PlayCustomizationEmpty {
     margin-bottom: 90px;
@@ -196,5 +219,18 @@ a {
 @media (max-height: 645px) {
   .welcome-PlayCustomizationEmpty {
     height: 216px;
+  }
+}
+@media (max-height: 610px) {
+  .welcome-PlayCustomizationEmpty > div {
+    height: 100px;
+  }
+  .welcome-PlayCustomizationEmpty {
+    justify-content: center;
+    height: 116px;
+  }
+  .welcome-social {
+    height: 40px;
+    width: 40px;
   }
 }
