@@ -40,32 +40,35 @@ var hero;// гг
 
 //startGame
 var isPause = true;//
-window.testGameMode = true;
+window.testGameMode = false;
 function restartGame() {
 	Stop();	
 	timer = setInterval(Update, UPDATE_TIME);
 	map = new Map(35, 10, textures);//карта
 	hero = new Hero(health, 200 / window.screenScale, 400, "images/rubicAsep.png", textures);// гг
 	isPause = false;
+	document.addEventListener("keydown", function Move(e) {
+		if(e.repeat)
+			return;
+		if (e.key == 'ArrowUp') { // up arrow
+			hero.Jump();		
+		}
+		else if (e.key == 'ArrowRight') { // right arrow
+			hero.Right(map);
+		}
+		else if (e.key == 'ArrowLeft') { // left arrow
+			hero.Left(map);
+			pauseMin = 100;
+		}
+		else if (e.key == 'ArrowDown') { // down arrow
+			hero.antiJump();
+		}
+		else if (e.key == ' ') { // down arrow
+			hero.Shot(map);
+		}
+	})
 }
 
-document.addEventListener("keydown", function Move(e) {
-	if(e.repeat)
-		return;
-	if (e.key == 'ArrowUp') { // up arrow
-		hero.Jump();		
-	}
-	else if (e.key == 'ArrowRight') { // right arrow
-		hero.Right(map);
-	}
-	else if (e.key == 'ArrowLeft') { // left arrow
-		hero.Left(map);
-		pauseMin = 100;
-	}
-	else if (e.key == 'ArrowDown') { // down arrow
-		hero.antiJump();
-	}
-})
 top.onclick = function(event){
 	hero.Jump();	//shoot.innerHTML = 
 }
@@ -109,7 +112,7 @@ function Update() {
 //даем пожить каждому обьекту игры
 var currentTime;
 function Lifes() {
-	currentTime = new Date().getTime() + 30;
+	//currentTime = new Date().getTime() + 30;
 	//mapBack
 	//mapBack.Life();
 	//карта
@@ -140,16 +143,6 @@ function Draws() {
 
 	//рисуем гг
 	hero.Draw(ctx, map);
-
-	let pause = currentTime - new Date().getTime();
-	if(pauseMin > pause){
-		pauseMin = pause;
-		health.innerHTML = pause;
-	}
-	while(pause > 0){
-		pause--;
-	}
-	
 }
 
 // start game 

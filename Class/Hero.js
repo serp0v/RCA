@@ -317,8 +317,10 @@ export default class {
     //Draw
     Draw(ctx, map) {
         //bullets
+        let mapX = -map.xyShift[0];
+        let mapY = window.screenshiftY - map.xyShift[1];
         this.bullets.forEach(bul => {
-            bul.Draw(ctx, map);
+            bul.Draw(ctx, mapX, mapY);
         });
 
         //hero
@@ -330,10 +332,10 @@ export default class {
             this.image.width, //End X on image
             this.image.height, //End Y on image
 
-            window.screenScale * this.xy[0],//X on canvas
-            window.screenScale * (window.screenshiftY + this.xy[1]),//Y on canvas
-            window.screenScale * this.widthBox, //Width on canvas
-            window.screenScale * this.widthBox //Height on canvas
+            Math.floor(window.screenScale * this.xy[0]),//X on canvas
+            Math.floor(window.screenScale * (window.screenshiftY + this.xy[1])),//Y on canvas
+            Math.floor(window.screenScale * this.widthBox), //Width on canvas
+            Math.floor(window.screenScale * this.widthBox) //Height on canvas
             // window.widthBox, //Width on canvas
             // window.widthBox //Height on canvas
         );

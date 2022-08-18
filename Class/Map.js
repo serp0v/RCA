@@ -58,7 +58,7 @@ export default class {
     if(this.speedMap > 20)
       return;
     this.speedMapUpNextShift += 2000;//каждый метр повышаем скорость
-    this.speedMap += 5;
+    this.speedMap += 1;
   }
 
   //переодичность проверки элементов
@@ -149,7 +149,7 @@ export default class {
 
     //стена на 3 этаже
     let kirpich = [false, false, false];
-    let freqBase = 3000;
+    let freqBase = 5000;
     if (this.lasttimegenfloar3 < millis && this.floor3[2] == window.BETON) {
       if (this.floor3[0] > 2) {
         this.setKirpichBox(arr, Y3, xShift);
@@ -170,7 +170,7 @@ export default class {
       if (this.floor2[0] > 2 && this.floor1[0] > 2) {
         this.setKirpichBox(arr, Y1, xShift);
         this.lasttimegenfloar1 = millis + getRandomInt(freqBase) + 2000;
-        kirpich[0] = true;
+        kirpich[2] = true;
       }
     }
     //генерим здоровье после кирпичей!!

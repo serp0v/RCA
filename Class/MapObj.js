@@ -58,10 +58,10 @@ export default class {
         xE, //End X on image
         this.texture.imageHeight, //End Y on image
 
-        window.screenScale * (mapX + this.xy[0]),//X on canvas
-        window.screenScale * (mapY + this.xy[1]),//Y on canvas /* window.screenshift */
-        window.screenScale * (window.widthBox), //Width on canvas
-        window.screenScale * (window.widthBox) //Height on canvas
+        Math.floor(window.screenScale * (mapX + this.xy[0])),//X on canvas
+        Math.floor(window.screenScale * (mapY + this.xy[1])),//Y on canvas /* window.screenshift */
+        Math.floor(window.screenScale * (window.widthBox)), //Width on canvas
+        Math.floor(window.screenScale * (window.widthBox)) //Height on canvas
       );
   }  
 }
