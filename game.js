@@ -2,7 +2,9 @@ console.log(window.navigator.userAgent); // узнать инфо о устро�
 //получим элемент со страницы///////////////////////////
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");//вытащим из него холст для рисования
-
+ctx.webkitImageSmoothingEnabled = false;
+ctx.mozImageSmoothingEnabled = false;
+ctx.imageSmoothingEnabled = false;
 
 //Canvas на весь размер экрана
 Resize();
@@ -13,7 +15,6 @@ function Resize() {//меняем и размер элемента Canvas
 	window.screenScale = canvas.height / 1400;
 	window.screenshiftY = 0;
 }
-
 
 // управление стрелками
 const top = document.getElementById('top');
@@ -39,42 +40,44 @@ var textures = new Textures();//для загрузки всех текстур 
 var map;//карта
 var hero;// гг
 
-restartGame();
+//startGame
+var isPause = true;//
+window.testGameMode = false;
 function restartGame() {
-	map = new Map(30, 10, textures);//карта
+	Stop();
+	timer = setInterval(Update, UPDATE_TIME);
+	if (window.testGameMode)
+		map = new Map(20, 10, textures);//карта
+	else
+		map = new Map(35, 10, textures);//карта
 	hero = new Hero(health, 200 / window.screenScale, 400, "images/rubicAsep.png", textures);// гг
+	isPause = false;
 }
-
-//запускаем GamePlay
-Start();
-
+///keyboard game event
 document.addEventListener("keydown", function Move(e) {
-	if (e.keyCode == '38') { // up arrow
-		hero.Jump();
-		Pressed();
-	}
-	else if (e.keyCode == '39') { // right arrow
-		hero.Right();
-		Pressed();
+	if (e.repeat)
+		return;
+	if (e.key == 'ArrowUp')  // up arrow
+		hero.Jump();	
+	else if (e.key == 'ArrowRight')  // right arrow
+		hero.Right(map);	
+	else if (e.key == 'ArrowLeft')  // left arrow
+		hero.Left(map);	
+	else if (e.key == 'ArrowDown')  // down arrow
+		hero.antiJump();	
+	else if (e.key == ' ')  // down arrow
+		hero.Shot(map);	
+	else if (e.key == 'Escape')  // down arrow
+		clickPause();	
+});
 
-	}
-	else if (e.keyCode == '37') { // left arrow
-		hero.Left();
-		Pressed();
-	}
-	else if (e.keyCode == '40') { // down arrow
-		hero.antiJump();
-		Pressed();
-
-	}
-})
-top.onclick = function(event){
+top.onclick = function (event) {
 	hero.Jump();	//shoot.innerHTML = 
 }
 // right.onclick = function(event){
 // 	hero.Right();
 // }
-bottom.onclick = function(event){
+bottom.onclick = function (event) {
 	hero.antiJump();
 }
 // left.onclick = function(event){
@@ -85,13 +88,10 @@ bottom.onclick = function(event){
 shoot.onclick = function (event) {
 	hero.Shot(map);
 }
-function Pressed() {
-
-}
 // пауза
-var isPause = false;//
 pauseMenu.style.visibility = "hidden";
-pause.onclick = () => {
+pause.onclick = () => clickPause();
+function clickPause() {
 	isPause = !isPause;
 	if (isPause)
 		pauseMenu.style.visibility = "visible";
@@ -99,9 +99,7 @@ pause.onclick = () => {
 		pauseMenu.style.visibility = "hidden";
 }
 /////////////////////////////////////////////////
-function Start() {
-	timer = setInterval(Update, UPDATE_TIME);
-}
+
 //для остановки игры 
 function Stop() {
 	clearInterval(timer);
@@ -115,7 +113,9 @@ function Update() {
 	Draws();
 }
 //даем пожить каждому обьекту игры
+var currentTime;
 function Lifes() {
+	//currentTime = new Date().getTime() + 30;
 	//mapBack
 	//mapBack.Life();
 	//карта
@@ -157,6 +157,8 @@ welcomePlayBtn.onclick = () => {
 	canvas.classList.remove('off');
 	metricscontrolspause.classList.remove('off');
 	welcomeContainer.classList.add('off');
+	///start game
+	restartGame();
 }
 
 // customization
@@ -229,7 +231,7 @@ function getDataTop() {
 				//подкрасим в топе себя
 				if (playerID == topArray[index][1]) {
 					topScore[index].style.background = "#00f";
-					topNick[index].style.background = "#00f";					
+					topNick[index].style.background = "#00f";
 				}
 			}
 			//Если нет нас в топе напишем ниже себя 
