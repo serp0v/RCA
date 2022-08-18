@@ -124,16 +124,35 @@ function Lifes() {
 	//карта
 	map.Life(hero);
 	//живем героя
-	hero.Life(map, score, finishScore);
+	hero.Life(map, score);
 	//рестарт игры
 	// const finishGame = document.getElementById('finishGame');
 	const finishGameWrapper = document.getElementById('finishGameWrapper');
-	if (hero.health < 0)
+	
 	// restartGame(),
-	Stop(),
-	finishGameWrapper.classList.remove('off');
-	// finishGame.classList.toggle('off'),
+	if (hero.health < 0){
+		Stop();
+		finishGameWrapper.classList.remove('off');
+		startAnima();
+	}
 }
+///////////////////////////////////////////////////////////////
+const finishScore = document.getElementById('finishScore');
+let currAnimaScore = 0;
+let timerAnima;
+function startAnima(){
+	let timestep = 1000 / hero.score;	
+	currAnimaScore = 0;
+	timerAnima = setInterval(UpdateAnima, timestep);
+}
+function UpdateAnima(){
+	finishScore.innerHTML = currAnimaScore++;	
+	if(currAnimaScore >= hero.score){
+		clearInterval(timerAnima);
+		timerAnima = null;
+	}
+}
+///////////////////////////////////////////////////////////////
 const restart = document.getElementById('restart');
 const home = document.getElementById('home');
 
@@ -148,9 +167,6 @@ restart.onclick = () => {
 	restartGame();
 
 }
-
-const finishScore = document.getElementById('finishScore');
-// finishScore.innerHTML = "Рекорд:" + hero.score;
 
 //рисование всех обьектов игры
 function Draws() {
@@ -320,11 +336,16 @@ backToGame.onclick = () => {
 	// Update()
 }
 
-// // открытие топа с приветственной страницы
+////////открытие топа с приветственной страницы//////
+topbtn.onclick = function topbtnopener() {
+ 	let parentToggler = topWelcomeToggler();
+}
+function topWelcomeToggler() {
+	topContainer.classList.toggle('off');
+	welcomeContainer.classList.toggle('off');
+}
+////////////////////////////////////////////////////
 
-// topbtn.onclick = function topbtnopener() {
-// 	let parentToggler = topWelcomeToggler();
-// }
 // const pauseTopBtn = document.getElementById('pauseTopBtn');
 // const closeTopMenu = document.getElementById('closeTopMenu');
 
@@ -351,10 +372,7 @@ backToGame.onclick = () => {
 // 	// topContainer.classList.toggle('off');
 // }
 // let parentToggler;
-// function topWelcomeToggler() {
-// 	topContainer.classList.toggle('off');
-// 	welcomeContainer.classList.toggle('off');
-// }
+
 // topContainer.classList.remove('off');
 // function topFinishToggler() {
 	

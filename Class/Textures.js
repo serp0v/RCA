@@ -29,7 +29,8 @@ export default class {
     }
     loadImagesKirpich() {
         let arr = [];
-        arr.push(this.loadTexture("images/bricks.png", 1));
+        // arr.push(this.loadTexture("images/bricks.png", 1));
+        arr.push(this.loadTexture("images/blocks/whiteblockwowall100p.png", 1));
         return arr;
     }
     loadImagesTechno() {
