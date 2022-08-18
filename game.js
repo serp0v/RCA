@@ -69,9 +69,10 @@ document.addEventListener("keydown", function Move(e) {
 		hero.antiJump();	
 	else if (e.key == ' ')  // down arrow
 		hero.Shot(map);	
-	else if (e.key == 'Escape')  // down arrow
+	else if (e.key == 'Escape'){
 		clickPause(),	
-		pause.classList.toggle("off");
+		pause.classList.toggle("off");///переключает
+	}
 });
 
 top.onclick = function (event) {
@@ -136,7 +137,7 @@ function Lifes() {
 		startAnima();
 	}
 }
-///////////////////////////////////////////////////////////////
+/////// AnimaScore /////////////////////////////////////////////
 const finishScore = document.getElementById('finishScore');
 let currAnimaScore = 0;
 let timerAnima;
@@ -194,6 +195,7 @@ function Draws() {
 const welcomePlayBtn = document.getElementById('welcomePlayBtn');
 const metricscontrolspause = document.getElementById('metricscontrolspause');
 const welcomeContainer = document.getElementById('welcomeContainer');
+const finishGameWrapper = document.getElementById('finishGameWrapper');
 
 welcomePlayBtn.onclick = () => {
 	canvas.classList.remove('off');
@@ -223,8 +225,6 @@ shop.onclick = () => {
 // top
 
 const topContainer = document.getElementById('topContainer');
-const topbtn = document.getElementById('topbtn');
-
 // score
 var topScore = [
 	document.getElementById('top1Score'),
@@ -268,13 +268,14 @@ function getDataTop() {
 
 			let playertopNumber = document.getElementById('playertopNumber');
 			//console.log(topArray);
+			let color = "#CfC";
 			for (let index = 0; index < 10; index++) {
 				topScore[index].textContent = topArray[index][2];
 				topNick[index].textContent = "Игрок " + topArray[index][1];
 				//подкрасим в топе себя
 				if (playerID == topArray[index][1]) {
-					// topScore[index].style.background = "#00f";
-					// topNick[index].style.background = "#00f";					
+					topScore[index].style.background = color;
+					topNick[index].style.background = color;					
 				}
 			}
 			//Если нет нас в топе напишем ниже себя 
@@ -284,8 +285,8 @@ function getDataTop() {
 				playertopNumber.textContent = topArray[index][4];
 				topScore[index].textContent = topArray[index][2];
 				topNick[index].textContent = "Игрок " + topArray[index][1];
-				// topScore[index].style.background = "#00f";
-				// topNick[index].style.background = "#00f";
+				topScore[index].style.background = color;
+				topNick[index].style.background = color;
 				playertopNumber.style.visibility = "visible";
 				topScore[index].style.visibility = "visible";
 				topNick[index].style.visibility = "visible";
@@ -336,18 +337,40 @@ backToGame.onclick = () => {
 	// Update()
 }
 
-////////открытие топа с приветственной страницы//////
-topbtn.onclick = function topbtnopener() {
- 	let parentToggler = topWelcomeToggler();
+////открытие топа из 3 разных кнопки/////////////
+const topbtn = document.getElementById('topbtn');
+const pauseTopBtn = document.getElementById('pauseTopBtn');
+const fgw_btn_openTop = document.getElementById('fgw_btn_openTop');
+
+topbtn.onclick = () => Form_Top_Show(welcomeContainer);
+pauseTopBtn.onclick = () => Form_Top_Show(pauseMenu);
+fgw_btn_openTop.onclick = () => Form_Top_Show(finishGameWrapper);
+
+function Form_Top_Show(parentForm) {
+	parentForm.classList.add("off");
+	canvas.classList.add("off");
+	metricscontrolspause.classList.add("off");
+	
+	topContainer.classList.remove("off");
+	topContainer.parentForm = parentForm;
+
 }
-function topWelcomeToggler() {
-	topContainer.classList.toggle('off');
-	welcomeContainer.classList.toggle('off');
+//закрываем топ
+document.getElementById('closeTopMenu').onclick =
+function Form_Top_Exit() {
+	topContainer.parentForm.classList.remove("off");
+
+	///
+	if(topContainer.parentForm != welcomeContainer){
+		metricscontrolspause.classList.remove("off");
+		canvas.classList.remove("off");
+	}
+
+	topContainer.classList.add("off");
+
 }
 ////////////////////////////////////////////////////
 
-// const pauseTopBtn = document.getElementById('pauseTopBtn');
-// const closeTopMenu = document.getElementById('closeTopMenu');
 
 // // открытие топа с паузы
 

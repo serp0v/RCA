@@ -35,17 +35,23 @@ width: 100%;
   align-items: center;
  }
 .top-number {
+  margin-left: 5%;
+  margin-right: 5%;
   padding-left: 1%;
   padding-right: 1%;
   width: 5%;
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
 }
 .player-nick {
   width: 47%;
+  padding-left: 5%;
 }
 .top-score {
   justify-content: flex-end;
   width: 47%;
-  padding-right: 1%;
+  padding-right: 6%;
 }
 
 .top-helpers-wrapper {
@@ -78,6 +84,7 @@ width: 100%;
     align-items: center;
     position: absolute;
     font-size: 2vh;
+    padding-right: 10vh;
     /* margin-right: 1vw; */
 
 }
@@ -177,10 +184,14 @@ width: 100%;
 }
 .gold {
   background-color: #ffd700;
+  font-weight: bold;
+  border-radius: 50%;
 }
 .silver {
   background-color: #c0c0c0;
+  border-radius: 50%;
 }
 .bronze {
   background-color: #cd7f32;
+  border-radius: 50%;
 }
