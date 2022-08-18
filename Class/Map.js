@@ -157,27 +157,29 @@ export default class {
 
     //стена на 3 этаже
     let kirpich = [false, false, false];
-    let freqBase = 5000;
+    let freqRandRange = 3000;//время между стен диапазон
+    let freqMin = 1000;//время между стен минимум
+    let stepLenMin = 1;//ступенька минимум
     if (this.lasttimegenfloar3 < millis && this.floor3[2] == window.BETON) {
-      if (this.floor3[0] > 2) {
+      if (this.floor3[0] > stepLenMin) {
         this.setKirpichBox(arr, Y3, xShift);
-        this.lasttimegenfloar3 = millis + getRandomInt(freqBase) + 2000;
+        this.lasttimegenfloar3 = millis + getRandomInt(freqRandRange) + freqMin;
         kirpich[0] = true;
       }
     }
     //стена на 2 этаже
     if (this.lasttimegenfloar2 < millis && this.floor2[2] == window.BETON && this.floor3[2] == window.BETON) {
-      if (this.floor2[0] > 2 && this.floor3[0] > 2) {
+      if (this.floor2[0] > stepLenMin && this.floor3[0] > 2) {
         this.setKirpichBox(arr, Y2, xShift);
-        this.lasttimegenfloar2 = millis + getRandomInt(freqBase) + 2000;
+        this.lasttimegenfloar2 = millis + getRandomInt(freqRandRange) + freqMin;
         kirpich[1] = true;
       }
     }
     //стена на 1 этаже
     if (!window.testGameMode && this.lasttimegenfloar1 < millis && this.floor1[2] == window.BETON && this.floor2[2] == window.BETON) {
-      if (this.floor2[0] > 2 && this.floor1[0] > 2) {
+      if (this.floor2[0] > stepLenMin && this.floor1[0] > 2) {
         this.setKirpichBox(arr, Y1, xShift);
-        this.lasttimegenfloar1 = millis + getRandomInt(freqBase) + 2000;
+        this.lasttimegenfloar1 = millis + getRandomInt(freqRandRange) + freqMin;
         kirpich[2] = true;
       }
     }
