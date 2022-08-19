@@ -10,6 +10,7 @@ export default class {
     Ymax = 0;
     health = 3;
     score = 0;
+    // finishScore;
     healthDom;
     bullets = [];
     bulletSpeed = 7;
@@ -82,7 +83,9 @@ export default class {
         this.healthDom.innerHTML = this.health;
     }
     //Life
-    Life(map, score) {
+    Life(map, score, 
+        // finishScore
+        ) {
         //удар об верхний край карты
         if (this.xy[1] < 100) {
             this.xy[1] = 110;
@@ -107,7 +110,9 @@ export default class {
         //score        
         this.score += 0.01;
         score.innerHTML = Math.round(this.score);
-
+        // this.finishScore.innerHTML = this.score;
+        // this.finishScore += 0;
+        // this.finishScore.innerHTML = this.score;
         //bullets
         this.bulletsLife(map);
     }
