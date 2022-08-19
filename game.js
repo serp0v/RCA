@@ -52,6 +52,8 @@ function restartGame() {
 		map = new Map(35, 10, textures);//карта
 	hero = new Hero(health, 200 / window.screenScale, 400, "images/rubicAsep.png", textures);// гг
 	isPause = false;
+	pause.classList.remove("off");
+	finishGameWrapper.classList.add('off');
 }
 ///keyboard game event
 document.addEventListener("keydown", function Move(e) {
@@ -68,7 +70,8 @@ document.addEventListener("keydown", function Move(e) {
 	else if (e.key == ' ')  // down arrow
 		hero.Shot(map);	
 	else if (e.key == 'Escape')  // down arrow
-		clickPause();	
+		clickPause(),	
+		pause.classList.toggle("off");
 });
 
 top.onclick = function (event) {
@@ -94,13 +97,12 @@ pause.onclick = () => clickPause();
 function clickPause() {
 	isPause = !isPause;
 	if (isPause)
-		pauseMenu.style.visibility = "visible",
-		pause.style.visibility = "hidden";
+		pauseMenu.style.visibility = "visible";
+		// pause.classList.toggle("off");
 	else
 		pauseMenu.style.visibility = "hidden";
 }
 /////////////////////////////////////////////////
-
 //для остановки игры 
 function Stop() {
 	clearInterval(timer);
@@ -122,12 +124,34 @@ function Lifes() {
 	//карта
 	map.Life(hero);
 	//живем героя
-	hero.Life(map, score);
+	hero.Life(map, score, finishScore);
 	//рестарт игры
+	// const finishGame = document.getElementById('finishGame');
+	const finishGameWrapper = document.getElementById('finishGameWrapper');
 	if (hero.health < 0)
-		
-		restartGame();
+	// restartGame(),
+	Stop(),
+	finishGameWrapper.classList.remove('off');
+	// finishGame.classList.toggle('off'),
 }
+const restart = document.getElementById('restart');
+const home = document.getElementById('home');
+
+home.onclick = () => {
+	welcomeContainer.classList.remove('off');
+	canvas.classList.add('off');
+	metricscontrolspause.classList.add('off');
+}
+
+restart.onclick = () => {
+	finishGameWrapper.classList.add('off');
+	restartGame();
+
+}
+
+const finishScore = document.getElementById('finishScore');
+// finishScore.innerHTML = "Рекорд:" + hero.score;
+
 //рисование всех обьектов игры
 function Draws() {
 	//очистка экрана
@@ -159,6 +183,7 @@ welcomePlayBtn.onclick = () => {
 	canvas.classList.remove('off');
 	metricscontrolspause.classList.remove('off');
 	welcomeContainer.classList.add('off');
+	pauseMenu.style.visibility = 'hidden';
 	///start game
 	restartGame();
 }
@@ -276,11 +301,18 @@ function getPlayerID() {
 // вернуться в главное меню
 
 const backToWelcome = document.getElementById('backToWelcome');
+const backToGame = document.getElementById('backToGame');
 
 backToWelcome.onclick = () => {
 	welcomeContainer.classList.remove('off');
 	canvas.classList.add('off');
 	metricscontrolspause.classList.add('off');
+}
+backToGame.onclick = () => {
+	// welcomeContainer.classList.remove('off');
+	// canvas.classList.add('off');
+	// metricscontrolspause.classList.add('off');
+	console.log(123)
 }
 
 // // открытие топа с приветственной страницы

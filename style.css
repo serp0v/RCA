@@ -242,6 +242,22 @@ html, body {
 .finish-btn ~ .finish-btn {
 	margin-left: 7px;
 }
+.rest > svg {
+	height: 40px;
+	width: 40px;
+	display: flex;
+	/* justify-content: center; */
+	margin-right: 5px;
+	align-items: center;
+}
+.finish-btn > svg {
+	height: 40px;
+	width: 40px;
+	display: flex;
+	justify-content: center;
+	/* margin-right: 5px; */
+	align-items: center;
+}
 /* .welcome-circle-btns{
 
 	display: flex;
