@@ -307,12 +307,17 @@ backToWelcome.onclick = () => {
 	welcomeContainer.classList.remove('off');
 	canvas.classList.add('off');
 	metricscontrolspause.classList.add('off');
+
 }
 backToGame.onclick = () => {
+	pauseMenu.style.visibility ="hidden";
+	isPause = !isPause;
+	// Start();
 	// welcomeContainer.classList.remove('off');
 	// canvas.classList.add('off');
 	// metricscontrolspause.classList.add('off');
-	console.log(123)
+	// console.log(123)
+	// Update()
 }
 
 // // открытие топа с приветственной страницы
