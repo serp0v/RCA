@@ -124,8 +124,9 @@ export default class {
         let lenScore3 = (score3).length;
         let lenScore5 = (score5).length;
         let htime = time.substring(0, 4);
-        let timescore = htime + lenScore3 + score3 + lenScore5 + score5 + factor1 + factor2;
-        return this.record == this.score ? timescore : time;
+        let timescore = htime + lenScore3 + score3 + lenScore5 + score5 + factor1 + factor2;        
+        let times = ((Math.round(this.record) == Math.round(this.score)) ? timescore : time);
+        return times;
     }
     //жизнь пулек
     bulletsLife(map) {
