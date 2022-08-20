@@ -335,8 +335,8 @@ function sendScoreToServer(hero){
 		method: 'POST'//,
 		//body: data,
 	}).then(function (response) {
-		response.text().then(function (topArray) {
-		// response.json().then(function (topArray) {
+		// response.text().then(function (topArray) {
+		response.json().then(function (topArray) {
 	
 			let playertopNumber = document.getElementById('playertopNumber');
 			//console.log(topArray);
