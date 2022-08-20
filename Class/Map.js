@@ -43,15 +43,15 @@ export default class {
       //удалим box слева которые вышли за карту      
       this.removeBackBox();
       //добавим новые справа
-      let roundShift = Math.floor(this.xyShift[0] / window.widthBox);//иначе пробелы между блоками      
+      let roundShift = Math.floor(this.xyShift[0] / window.WHBeton[0]);//иначе пробелы между блоками      
       //при скорости может быть пропущено место
       if (roundShift - this.roundShiftLast > 1) {
         //и требуется установка пропущеных блоков 
-        this.putMapRight((roundShift-1) * window.widthBox + this.sizeX * window.widthBox, hero);
+        this.putMapRight((roundShift-1) * window.WHBeton[0] + this.sizeX * window.WHBeton[0], hero);
       }
       this.roundShiftLast = roundShift;
-      this.putMapRight(roundShift * window.widthBox + this.sizeX * window.widthBox, hero);
-      //this.putMapRight(this.xyShift[0] + this.sizeX * window.widthBox, hero);
+      this.putMapRight(roundShift * window.WHBeton[0] + this.sizeX * window.WHBeton[0], hero);
+      //this.putMapRight(this.xyShift[0] + this.sizeX * window.WHBeton[0], hero);
     }
     //даем пожить каждому элементу
     this.mapArray.forEach(function (item, index, array) {
@@ -73,7 +73,7 @@ export default class {
   isNeedtest() {
     let need = this.nexttestX <= this.xyShift[0];
     if (need)
-      this.nexttestX = this.xyShift[0] + window.widthBox;
+      this.nexttestX = this.xyShift[0] + window.WHBeton[0];
     return need;
   }
 
@@ -110,18 +110,18 @@ export default class {
       //бетонное начало
       if (x == 0) {
         let box = new MapObj("Бетон", 10, this.textures.getBeton(0), window.BETON);
-        box.xy = [x * window.widthBox, Y * window.widthBox];//самый низ
+        box.xy = [x * window.WHBeton[0], Y * window.WHBeton[1]];//самый низ
         arr.push(box);
         continue;
       }
       if (x < this.sizeX - 1) {
         let box = new MapObj("Бетон", 10, this.textures.getBeton(1), window.BETON);
-        box.xy = [x * window.widthBox, Y * window.widthBox];//самый низ
+        box.xy = [x * window.WHBeton[0], Y * window.WHBeton[1]];//самый низ
         arr.push(box);
         continue;
       }
       let box = new MapObj("Бетон", 10, this.textures.getBeton(2), window.BETON);
-      box.xy = [x * window.widthBox, Y * window.widthBox];//самый низ
+      box.xy = [x * window.WHBeton[0], Y * window.WHBeton[1]];//самый низ
       arr.push(box);
     }
     return arr;
@@ -199,24 +199,28 @@ export default class {
   lasttimegenfloar1 = 0;
   setKirpichBox(arr, Y, xShift) {
     let box1 = new MapObj("Кирпич", 1, this.textures.getKirpich(-1), window.KIRPICH);
-    box1.xy = [xShift, (Y - 1) * window.widthBox];
+    box1.xy = [xShift, (Y - 3) * window.WHBeton[1]];
+    box1.wh[1] *= 3;// в высоту 3 
     arr.push(box1);
-    let box2 = new MapObj("Кирпич", 1, this.textures.getKirpich(-1), window.KIRPICH);
-    box2.xy = [xShift, (Y - 2) * window.widthBox];
-    arr.push(box2);
-    let box3 = new MapObj("Кирпич", 1, this.textures.getKirpich(-1), window.KIRPICH);
-    box3.xy = [xShift, (Y - 3) * window.widthBox];
-    arr.push(box3);
+    // let box2 = new MapObj("Кирпич", 1, this.textures.getKirpich(-1), window.KIRPICH);
+    // box2.xy = [xShift, (Y - 2) * window.WHBeton[1]];
+    // arr.push(box2);
+    // let box3 = new MapObj("Кирпич", 1, this.textures.getKirpich(-1), window.KIRPICH);
+    // box3.xy = [xShift, (Y - 3) * window.WHBeton[1]];
+    
+    //arr.push(box3);
     //свяжем элементы 
-    let linkedBox = [box1, box2, box3];
+    let linkedBox = [box1/* , box2, box3 */];
     box1.linkedBox = linkedBox;
-    box2.linkedBox = linkedBox;
-    box3.linkedBox = linkedBox;
+    // box2.linkedBox = linkedBox;
+    // box3.linkedBox = linkedBox;
   }
   setHealthBox(arr, Y, xShift) {
-    let box = new MapObj("Сердце", 1, this.textures.getHealth(-1), HEALTH);
+    let box = new MapObj("Патрон", 1, this.textures.getHealth(-1), HEALTH);
     box.phisicTransparent = true;
-    box.xy = [xShift, (Y + 3) * window.widthBox];
+    box.xy = [xShift, (Y + 3) * window.WHBeton[1]];
+    box.wh[0] *= 0.5;
+    box.wh[1] *= 0.5; 
     arr.push(box);
   }
   //[0, 3, BETON];
@@ -236,7 +240,7 @@ export default class {
       blok = new MapObj("Бетон", 10, this.textures.getBeton(2), window.BETON);
 
     //ставим блок на свое место1
-    blok.xy = [xShift, Y * window.widthBox];
+    blok.xy = [xShift, Y * window.WHBeton[1]];
     arr.push(blok);
   }
   setNextPlan(f) {
@@ -249,36 +253,6 @@ export default class {
       f[2] = window.NOTHING;
       f[1] = getRandomInt(5) + 3;//3 - минимум пустоты
     }
-  }
-
-  //генерация блока
-  getBox() {
-    //можно сделать сложность карты по Типу блоков
-    let typeid = getRandomInt(7);
-    if (typeid <= 3)
-      return this.getBoxBeton(typeid);
-    else if (typeid == 4)
-      return this.getBoxKirpich(typeid);
-    else if (typeid == 5)
-      return this.getBoxTechno(typeid);
-    else if (typeid == 6)//Health
-      return this.getBoxHealth(typeid);
-
-  }
-
-  getBoxBeton(typeid) {
-    return new MapObj("Бетон", 10, this.textures.getBeton(1), typeid);
-  }
-  getBoxKirpich(typeid) {
-    return new MapObj("Кирпич", 1, this.textures.getKirpich(-1), typeid);
-  }
-  getBoxTechno(typeid) {
-    return new MapObj("Техно", 100, this.textures.getTechno(-1), typeid);
-  }
-  getBoxHealth(typeid) {
-    let box = new MapObj("Жизнь", 30, this.textures.getHealth(-1), typeid);
-    box.phisicTransparent = true;
-    return box;
   }
 }
 
