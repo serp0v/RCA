@@ -9,10 +9,24 @@ var ctxTmp = canvasTmp.getContext("2d",{ alpha: false });//вытащим из �
 Resize();
 window.addEventListener("resize", Resize);//при смене размера экрана
 function Resize() {//меняем и размер элемента Canvas
-	canvas.width = window.innerWidth;
-	canvas.height = window.innerHeight;
-	canvasTmp.width = canvas.width;
-	canvasTmp.height = canvas.height;
+	let w = window.innerWidth;
+	let h = window.innerHeight;
+	
+	//ширина больше высоты
+	if(window.innerWidth >= window.innerHeight){
+		w = window.innerHeight * 16 / 9;
+		if(window.innerWidth < w)
+			w = window.innerWidth;
+	}
+	else{
+		//высота больше ширины
+		h = window.innerWidth * 9 / 16;
+		if(window.innerHeight < h)
+			h = window.innerHeight;
+	} 
+
+	canvasTmp.width = canvas.width = 	w;
+	canvasTmp.height = canvas.height = 	h;
 	window.screenScale = canvas.height / 1400;
 	window.screenshiftY = 0;
 }
@@ -54,35 +68,58 @@ function restartGame() {
 	Stop();
 	timer = setInterval(Update, UPDATE_TIME);
 	if (window.testGameMode)
-		map = new Map(20, 10, textures);//карта
+	map = new Map(20, 10, textures);//карта
 	else
-		map = new Map(35, 10, textures);//карта
+	map = new Map(35, 10, textures);//карта
 	hero = new Hero(health, 200 / window.screenScale, 400, "images/rubicAsep.png", textures);// гг
 	isPause = false;
+	//hide show form
 	pause.classList.remove("off");
+	canvas.classList.remove('off');
 	finishGameWrapper.classList.add('off');
+	welcomeContainer.classList.add('off');
+	topContainer.classList.add('off');
 }
 ///keyboard game event
 document.addEventListener("keydown", function Move(e) {
 	if (e.repeat)
 	return;
-	if (e.key == 'ArrowUp')  // up arrow
-	hero.Jump();	
-	else if (e.key == 'ArrowRight')  // right arrow
-	hero.Right(map);	
-	else if (e.key == 'ArrowLeft')  // left arrow
-	hero.Left(map);	
-	else if (e.key == 'ArrowDown')  // down arrow
-	hero.antiJump();	
-	else if (e.key == ' ')  // down arrow
-	hero.Shot(map);	
-	else if (e.key == 'Escape'){//Escape
+	
+	if(!finishGameWrapper.classList.contains("off")){
+		if (e.key == ' ' || e.key == 'Escape')//Space		
+			restartGame();
+		if (e.key == 'Enter')//Enter		
+			Form_Top_Show(finishGameWrapper);
+		return;
+	}
+
+	if(!canvas.classList.contains("off")){
+		if (e.key == 'ArrowUp')  // up arrow
+		hero.Jump();	
+		else if (e.key == 'ArrowRight')  // right arrow
+		hero.Right(map);	
+		else if (e.key == 'ArrowLeft')  // left arrow
+		hero.Left(map);	
+		else if (e.key == 'ArrowDown')  // down arrow
+		hero.antiJump();	
+		else if (e.key == ' ')  //' ' - Space
+		hero.Shot(map);	
+		else if (e.key == 'Escape'){//Escape
 		clickPause(),	
 		pause.classList.toggle("off");///переключает
-	}	
-	if(!finishGameWrapper.classList.contains("off")){
-		if (e.key == 'Enter')//Enter		
-		restartGame();
+		}	
+	}
+	
+	if(!topContainer.classList.contains("off")){
+		if (e.key == 'Enter'||e.key == 'Escape'||e.key == ' ')	//' ' - Space		
+			Form_Top_Exit();
+		return;
+	}
+	
+	if(!welcomeContainer.classList.contains("off")){
+		if (e.key == 'Enter'||e.key == 'Escape'||e.key == ' ')	//' ' - Space	
+			restartGame();
+		return;
 	}
 });
 requestAnimationFrame
@@ -170,10 +207,8 @@ home.onclick = () => {
 	canvas.classList.add('off');
 	metricscontrolspause.classList.add('off');
 }
-restart.onclick = () => {
-	finishGameWrapper.classList.add('off');
+restart.onclick = () => {	
 	restartGame();
-
 }
 
 //рисование всех обьектов игры в временный context//////////////////////////////
@@ -279,6 +314,7 @@ function getDataTop() {
 			let playertopNumber = document.getElementById('playertopNumber');
 			//console.log(topArray);
 			let color = "#CfC";
+			let colorNotSelect = "#0000";
 			for (let index = 0; index < 10; index++) {
 				topScore[index].textContent = topArray[index][2];
 				topNick[index].textContent = topArray[index][5];
@@ -286,6 +322,9 @@ function getDataTop() {
 				if (playerID == topArray[index][1]) {
 					topScore[index].style.background = color;
 					topNick[index].style.background = color;					
+				}else{
+					topScore[index].style.background = colorNotSelect;
+					topNick[index].style.background = colorNotSelect;
 				}
 			}
 			//Если нет нас в топе напишем ниже себя 
@@ -381,7 +420,8 @@ function Form_Top_Show(parentForm) {
 	topContainer.parentForm = parentForm;
 }
 //закрываем топ
-document.getElementById('closeTopMenu').onclick =
+let closeTopMenu = document.getElementById('closeTopMenu');
+closeTopMenu.onclick=()=>Form_Top_Exit();
 function Form_Top_Exit() {
 	topContainer.parentForm.classList.remove("off");
 
