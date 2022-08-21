@@ -262,7 +262,7 @@ a {
     margin-right: 2vw;
   }
   .welcome-container {
-    align-items: flex-start;
+    justify-content: start;
   }
   /* .welcome-PlayCustomizationEmpty {
     justify-content: center;
