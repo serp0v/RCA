@@ -156,7 +156,7 @@ function startAnima(){
 	timerAnima = setInterval(UpdateAnima, timestep);
 }
 function UpdateAnima(){
-	finishScore.innerHTML = currAnimaScore++;	
+	finishScore.innerHTML = ++currAnimaScore;	
 	if(currAnimaScore >= hero.score){
 		clearInterval(timerAnima);
 		timerAnima = null;
@@ -312,11 +312,10 @@ function getDataTop() {
 // localstorage
 function getPlayerID() {
 
-	// localStorage.getItem('PlayerID', playerID);
 	let playerID = localStorage.getItem('PlayerID', 0);
+	// let playerID = null;//localStorage.getItem('PlayerID', 0);
 	if (playerID == null) {
-		let date = new Date();
-		playerID = date.getTime();
+		playerID = new Date().getTime();
 		localStorage.setItem('PlayerID', playerID);
 	}
 	return playerID;
@@ -337,36 +336,7 @@ function sendScoreToServer(hero){
 	}).then(function (response) {
 		response.text().then(function (topArray) {
 		// response.json().then(function (topArray) {
-	
-			let playertopNumber = document.getElementById('playertopNumber');
-			//console.log(topArray);
-			let color = "#CfC";
-			for (let index = 0; index < 10; index++) {
-				topScore[index].textContent = topArray[index][2];
-				topNick[index].textContent = "Игрок " + topArray[index][1];
-				//подкрасим в топе себя
-				if (playerID == topArray[index][1]) {
-					topScore[index].style.background = color;
-					topNick[index].style.background = color;					
-				}
-			}
-			//Если нет нас в топе напишем ниже себя 
-			let index = 10;//десятой строкой идем мы
-			let playerPlaceID = topArray[index][4];
-			if (playerPlaceID > 10) {
-				playertopNumber.textContent = topArray[index][4];
-				topScore[index].textContent = topArray[index][2];
-				topNick[index].textContent = "Игрок " + topArray[index][1];
-				topScore[index].style.background = color;
-				topNick[index].style.background = color;
-				playertopNumber.style.visibility = "visible";
-				topScore[index].style.visibility = "visible";
-				topNick[index].style.visibility = "visible";
-			} else {
-				playertopNumber.style.visibility = "hidden";
-				topScore[index].style.visibility = "hidden";
-				topNick[index].style.visibility = "hidden";
-			}
+			console.log(topArray);	
 		});
 	});
 	//.then(console.log)
