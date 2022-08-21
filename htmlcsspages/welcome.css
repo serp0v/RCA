@@ -261,6 +261,9 @@ a {
     margin-left: 2vw;
     margin-right: 2vw;
   }
+  .welcome-container {
+    align-items: flex-start;
+  }
   /* .welcome-PlayCustomizationEmpty {
     justify-content: center;
     height: 116px;
