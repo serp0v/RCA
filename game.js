@@ -451,40 +451,7 @@ function Form_Top_Exit() {
 }
 ////////////////////////////////////////////////////
 
-
-
-
-// // открытие топа с паузы
-
-// closeTopMenu.onclick = function closeTopMenuOpener() {
-// 	// parentToggler;
-// 	if (topbtn.classList == "off") {
-// 		parentToggler = topWelcomeToggler();
-// 	}
-// 	if (pauseTopBtn === 1) {
-// 		parentToggler = topPauseToggler();
-// 	}
-// }
-// pauseTopBtn.onclick = function pauseTopBtnOpener() {
-// 	let parentToggler = topPauseToggler();
-// }
-// // кнопка закрыть в топе
-// function topPauseToggler() {
-// 	console.log(123)
-// 	// pauseMenu.style.visibility = "hidden";
-// 	// canvas.style.visibility = "hidden";
-// 	// metricscontrolspause.style.visibility = "hidden";
-// 	// topContainer.classList.toggle('off');
-// }
-// let parentToggler;
-
-// topContainer.classList.remove('off');
-// function topFinishToggler() {
-	
-	// }
-	// pauseMenu.style.visibility = "hidden";
-	// canvas.style.visibility = "hidden";
-	// metricscontrolspause.style.visibility = "hidden";
-	// pauseMenu.style.visibility = "visible";
-	// canvas.style.visibility = "visible";
-	// metricscontrolspause.style.visibility = "visible";
+// window.addEventListener('load', () => { /* Страница загружена, включая все ресурсы */
+// const preloader = document.querySelector('.preloader') /* находим блок Preloader */
+// preloader.classList.add('preloader_hidden') /* добавляем ему класс для скрытия */
+// })
