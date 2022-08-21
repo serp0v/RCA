@@ -1,23 +1,61 @@
-<!DOCTYPE html>
-<html>
 <!-- Настройки страницы - надо проверить требования яндех -->
 <!-- git pull https://github.com/serp0v/RCA.git main -->
+
+
+<!DOCTYPE html>
+<html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+	<meta charset="utf-8">
+	<!-- <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' /> -->
+	<!-- <meta name="mobile-web-app-capable" content="yes"> -->
+	<!-- <meta name="apple-mobile-web-app-capable" content="yes"> -->
+	<meta name="HandheldFriendly" content="true" />	
+
+    <!-- <title>Пример страницы с синхронным подключением SDK</title> -->
+    <script src="https://yandex.ru/games/sdk/v2"></script>
+    <script>
+        YaGames.init().then(ysdk => {
+            ysdk.adv.showFullscreenAdv();
+
+            const buttonElem = document.querySelector('#button');
+
+            let commonCounter = 0;
+            buttonElem.addEventListener('click', () => {
+                let counter = 0;
+
+                function getCallback(callbackName) {
+                    return () => {
+                        counter += 1;
+                        commonCounter += 1;
+
+                        console.log(`showFullscreenAdv; callback ${callbackName}; ${counter} call`);
+                    }
+                }
+
+                ysdk.adv.showFullscreenAdv({
+                    callbacks: {
+                        onClose: getCallback('onClose'),
+                        onOpen: getCallback('onOpen'),
+                        onError: getCallback('onError'),
+                        onOffline: getCallback('onOffline')
+                    }
+                });
+            });
+        });
+    </script>
+
 	<title>Cubic RGame</title>
 	<link rel="stylesheet" href="htmlcsspages/welcome.css">
 	<link rel="stylesheet" href="htmlcsspages/top.css">
 	<link rel="stylesheet" href="htmlcsspages/preloader.css">
 	<link rel="stylesheet" href="style.css">
-	<meta charset="utf-8">
-	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="mobile-web-app-capable" content="yes">
-	<meta name="HandheldFriendly" content="true" />	
 	<link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pompiere&display=swap" rel="stylesheet">
-	<!-- Yandex Games SDK -->
-	<!-- <script src="https://yandex.ru/games/sdk/v2"></script> -->
 </head>
 
 <body>
@@ -112,7 +150,7 @@
 		</div>
 	<!-- top -->
 		<div id="topContainer" class="top-container off">
-			<div class="preloader">
+			<div id = "toploader" class="preloader">
 				<!-- Добавляем готовую структуру Preloader -->
 				<div class="sk-chase">
 				  <div class="sk-chase-dot"></div>
@@ -135,78 +173,78 @@
 			<div class="top-div" id="top1">
 				<li class="li-top">
 					<div class="top-number  gold" id="topNumber">1</div>
-					<div class="player-nick" id="playerTop1Nick">Player</div>
-					<div class="top-score" id="top1Score">undefined</div>
+					<div class="player-nick" id="playerTop1Nick">....</div>
+					<div class="top-score" id="top1Score">---</div>
 				</li>
 			</div>
 			<div class="top-div" id="top2">
 				<li class="li-top ">
 					<div class="top-number silver" id="topNumber">2</div>
-					<div class="player-nick" id="playerTop2Nick">Player</div>
-					<div class="top-score" id="top2Score">undefined</div>
+					<div class="player-nick" id="playerTop2Nick">....</div>
+					<div class="top-score" id="top2Score">---</div>
 				</li>
 			</div>
 			<div class="top-div" id="top3">
 				<li class="li-top ">
 					<div class="top-number bronze" id="topNumber">3</div>
-					<div class="player-nick" id="playerTop3Nick">Player</div>
-					<div class="top-score" id="top3Score">undefined</div>
+					<div class="player-nick" id="playerTop3Nick">....</div>
+					<div class="top-score" id="top3Score">---</div>
 				</li>
 			</div>
 			<div class="top-div" id="top4">
 				<li class="li-top">
 					<div class="top-number" id="topNumber">4</div>
-					<div class="player-nick" id="playerTop4Nick">Player</div>
-					<div class="top-score" id="top4Score">undefined</div>
+					<div class="player-nick" id="playerTop4Nick">....</div>
+					<div class="top-score" id="top4Score">---</div>
 				</li>
 			</div>
 			<div class="top-div" id="top5">
 				<li class="li-top">
 					<div class="top-number" id="topNumber">5</div>
-					<div class="player-nick" id="playerTop5Nick">Player</div>
-					<div class="top-score" id="top5Score">undefined</div>
+					<div class="player-nick" id="playerTop5Nick">....</div>
+					<div class="top-score" id="top5Score">---</div>
 				</li>
 			</div>
 			<div class="top-div" id="top6">
 				<li class="li-top">
 					<div class="top-number" id="topNumber">6</div>
-					<div class="player-nick" id="playerTop6Nick">Player</div>
-					<div class="top-score" id="top6Score">undefined</div>
+					<div class="player-nick" id="playerTop6Nick">....</div>
+					<div class="top-score" id="top6Score">---</div>
 				</li>
 			</div>
 			<div class="top-div" id="top7">
 				<li class="li-top">
 					<div class="top-number" id="topNumber">7</div>
-					<div class="player-nick" id="playerTop7Nick">Player</div>
-					<div class="top-score" id="top7Score">undefined</div>
+					<div class="player-nick" id="playerTop7Nick">....</div>
+					<div class="top-score" id="top7Score">---</div>
 				</li>
 			</div>
 			<div class="top-div" id="top8">
 				<li class="li-top">
 					<div class="top-number" id="topNumber">8</div>
-					<div class="player-nick" id="playerTop8Nick">Player</div>
-					<div class="top-score" id="top8Score">undefined</div>
+					<div class="player-nick" id="playerTop8Nick">....</div>
+					<div class="top-score" id="top8Score">---</div>
 				</li>
 			</div>
 			<div class="top-div" id="top9">
 				<li class="li-top">
 					<div class="top-number" id="topNumber">9</div>
-					<div class="player-nick" id="playerTop9Nick">Player</div>
-					<div class="top-score" id="top9Score">undefined</div>
+					<div class="player-nick" id="playerTop9Nick">....</div>
+					<div class="top-score" id="top9Score">---</div>
 				</li>
 			</div>
 			<div class="top-div" id="top10">
 				<li class="li-top">
 					<div class="top-number" id="topNumber">10</div>
-					<div class="player-nick" id="playerTop10Nick">Player</div>
-					<div class="top-score" id="top10Score">undefined</div>
+					<div class="player-nick" id="playerTop10Nick">....</div>
+					<div class="top-score" id="top10Score">---</div>
 				</li>
 			</div>
 			<div class="top-div" id="playerTop">
 				<li class="li-top">
 					<div class="top-number" id="playertopNumber">>10</div>
-					<div class="player-nick" id="playerNick">Player</div>
-					<div class="top-score" id="playerTopScore">undefined</div>
+					<div class="player-nick" id="playerNick">....</div>
+					<div class="top-score" id="playerTopScore">---</div>
 				</li>
 			</div>
 			<!-- <div class="checkbox-wrapper">
@@ -232,28 +270,31 @@
 			</div>
 		</div>
 	</div>
-	<!-- запуск кода игры -->
-	<script type="module" src="game.js"></script>
+
 	<!-- реклама от яндекс -->
-	
-	<!-- <script>
+	<!-- <script> 
 		YaGames
 			.init()
 			.then(ysdk => {
 				console.log('Yandex SDK initialized');
 				window.ysdk = ysdk;
 			});
-		ysdk.adv.showFullscreenAdv({
-			callbacks: {
-				onClose: function (wasShown) {
-					// some action after close
-				},
-				onError: function (error) {
-					// some action on error
-				}
-			}
-		})
+		// ysdk.adv.showFullscreenAdv({
+		// 	callbacks: {
+		// 		onClose: function (wasShown) {
+		// 			// some action after close
+		// 		},
+		// 		onError: function (error) {
+		// 			// some action on error
+		// 		}
+		// 	}
+		// })
 	</script> -->
+
+<!-- запуск кода игры -->
+	<script type="module" src="game.js"></script>
+	
+	
 </body>
 
 </html>
