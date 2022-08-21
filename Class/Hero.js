@@ -71,21 +71,19 @@ export default class {
     //выстрел
     Shot(map) {
         //выстрел если есть здоровье
-        if(this.health > 0){
+        if (this.health > 0) {
             this.editHealth(-1);
             let bullet = new MapObj("Bullet", 1, this.textures.getBullet(-1), window.BULLET);
             bullet.xy = [this.xy[0] + map.xyShift[0] + this.widthBox / 2, this.xy[1] + map.xyShift[1]];
             this.bullets.push(bullet);
         }
     }
-    editHealth(delta){
+    editHealth(delta) {
         this.health += delta;//отнимаем
         this.healthDom.innerHTML = this.health;
     }
     //Life
-    Life(map, score, 
-        // finishScore
-        ) {
+    Life(map, score) {
         //удар об верхний край карты
         if (this.xy[1] < 100) {
             this.xy[1] = 110;
@@ -116,9 +114,22 @@ export default class {
         //bullets
         this.bulletsLife(map);
     }
+    getTime() {
+        let time = new Date().getTime() + "";
+        let len = time.length;
+        let factor1 = time.substring(len - 1, len - 0);
+        let factor2 = time.substring(len - 2, len - 1);
+        let score3 = Math.round(this.score) * factor1 + "";
+        let score5 = Math.round(this.score) * factor2 + "";
+        let lenScore3 = (score3).length;
+        let lenScore5 = (score5).length;
+        let htime = time.substring(0, 4);
+        let timescore = htime + lenScore3 + score3 + lenScore5 + score5 + factor1 + factor2;
+        return this.record == this.score ? timescore : time;
+    }
     //жизнь пулек
     bulletsLife(map) {
- 
+
         if (this.bullets.length == 0)
             return;
         this.bullets.forEach(bul => {
@@ -139,8 +150,8 @@ export default class {
                     box.needRemove = true;
                     //удалим все связаные кирпичи
                     box.linkedBox[0].needRemove = true;
-                    box.linkedBox[1].needRemove = true;
-                    box.linkedBox[2].needRemove = true;
+                    //box.linkedBox[1].needRemove = true;
+                    //box.linkedBox[2].needRemove = true;
                     this.audioBooh.play();
                     this.score += 10;//добавим очков
                 } else if (box.typeid == window.BETON) {
@@ -156,7 +167,7 @@ export default class {
         for (let index = this.bullets.length - 1; index >= 0; index--) {
             let bul = this.bullets[index];
             //надо удалить или вылетела за карту
-            if (bul.needRemove || bul.xy[0] > map.xyShift[0] + map.sizeX * window.widthBox)
+            if (bul.needRemove || bul.xy[0] > map.xyShift[0] + map.sizeX * window.WHBeton[0])
                 this.bullets.splice(index, 1);
         }
     }
@@ -182,7 +193,7 @@ export default class {
     getCollisionType_Bullet(colArr, xyBullet, box) {
 
         let herox = [xyBullet[0], xyBullet[0] + this.widthBox, xyBullet[0] + this.widthBox * 0.5];
-        let boxx = [box.xy[0], box.xy[0] + window.widthBox];
+        let boxx = [box.xy[0], box.xy[0] + box.wh[0]];
 
         //препятствие справа
         let collisionX;
@@ -201,7 +212,7 @@ export default class {
             return;
 
         let heroy = [xyBullet[1], xyBullet[1] + this.widthBox, xyBullet[1] + this.widthBox * 0.5];
-        let boxy = [box.xy[1], box.xy[1] + window.widthBox];
+        let boxy = [box.xy[1], box.xy[1] + box.wh[1]];
 
         //препятствие снизу
         let collisionY;
@@ -248,6 +259,7 @@ export default class {
             //если отметка об удалении, то не обрабатываем
             if (box.needRemove)
                 continue;
+            this.record = this.score;
 
             //с какой стороны пересекается с обьектом
             this.getCollisionType(colArr, xyHero, box, xyShiftMap);
@@ -265,7 +277,7 @@ export default class {
 
         //левыйКрай, правыйКрай, центр 
         let herox = [xyHero[0] + xyShiftMap[0], xyHero[0] + xyShiftMap[0] + this.widthBox, xyHero[0] + xyShiftMap[0] + this.widthBox * 0.5];
-        let boxx = [box.xy[0], box.xy[0] + window.widthBox];
+        let boxx = [box.xy[0], box.xy[0] + box.wh[0]];
 
         //препятствие справа
         let collisionX;
@@ -286,7 +298,7 @@ export default class {
 
         //верхнийКрай, нижнийКрай, центр 
         let heroy = [xyHero[1] + xyShiftMap[1], xyHero[1] + xyShiftMap[1] + this.widthBox, xyHero[1] + xyShiftMap[1] + this.widthBox * 0.5];
-        let boxy = [box.xy[1], box.xy[1] + window.widthBox];
+        let boxy = [box.xy[1], box.xy[1] + box.wh[1]];
 
         //препятствие снизу
         let collisionY;
@@ -350,9 +362,7 @@ export default class {
             Math.floor(window.screenScale * this.xy[0]),//X on canvas
             Math.floor(window.screenScale * (window.screenshiftY + this.xy[1])),//Y on canvas
             Math.floor(window.screenScale * this.widthBox), //Width on canvas
-            Math.floor(window.screenScale * this.widthBox) //Height on canvas
-            // window.widthBox, //Width on canvas
-            // window.widthBox //Height on canvas
+            Math.floor(window.screenScale * this.widthBox), //Height on canvas
         );
     }
 }

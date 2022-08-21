@@ -1,20 +1,27 @@
 console.log(window.navigator.userAgent); // узнать инфо о устройстве пользователя
 //получим элемент со страницы///////////////////////////
 var canvas = document.getElementById("canvas");
-var ctx = canvas.getContext("2d");//вытащим из него холст для рисования
-ctx.webkitImageSmoothingEnabled = false;
-ctx.mozImageSmoothingEnabled = false;
-ctx.imageSmoothingEnabled = false;
-
+var ctx = canvas.getContext("2d",{ alpha: false });//вытащим из него холст для рисования
+////фоновый канвас
+var canvasTmp = document.createElement('canvas');
+var ctxTmp = canvasTmp.getContext("2d",{ alpha: false });//вытащим из него холст для рисования
 //Canvas на весь размер экрана
 Resize();
 window.addEventListener("resize", Resize);//при смене размера экрана
 function Resize() {//меняем и размер элемента Canvas
 	canvas.width = window.innerWidth;
 	canvas.height = window.innerHeight;
+	canvasTmp.width = canvas.width;
+	canvasTmp.height = canvas.height;
 	window.screenScale = canvas.height / 1400;
 	window.screenshiftY = 0;
 }
+
+// start game 
+const welcomePlayBtn = document.getElementById('welcomePlayBtn');
+const metricscontrolspause = document.getElementById('metricscontrolspause');
+const welcomeContainer = document.getElementById('welcomeContainer');
+const finishGameWrapper = document.getElementById('finishGameWrapper');
 
 // управление стрелками
 const top = document.getElementById('top');
@@ -28,7 +35,7 @@ const pauseMenu = document.getElementById('pauseMenu');
 //переменные для игры //////////////////////////////////
 const UPDATE_TIME = 1000 / 60;
 var timer = null;
-window.widthBox = 100;
+window.WHBeton = [100,100];//размер блока по умолчанию
 
 //import MapBack from './Class/MapBack.js';//class героя
 import Textures from './Class/Textures.js';//для загрузки всех текстур 1 раз
@@ -58,22 +65,27 @@ function restartGame() {
 ///keyboard game event
 document.addEventListener("keydown", function Move(e) {
 	if (e.repeat)
-		return;
+	return;
 	if (e.key == 'ArrowUp')  // up arrow
-		hero.Jump();	
+	hero.Jump();	
 	else if (e.key == 'ArrowRight')  // right arrow
-		hero.Right(map);	
+	hero.Right(map);	
 	else if (e.key == 'ArrowLeft')  // left arrow
-		hero.Left(map);	
+	hero.Left(map);	
 	else if (e.key == 'ArrowDown')  // down arrow
-		hero.antiJump();	
+	hero.antiJump();	
 	else if (e.key == ' ')  // down arrow
-		hero.Shot(map);	
-	else if (e.key == 'Escape')  // down arrow
+	hero.Shot(map);	
+	else if (e.key == 'Escape'){//Escape
 		clickPause(),	
-		pause.classList.toggle("off");
+		pause.classList.toggle("off");///переключает
+	}	
+	if(!finishGameWrapper.classList.contains("off")){
+		if (e.key == 'Enter')//Enter		
+		restartGame();
+	}
 });
-
+requestAnimationFrame
 top.onclick = function (event) {
 	hero.Jump();	//shoot.innerHTML = 
 }
@@ -118,29 +130,27 @@ function Update() {
 //даем пожить каждому обьекту игры
 var currentTime;
 function Lifes() {
-	//currentTime = new Date().getTime() + 30;
-	//mapBack
-	//mapBack.Life();
 	//карта
 	map.Life(hero);
 	//живем героя
-	hero.Life(map, score);
-	//рестарт игры
-	// const finishGame = document.getElementById('finishGame');
-	const finishGameWrapper = document.getElementById('finishGameWrapper');
-	
+	hero.Life(map, score);	
 	// restartGame(),
 	if (hero.health < 0){
 		Stop();
 		finishGameWrapper.classList.remove('off');
+		sendScoreToServer(hero);		
 		startAnima();
 	}
 }
-///////////////////////////////////////////////////////////////
+/////// AnimaScore /////////////////////////////////////////////
+let audioScoreAnima = new Audio();
+audioScoreAnima.preload = 'auto';
+audioScoreAnima.src = './sound/animScore.mp3';
 const finishScore = document.getElementById('finishScore');
 let currAnimaScore = 0;
 let timerAnima;
 function startAnima(){
+	audioScoreAnima.play();
 	let timestep = 1000 / hero.score;	
 	currAnimaScore = 0;
 	timerAnima = setInterval(UpdateAnima, timestep);
@@ -155,45 +165,47 @@ function UpdateAnima(){
 ///////////////////////////////////////////////////////////////
 const restart = document.getElementById('restart');
 const home = document.getElementById('home');
-
 home.onclick = () => {
 	welcomeContainer.classList.remove('off');
 	canvas.classList.add('off');
 	metricscontrolspause.classList.add('off');
 }
-
 restart.onclick = () => {
 	finishGameWrapper.classList.add('off');
 	restartGame();
 
 }
 
-//рисование всех обьектов игры
+//рисование всех обьектов игры в временный context//////////////////////////////
 function Draws() {
 	//очистка экрана
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	ctxTmp.clearRect(0, 0, canvas.width, canvas.height);
 
 	//цвет фона
-	ctx.beginPath();
-	ctx.fillStyle = '#FFF';
+	ctxTmp.beginPath();
+	ctxTmp.fillStyle = '#FFF';
 	// ctx.fillStyle = '#20F';
-	ctx.fillRect(0, 0, canvas.width, canvas.height);
+	ctxTmp.fillRect(0, 0, canvas.width, canvas.height);
 
 	//рисуем mapBack
 	//mapBack.Draw(ctx, map);
 
 	//рисуем карту
-	map.Draw(ctx);
+	map.Draw(ctxTmp);
 
 	//рисуем гг
-	hero.Draw(ctx, map);
+	hero.Draw(ctxTmp, map);
+	//canvas.getContext('2d').drawImage(canvasTmp, 0, 0);
+}
+requestAnimationFrame(render);
+function render() {
+	//очистка экрана
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	ctx.drawImage(canvasTmp, 0, 0);
+	requestAnimationFrame(render);
 }
 
-// start game 
 
-const welcomePlayBtn = document.getElementById('welcomePlayBtn');
-const metricscontrolspause = document.getElementById('metricscontrolspause');
-const welcomeContainer = document.getElementById('welcomeContainer');
 
 welcomePlayBtn.onclick = () => {
 	canvas.classList.remove('off');
@@ -223,8 +235,6 @@ shop.onclick = () => {
 // top
 
 const topContainer = document.getElementById('topContainer');
-const topbtn = document.getElementById('topbtn');
-
 // score
 var topScore = [
 	document.getElementById('top1Score'),
@@ -253,7 +263,7 @@ var topNick = [
 	document.getElementById('playerNick'),
 ];
 //получим данные
-getDataTop();
+//getDataTop();
 function getDataTop() {
 	//получение playerID из браузера
 	let playerID = getPlayerID();
@@ -268,13 +278,14 @@ function getDataTop() {
 
 			let playertopNumber = document.getElementById('playertopNumber');
 			//console.log(topArray);
+			let color = "#CfC";
 			for (let index = 0; index < 10; index++) {
 				topScore[index].textContent = topArray[index][2];
-				topNick[index].textContent = "Игрок " + topArray[index][1];
+				topNick[index].textContent = topArray[index][5];
 				//подкрасим в топе себя
 				if (playerID == topArray[index][1]) {
-					// topScore[index].style.background = "#00f";
-					// topNick[index].style.background = "#00f";					
+					topScore[index].style.background = color;
+					topNick[index].style.background = color;					
 				}
 			}
 			//Если нет нас в топе напишем ниже себя 
@@ -283,9 +294,9 @@ function getDataTop() {
 			if (playerPlaceID > 10) {
 				playertopNumber.textContent = topArray[index][4];
 				topScore[index].textContent = topArray[index][2];
-				topNick[index].textContent = "Игрок " + topArray[index][1];
-				// topScore[index].style.background = "#00f";
-				// topNick[index].style.background = "#00f";
+				topNick[index].textContent = topArray[index][5];
+				topScore[index].style.background = color;
+				topNick[index].style.background = color;
 				playertopNumber.style.visibility = "visible";
 				topScore[index].style.visibility = "visible";
 				topNick[index].style.visibility = "visible";
@@ -314,8 +325,54 @@ function getPlayerID() {
 	//const output = String(date.getDate()).padStart(2, '0') + String(date.getMonth() + 1).padStart(2, '0') + date.getFullYear() + "|" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + ":" + date.getMilliseconds();
 	//localStorage.getItem('ID', output);
 }
-// вернуться в главное меню
+function sendScoreToServer(hero){
+	//получение playerID из браузера
+	let playerID = getPlayerID();
+	//получение Топ с сервера
+	let url = 'https://map3dpro.infobox.vip/score.php?pid=' + playerID +
+	"&time=" + hero.getTime();
+	fetch(url, {
+		method: 'POST'//,
+		//body: data,
+	}).then(function (response) {
+		response.text().then(function (topArray) {
+		// response.json().then(function (topArray) {
+	
+			let playertopNumber = document.getElementById('playertopNumber');
+			//console.log(topArray);
+			let color = "#CfC";
+			for (let index = 0; index < 10; index++) {
+				topScore[index].textContent = topArray[index][2];
+				topNick[index].textContent = "Игрок " + topArray[index][1];
+				//подкрасим в топе себя
+				if (playerID == topArray[index][1]) {
+					topScore[index].style.background = color;
+					topNick[index].style.background = color;					
+				}
+			}
+			//Если нет нас в топе напишем ниже себя 
+			let index = 10;//десятой строкой идем мы
+			let playerPlaceID = topArray[index][4];
+			if (playerPlaceID > 10) {
+				playertopNumber.textContent = topArray[index][4];
+				topScore[index].textContent = topArray[index][2];
+				topNick[index].textContent = "Игрок " + topArray[index][1];
+				topScore[index].style.background = color;
+				topNick[index].style.background = color;
+				playertopNumber.style.visibility = "visible";
+				topScore[index].style.visibility = "visible";
+				topNick[index].style.visibility = "visible";
+			} else {
+				playertopNumber.style.visibility = "hidden";
+				topScore[index].style.visibility = "hidden";
+				topNick[index].style.visibility = "hidden";
+			}
+		});
+	});
+	//.then(console.log)
+}
 
+// вернуться в главное меню
 const backToWelcome = document.getElementById('backToWelcome');
 const backToGame = document.getElementById('backToGame');
 
@@ -336,18 +393,39 @@ backToGame.onclick = () => {
 	// Update()
 }
 
-////////открытие топа с приветственной страницы//////
-topbtn.onclick = function topbtnopener() {
- 	let parentToggler = topWelcomeToggler();
+////открытие топа из 3 разных кнопки/////////////
+const topbtn = document.getElementById('topbtn');
+const pauseTopBtn = document.getElementById('pauseTopBtn');
+const fgw_btn_openTop = document.getElementById('fgw_btn_openTop');
+
+topbtn.onclick = () => Form_Top_Show(welcomeContainer);
+pauseTopBtn.onclick = () => Form_Top_Show(pauseMenu);
+fgw_btn_openTop.onclick = () => Form_Top_Show(finishGameWrapper);
+function Form_Top_Show(parentForm) {
+	getDataTop();//get data top from server
+	parentForm.classList.add("off");
+	canvas.classList.add("off");
+	metricscontrolspause.classList.add("off");
+	
+	topContainer.classList.remove("off");	
+	topContainer.parentForm = parentForm;
 }
-function topWelcomeToggler() {
-	topContainer.classList.toggle('off');
-	welcomeContainer.classList.toggle('off');
+//закрываем топ
+document.getElementById('closeTopMenu').onclick =
+function Form_Top_Exit() {
+	topContainer.parentForm.classList.remove("off");
+
+	///
+	if(topContainer.parentForm != welcomeContainer){
+		metricscontrolspause.classList.remove("off");
+		canvas.classList.remove("off");
+	}
+
+	topContainer.classList.add("off");
+
 }
 ////////////////////////////////////////////////////
 
-// const pauseTopBtn = document.getElementById('pauseTopBtn');
-// const closeTopMenu = document.getElementById('closeTopMenu');
 
 // // открытие топа с паузы
 

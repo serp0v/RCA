@@ -2,6 +2,7 @@ export default class {
 
   //координаты обьекта устанавливаются при генерации карты
   xy = [0, 0];  
+  wh = [window.WHBeton[0],window.WHBeton[1]];  
   needRemove = false;//удаление не требуется
   spriteFrameID = 0;//текущий кадр анимации
   spriteTimeNext = 0;//таймер следующей анимации
@@ -60,8 +61,8 @@ export default class {
 
         window.screenScale * (mapX + this.xy[0]),//X on canvas
         window.screenScale * (mapY + this.xy[1]),//Y on canvas /* window.screenshift */
-        window.screenScale * (window.widthBox), //Width on canvas
-        window.screenScale * (window.widthBox) //Height on canvas
+        window.screenScale * (this.wh[0]), //Width on canvas
+        window.screenScale * (this.wh[1]) //Height on canvas
       );
   }  
 }
