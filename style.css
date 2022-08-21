@@ -296,16 +296,19 @@ html, body {
 		flex-direction: column;
 		background-color: #fff;
 	}
+	.pauseMenu-container {
+		max-width: 580px;
+	}
 	.finish-game > div {
 		height: 70px;
 	}
 }
-@media (max-height: 300px) {
+@media (max-height: 350px) {
 	.finish-game {
 		display: flex;
 		max-width:245px;
 		height: 200px;
-		border: 1px solid #000;
+		border: 1px solid rgb(0, 0, 0);
 		font-size: 32px;
 		flex-direction: column;
 		background-color: #fff;
@@ -317,4 +320,15 @@ html, body {
 		height: 38px;
 		width: 38px;
 	}
+	.pauseMenu-container {
+		max-width: 320px;
+		height: 200px;
+	}
+	.pauseMenu-container > div {
+		height: 48px;
+	}
+	.pauseMenu-container > div > div {
+		border: none;
+	}
+
 }
