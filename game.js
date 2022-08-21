@@ -189,6 +189,7 @@ function Lifes() {
 	// restartGame(),
 	if (hero.health < 0){
 		Stop();
+		pause.classList.add("off");
 		finishGameWrapper.classList.remove('off');
 		sendScoreToServer(hero);		
 		startAnima();
