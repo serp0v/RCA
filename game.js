@@ -397,11 +397,11 @@ function sendScoreToServer(hero) {
 	let url = 'https://map3dpro.infobox.vip/score.php?pid=' + playerID +
 		"&time=" + hero.getTime();
 	fetch(url, {
-		method: 'POST'//,
-		//body: data,
+		method: 'POST'
 	}).then(function (response) {
 		response.text().then(function (topArray) {
-			topArray == topArray;
+			//ответ сервера
+			console.log(topArray);
 		});
 	});	
 }
