@@ -262,7 +262,7 @@ a {
     margin-right: 2vw;
   }
   .welcome-container {
-    justify-content: start;
+    /* justify-content: start; */
   }
   /* .welcome-PlayCustomizationEmpty {
     justify-content: center;
@@ -283,7 +283,7 @@ a {
   .welcome-PlayCustomizationEmpty > div {
     height: 50px;
     font-size: 8vh;
-    width: 75px;
+    width: 100px;
   }
 }
 @media (max-height: 220px) {
@@ -308,4 +308,5 @@ a {
     font-size: 8vh;
     width: 75px;
   } */
+
 }
