@@ -454,7 +454,7 @@ function Form_Top_Exit() {
 
 // fullscreen
 
-document.addEventListener('click', function (event) {
+document.addEventListener('onclick', function (event) {
 
 	// Игнорируем клики, которые не относятся к нашей кнопке
 	if (!event.target.hasAttribute('data-fullscreen')) return;
