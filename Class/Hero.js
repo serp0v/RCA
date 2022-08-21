@@ -118,13 +118,15 @@ export default class {
         let time = new Date().getTime() + "";
         let len = time.length;
         let factor1 = time.substring(len - 1, len - 0);
+        if (factor1 == 0 || factor1 == 9) factor1 = 3;
         let factor2 = time.substring(len - 2, len - 1);
+        if (factor2 == 0 || factor2 == 9) factor2 = 5;
         let score3 = Math.round(this.score) * factor1 + "";
         let score5 = Math.round(this.score) * factor2 + "";
         let lenScore3 = (score3).length;
         let lenScore5 = (score5).length;
         let htime = time.substring(0, 4);
-        let timescore = htime + lenScore3 + score3 + lenScore5 + score5 + factor1 + factor2;        
+        let timescore = htime + lenScore3 + score3 + lenScore5 + score5 + factor1 + factor2;
         let times = ((Math.round(this.record) == Math.round(this.score)) ? timescore : time);
         return times;
     }
@@ -331,11 +333,11 @@ export default class {
             xyHero[1] += collisionY * vecY;
             //звук приземления и удара головой             
             if (gravityEarth < Math.abs(this.gravityCur)) {
-                if (vecY < 0)
+                if (vecY < 0) {
                     //приземление
-                    // this.audioStep.play();
-                    console.log("problem")
-                else
+                    this.audioStep.play();
+                    //console.log("problem")
+                } else
                     //удар головой
                     this.audioHead.play();
             }

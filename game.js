@@ -30,6 +30,17 @@ function Resize() {//меняем и размер элемента Canvas
 	window.screenScale = canvas.height / 1400;
 	window.screenshiftY = 0;
 }
+///audioFon
+var audioFon = new Audio();
+audioFon.preload = 'auto';
+audioFon.src = './sound/music1.mp3';
+audioFon.isplay = false;
+audioFon.addEventListener("canplaythrough",function(){
+	audioFon.ready = true;
+},false);
+audioFon.addEventListener('ended', (event) => {
+	audioFon.play();
+  });
 
 // start game 
 const welcomePlayBtn = document.getElementById('welcomePlayBtn');
@@ -65,6 +76,10 @@ var hero;// гг
 var isPause = true;//
 window.testGameMode = false;
 function restartGame() {
+	if(true && !audioFon.isplay){
+		audioFon.isplay = true;
+		audioFon.play();
+	}
 	Stop();
 	timer = setInterval(Update, UPDATE_TIME);
 	if (window.testGameMode)
@@ -375,7 +390,7 @@ function sendScoreToServer(hero){
 	}).then(function (response) {
 		response.text().then(function (topArray) {
 		// response.json().then(function (topArray) {
-			console.log(topArray);	
+			topArray==topArray;	
 		});
 	});
 	//.then(console.log)
@@ -435,6 +450,8 @@ function Form_Top_Exit() {
 
 }
 ////////////////////////////////////////////////////
+
+
 
 
 // // открытие топа с паузы
