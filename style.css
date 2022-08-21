@@ -28,7 +28,8 @@ html, body {
 	background: #000;
 	position: absolute;
 	z-index: -1;
-	transform: translateX(5.5%);
+	transform: translateX(-50%);
+	left: 50%;
 	border: 1px solid #000;
 }
 
