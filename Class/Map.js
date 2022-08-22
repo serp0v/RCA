@@ -19,7 +19,7 @@ export default class {
   x2DistancePeriod = 10000;//каждые 3 метра генерим x2
   speedMapUpNextShift = 1000;
   speedMapAutoMax = 10;
-
+  
   //текущий план расстановки блоков
   floor3 = [0, 5, window.NOTHING];
   floor2 = [0, 2, window.BETON];
