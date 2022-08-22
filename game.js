@@ -1,32 +1,32 @@
 console.log(window.navigator.userAgent); // узнать инфо о устройстве пользователя
 //получим элемент со страницы///////////////////////////
 var canvas = document.getElementById("canvas");
-var ctx = canvas.getContext("2d",{ alpha: false });//вытащим из него холст для рисования
+var ctx = canvas.getContext("2d", { alpha: false });//вытащим из него холст для рисования
 ////фоновый канвас
 var canvasTmp = document.createElement('canvas');
-var ctxTmp = canvasTmp.getContext("2d",{ alpha: false });//вытащим из него холст для рисования
+var ctxTmp = canvasTmp.getContext("2d", { alpha: false });//вытащим из него холст для рисования
 //Canvas на весь размер экрана
 Resize();
 window.addEventListener("resize", Resize);//при смене размера экрана
 function Resize() {//меняем и размер элемента Canvas
 	let w = window.innerWidth;
 	let h = window.innerHeight;
-	
+
 	//ширина больше высоты
-	if(window.innerWidth >= window.innerHeight){
+	if (window.innerWidth >= window.innerHeight) {
 		w = window.innerHeight * 16 / 9;
-		if(window.innerWidth < w)
+		if (window.innerWidth < w)
 			w = window.innerWidth;
 	}
-	else{
+	else {
 		//высота больше ширины
 		h = window.innerWidth * 9 / 16;
-		if(window.innerHeight < h)
+		if (window.innerHeight < h)
 			h = window.innerHeight;
-	} 
+	}
 
-	canvasTmp.width = canvas.width = 	w;
-	canvasTmp.height = canvas.height = 	h;
+	canvasTmp.width = canvas.width = w;
+	canvasTmp.height = canvas.height = h;
 	window.screenScale = canvas.height / 1400;
 	window.screenshiftY = 0;
 }
@@ -35,12 +35,12 @@ var audioFon = new Audio();
 audioFon.preload = 'auto';
 audioFon.src = './sound/music1.mp3';
 audioFon.isplay = false;
-audioFon.addEventListener("canplaythrough",function(){
+audioFon.addEventListener("canplaythrough", function () {
 	audioFon.ready = true;
-},false);
+}, false);
 audioFon.addEventListener('ended', (event) => {
 	audioFon.play();
-  });
+});
 
 // start game 
 const welcomePlayBtn = document.getElementById('welcomePlayBtn');
@@ -60,7 +60,7 @@ const pauseMenu = document.getElementById('pauseMenu');
 //переменные для игры //////////////////////////////////
 const UPDATE_TIME = 1000 / 60;
 var timer = null;
-window.WHBeton = [100,100];//размер блока по умолчанию
+window.WHBeton = [100, 100];//размер блока по умолчанию
 
 //import MapBack from './Class/MapBack.js';//class героя
 import Textures from './Class/Textures.js';//для загрузки всех текстур 1 раз
@@ -76,16 +76,16 @@ var hero;// гг
 var isPause = true;//
 window.testGameMode = false;
 function restartGame() {
-	if(true && !audioFon.isplay){
+	if (true && !audioFon.isplay) {
 		audioFon.isplay = true;
 		audioFon.play();
 	}
 	Stop();
 	timer = setInterval(Update, UPDATE_TIME);
 	if (window.testGameMode)
-	map = new Map(20, 10, textures);//карта
+		map = new Map(20, 10, textures);//карта
 	else
-	map = new Map(35, 10, textures);//карта
+		map = new Map(35, 10, textures);//карта
 	hero = new Hero(health, 200 / window.screenScale, 400, "images/rubicAsep.png", textures);// гг
 	isPause = false;
 	//hide show form
@@ -98,9 +98,9 @@ function restartGame() {
 ///keyboard game event
 document.addEventListener("keydown", function Move(e) {
 	if (e.repeat)
-	return;
-	
-	if(!finishGameWrapper.classList.contains("off")){
+		return;
+
+	if (!finishGameWrapper.classList.contains("off")) {
 		if (e.key == ' ' || e.key == 'Escape')//Space		
 			restartGame();
 		if (e.key == 'Enter')//Enter		
@@ -108,31 +108,31 @@ document.addEventListener("keydown", function Move(e) {
 		return;
 	}
 
-	if(!canvas.classList.contains("off")){
+	if (!canvas.classList.contains("off")) {
 		if (e.key == 'ArrowUp')  // up arrow
-		hero.Jump();	
+			hero.Jump();
 		else if (e.key == 'ArrowRight')  // right arrow
-		hero.Right(map);	
+			hero.Right(map);
 		else if (e.key == 'ArrowLeft')  // left arrow
-		hero.Left(map);	
+			hero.Left(map);
 		else if (e.key == 'ArrowDown')  // down arrow
-		hero.antiJump();	
+			hero.antiJump();
 		else if (e.key == ' ')  //' ' - Space
-		hero.Shot(map);	
-		else if (e.key == 'Escape'){//Escape
-		clickPause(),	
-		pause.classList.toggle("off");///переключает
-		}	
+			hero.Shot(map);
+		else if (e.key == 'Escape') {//Escape
+			clickPause(),
+				pause.classList.toggle("off");///переключает
+		}
 	}
-	
-	if(!topContainer.classList.contains("off")){
-		if (e.key == 'Enter'||e.key == 'Escape'||e.key == ' ')	//' ' - Space		
+
+	if (!topContainer.classList.contains("off")) {
+		if (e.key == 'Enter' || e.key == 'Escape' || e.key == ' ')	//' ' - Space		
 			Form_Top_Exit();
 		return;
 	}
-	
-	if(!welcomeContainer.classList.contains("off")){
-		if (e.key == 'Enter'||e.key == 'Escape'||e.key == ' ')	//' ' - Space	
+
+	if (!welcomeContainer.classList.contains("off")) {
+		if (e.key == 'Enter' || e.key == 'Escape' || e.key == ' ')	//' ' - Space	
 			restartGame();
 		return;
 	}
@@ -162,7 +162,7 @@ function clickPause() {
 	isPause = !isPause;
 	if (isPause)
 		pauseMenu.style.visibility = "visible";
-		// pause.classList.toggle("off");
+	// pause.classList.toggle("off");
 	else
 		pauseMenu.style.visibility = "hidden";
 }
@@ -185,13 +185,13 @@ function Lifes() {
 	//карта
 	map.Life(hero);
 	//живем героя
-	hero.Life(map, score);	
+	hero.Life(map, score);
 	// restartGame(),
-	if (hero.health < 0){
+	if (hero.health < 0) {
 		Stop();
 		pause.classList.add("off");
 		finishGameWrapper.classList.remove('off');
-		sendScoreToServer(hero);		
+		sendScoreToServer(hero);
 		startAnima();
 	}
 }
@@ -202,15 +202,15 @@ audioScoreAnima.src = './sound/animScore.mp3';
 const finishScore = document.getElementById('finishScore');
 let currAnimaScore = 0;
 let timerAnima;
-function startAnima(){
+function startAnima() {
 	audioScoreAnima.play();
-	let timestep = 1000 / hero.score;	
+	let timestep = 1000 / hero.score;
 	currAnimaScore = 0;
 	timerAnima = setInterval(UpdateAnima, timestep);
 }
-function UpdateAnima(){
-	finishScore.innerHTML = ++currAnimaScore;	
-	if(currAnimaScore >= hero.score){
+function UpdateAnima() {
+	finishScore.innerHTML = ++currAnimaScore;
+	if (currAnimaScore >= hero.score) {
 		clearInterval(timerAnima);
 		timerAnima = null;
 	}
@@ -223,7 +223,7 @@ home.onclick = () => {
 	canvas.classList.add('off');
 	metricscontrolspause.classList.add('off');
 }
-restart.onclick = () => {	
+restart.onclick = () => {
 	restartGame();
 }
 
@@ -315,17 +315,31 @@ var topNick = [
 ];
 //получим данные
 //getDataTop();
+const toploader = document.getElementById('toploader');
 function getDataTop() {
+	//show toploader
+	toploader.classList.remove('preloader_hidden')
 	//получение playerID из браузера
 	let playerID = getPlayerID();
 	//получение Топ с сервера
 	let url = 'https://map3dpro.infobox.vip/score.php?pid=' + playerID;
+	// let url = 'https://toplist.infobox.vip/score.php?pid=' + playerID;
 	fetch(url, {
 		method: 'POST'//,
 		//body: data,
+	}).catch((e) => {
+		console.log('Error: ' + e.message);
+		alert("Ошибка доступа к серверу PlayerTop. \nПроверте наличие интернета.");
+		//hide toploader
+		toploader.classList.add('preloader_hidden') 
 	}).then(function (response) {
+
+		//ошибка доступа к серверу
+		if(response==undefined)
+			return;
+
 		// response.text().then(function (topArray) {
-		response.json().then(function (topArray) {
+		response.json().then(function (topArray) {			
 
 			let playertopNumber = document.getElementById('playertopNumber');
 			//console.log(topArray);
@@ -337,8 +351,8 @@ function getDataTop() {
 				//подкрасим в топе себя
 				if (playerID == topArray[index][1]) {
 					topScore[index].style.background = color;
-					topNick[index].style.background = color;					
-				}else{
+					topNick[index].style.background = color;
+				} else {
 					topScore[index].style.background = colorNotSelect;
 					topNick[index].style.background = colorNotSelect;
 				}
@@ -360,6 +374,10 @@ function getDataTop() {
 				topScore[index].style.visibility = "hidden";
 				topNick[index].style.visibility = "hidden";
 			}
+
+			//hide toploader
+			toploader.classList.add('preloader_hidden') /* добавляем ему класс для скрытия */
+
 		});
 	});
 	//.then(console.log)
@@ -379,19 +397,19 @@ function getPlayerID() {
 	//const output = String(date.getDate()).padStart(2, '0') + String(date.getMonth() + 1).padStart(2, '0') + date.getFullYear() + "|" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + ":" + date.getMilliseconds();
 	//localStorage.getItem('ID', output);
 }
-function sendScoreToServer(hero){
+function sendScoreToServer(hero) {
 	//получение playerID из браузера
 	let playerID = getPlayerID();
 	//получение Топ с сервера
 	let url = 'https://map3dpro.infobox.vip/score.php?pid=' + playerID +
-	"&time=" + hero.getTime();
+		"&time=" + hero.getTime();
 	fetch(url, {
 		method: 'POST'//,
 		//body: data,
 	}).then(function (response) {
 		response.text().then(function (topArray) {
-		// response.json().then(function (topArray) {
-			topArray==topArray;	
+			// response.json().then(function (topArray) {
+			topArray == topArray;
 		});
 	});
 	//.then(console.log)
@@ -408,7 +426,7 @@ backToWelcome.onclick = () => {
 
 }
 backToGame.onclick = () => {
-	pauseMenu.style.visibility ="hidden";
+	pauseMenu.style.visibility = "hidden";
 	isPause = !isPause;
 	// Start();
 	// welcomeContainer.classList.remove('off');
@@ -431,18 +449,18 @@ function Form_Top_Show(parentForm) {
 	parentForm.classList.add("off");
 	canvas.classList.add("off");
 	metricscontrolspause.classList.add("off");
-	
-	topContainer.classList.remove("off");	
+
+	topContainer.classList.remove("off");
 	topContainer.parentForm = parentForm;
 }
 //закрываем топ
 let closeTopMenu = document.getElementById('closeTopMenu');
-closeTopMenu.onclick=()=>Form_Top_Exit();
+closeTopMenu.onclick = () => Form_Top_Exit();
 function Form_Top_Exit() {
 	topContainer.parentForm.classList.remove("off");
 
 	///
-	if(topContainer.parentForm != welcomeContainer){
+	if (topContainer.parentForm != welcomeContainer) {
 		metricscontrolspause.classList.remove("off");
 		canvas.classList.remove("off");
 	}
@@ -458,17 +476,17 @@ document.addEventListener('onclick', function (event) {
 
 	// Игнорируем клики, которые не относятся к нашей кнопке
 	if (!event.target.hasAttribute('data-fullscreen')) return;
-  
+
 	// Если уже в полном, выйти
 	// Иначе, снова открыть полный экран
 	if (document.fullscreenElement) {
-	  document.exitFullscreen();
+		document.exitFullscreen();
 	} else {
-	  document.documentElement.requestFullscreen();
+		document.documentElement.requestFullscreen();
 	}
-  
-  }, false);
-  
+
+}, false);
+
 // window.addEventListener('load', () => { /* Страница загружена, включая все ресурсы */
 // const preloader = document.querySelector('.preloader') /* находим блок Preloader */
 // preloader.classList.add('preloader_hidden') /* добавляем ему класс для скрытия */
