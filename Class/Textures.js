@@ -4,6 +4,7 @@ export default class {
     constructor() {
         this.arrBeton = this.loadImagesBeton();
         this.arrKirpich = this.loadImagesKirpich();
+        this.arrGameFactor = this.loadImagesGamesFactor();
         this.arrTechno = this.loadImagesTechno();
         this.arrHealth = this.loadImagesHealth();
         this.arrBullet = this.loadImagesBullet();
@@ -27,9 +28,13 @@ export default class {
         arr.push(this.loadTexture("images/blocks/end-block.png", 1));
         return arr;
     }
+    loadImagesGamesFactor() {
+        let arr = [];
+        arr.push(this.loadTexture("images/x2.png", 4, 100));
+        return arr;
+    }
     loadImagesKirpich() {
         let arr = [];
-        // arr.push(this.loadTexture("images/bricks.png", 1));
         arr.push(this.loadTexture("images/blocks/whiteblockwowall100p.png", 1));
         return arr;
     }
@@ -71,6 +76,12 @@ export default class {
         if (id == -1)
             id = getRandomInt(this.arrHealth.length);
         return this.arrHealth[id];
+    }
+    getGameFactor(id) {
+        //если индекс не указан то выбираем любой
+        if (id == -1)
+            id = getRandomInt(this.arrGameFactor.length);
+        return this.arrGameFactor[id];
     }
     getBullet(id) {
         //если индекс не указан то выбираем любой
