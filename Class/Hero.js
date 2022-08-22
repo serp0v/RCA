@@ -145,10 +145,8 @@ export default class {
             //далее обработка обьектов(оружие, здоровье, огонь и тд)
             colArr.forEach(box => {
                 if (box.typeid == window.KIRPICH) {
-
                     //пуля для удаления
                     bul.needRemove = true;
-
                     //удалим кирпич
                     box.needRemove = true;
                     //удалим все связаные кирпичи

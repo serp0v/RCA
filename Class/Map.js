@@ -33,7 +33,6 @@ export default class {
     //генерация новой карты
     this.mapArray = this.getMapNew();
   }
-
   //Life
   roundShiftLast = 0;
   Life(hero) {
