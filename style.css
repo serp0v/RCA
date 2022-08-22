@@ -194,8 +194,8 @@ html, body {
 }
 .finish-game {
 	display: flex;
-	width: 580px;
-	height: 400px;
+	width: 50%;
+	height: 50%;
 	border: 1px solid #000;
 	font-size: 32px;
 	flex-direction: column;
