@@ -323,7 +323,6 @@ function getDataTop() {
 	let playerID = getPlayerID();
 	//получение Топ с сервера
 	let url = 'https://map3dpro.infobox.vip/score.php?pid=' + playerID;
-	// let url = 'https://toplist.infobox.vip/score.php?pid=' + playerID;
 	fetch(url, {
 		method: 'POST'//,
 		//body: data,
@@ -384,18 +383,12 @@ function getDataTop() {
 }
 // localstorage
 function getPlayerID() {
-
 	let playerID = localStorage.getItem('PlayerID', 0);
-	// let playerID = null;//localStorage.getItem('PlayerID', 0);
 	if (playerID == null) {
 		playerID = new Date().getTime();
 		localStorage.setItem('PlayerID', playerID);
 	}
 	return playerID;
-
-	// localStorage.setItem('Time', output);
-	//const output = String(date.getDate()).padStart(2, '0') + String(date.getMonth() + 1).padStart(2, '0') + date.getFullYear() + "|" + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds() + ":" + date.getMilliseconds();
-	//localStorage.getItem('ID', output);
 }
 function sendScoreToServer(hero) {
 	//получение playerID из браузера
@@ -404,15 +397,13 @@ function sendScoreToServer(hero) {
 	let url = 'https://map3dpro.infobox.vip/score.php?pid=' + playerID +
 		"&time=" + hero.getTime();
 	fetch(url, {
-		method: 'POST'//,
-		//body: data,
+		method: 'POST'
 	}).then(function (response) {
 		response.text().then(function (topArray) {
-			// response.json().then(function (topArray) {
-			topArray == topArray;
+			//ответ сервера
+			console.log(topArray);
 		});
-	});
-	//.then(console.log)
+	});	
 }
 
 // вернуться в главное меню

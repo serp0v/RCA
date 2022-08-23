@@ -3,6 +3,7 @@ window.BETON = 1;
 window.KIRPICH = 2;
 window.HEALTH = 3;
 window.BULLET = 4;
+window.X2 = 5;
 import MapObj from './MapObj.js';//class для работы с обьектами карты
 export default class {
 
@@ -14,8 +15,11 @@ export default class {
   textures; //хранилище текстур карты
   healthLastShift = 2;//для генерации здоровья
   healthDistancePeriod = 3000;//каждые 3 метра генерим здоровье
+  x2LastShift = 10000;//для генерации x2
+  x2DistancePeriod = 10000;//каждые 3 метра генерим x2
   speedMapUpNextShift = 1000;
-
+  speedMapAutoMax = 10;
+  
   //текущий план расстановки блоков
   floor3 = [0, 5, window.NOTHING];
   floor2 = [0, 2, window.BETON];
@@ -29,12 +33,13 @@ export default class {
     //генерация новой карты
     this.mapArray = this.getMapNew();
   }
-
   //Life
   roundShiftLast = 0;
   Life(hero) {
+
     //auto speedUp
     this.autoSpeedUp();
+    
     //смещаем карту
     this.xyShift[0] += this.speedMap;
     //this.xyShift[1] = hero.xy[1];//следование за картой
@@ -47,11 +52,16 @@ export default class {
       //при скорости может быть пропущено место
       if (roundShift - this.roundShiftLast > 1) {
         //и требуется установка пропущеных блоков 
-        this.putMapRight((roundShift-1) * window.WHBeton[0] + this.sizeX * window.WHBeton[0], hero);
+        this.putMapRight((roundShift - 1) * window.WHBeton[0] + this.sizeX * window.WHBeton[0], hero);
       }
       this.roundShiftLast = roundShift;
       this.putMapRight(roundShift * window.WHBeton[0] + this.sizeX * window.WHBeton[0], hero);
-      //this.putMapRight(this.xyShift[0] + this.sizeX * window.WHBeton[0], hero);
+      
+      //увеличение максимальной скорости
+      if(this.xyShift[0] > 10000) 
+        this.speedMapAutoMax += 1;
+      else if(this.xyShift[0] > 20000) 
+        this.speedMapAutoMax = 20;
     }
     //даем пожить каждому элементу
     this.mapArray.forEach(function (item, index, array) {
@@ -61,9 +71,10 @@ export default class {
     });
   }
   autoSpeedUp() {
+
     if (this.xyShift[0] < this.speedMapUpNextShift)
       return;
-    if (this.speedMap > 20)
+    if (this.speedMap > this.speedMapAutoMax)//максимальная скорость меняется в Life()
       return;
     this.speedMapUpNextShift += 2000;//каждый метр повышаем скорость
     this.speedMap += 1;
@@ -156,7 +167,7 @@ export default class {
 
 
     //стена на 3 этаже
-    let kirpich = [false, false, false];
+    let isSlotUsed = [false, false, false];
     let freqRandRange = 3000;//время между стен диапазон
     let freqMin = 1000;//время между стен минимум
     let stepLenMin = 1;//ступенька минимум
@@ -164,7 +175,7 @@ export default class {
       if (this.floor3[0] > stepLenMin) {
         this.setKirpichBox(arr, Y3, xShift);
         this.lasttimegenfloar3 = millis + getRandomInt(freqRandRange) + freqMin;
-        kirpich[0] = true;
+        isSlotUsed[0] = true;
       }
     }
     //стена на 2 этаже
@@ -172,7 +183,7 @@ export default class {
       if (this.floor2[0] > stepLenMin && this.floor3[0] > 2) {
         this.setKirpichBox(arr, Y2, xShift);
         this.lasttimegenfloar2 = millis + getRandomInt(freqRandRange) + freqMin;
-        kirpich[1] = true;
+        isSlotUsed[1] = true;
       }
     }
     //стена на 1 этаже
@@ -180,20 +191,43 @@ export default class {
       if (this.floor2[0] > stepLenMin && this.floor1[0] > 2) {
         this.setKirpichBox(arr, Y1, xShift);
         this.lasttimegenfloar1 = millis + getRandomInt(freqRandRange) + freqMin;
-        kirpich[2] = true;
+        isSlotUsed[2] = true;
       }
     }
+
     //генерим здоровье после кирпичей!!
+    this.setHealth(xShift, isSlotUsed, arr);
+
+    //Extension GamesFactor
+    this.setGamesFactor(xShift, isSlotUsed, arr);
+  }
+  //генерим здоровье после кирпичей!!
+  setHealth(xShift, isSlotUsed, arr) {
     if (xShift > this.healthLastShift) {
       //выберем этаж для установки здоровья
       let id = getRandomInt(3)
       //проверим чтобы не было там кирпича
-      if (!kirpich[id]) {
+      if (!isSlotUsed[id]) {
         this.setHealthBox(arr, id * 4, xShift);
-        this.healthLastShift = xShift + this.healthDistancePeriod;//+ getRandomInt(1000)/1000
+        this.healthLastShift = xShift + this.healthDistancePeriod;
+        isSlotUsed[id] = true;
       }
     }
   }
+  //Extension GamesFactor
+  setGamesFactor(xShift, isSlotUsed, arr) {
+    if (xShift > this.x2LastShift) {
+      //выберем этаж для установки x2
+      let id = 2;//getRandomInt(3)
+      //проверим чтобы не было там кирпича
+      if (!isSlotUsed[id]) {
+        this.setGamesFactorBox(arr, id * 4, xShift);
+        this.x2LastShift = xShift + this.x2DistancePeriod;//+ getRandomInt(1000)/1000
+        isSlotUsed[id] = true;
+      }
+    }
+  }
+
   lasttimegenfloar3 = 0;
   lasttimegenfloar2 = 0;
   lasttimegenfloar1 = 0;
@@ -207,7 +241,7 @@ export default class {
     // arr.push(box2);
     // let box3 = new MapObj("Кирпич", 1, this.textures.getKirpich(-1), window.KIRPICH);
     // box3.xy = [xShift, (Y - 3) * window.WHBeton[1]];
-    
+
     //arr.push(box3);
     //свяжем элементы 
     let linkedBox = [box1/* , box2, box3 */];
@@ -216,11 +250,19 @@ export default class {
     // box3.linkedBox = linkedBox;
   }
   setHealthBox(arr, Y, xShift) {
-    let box = new MapObj("Патрон", 1, this.textures.getHealth(-1), HEALTH);
+    let box = new MapObj("Патрон", 1, this.textures.getHealth(-1), window.HEALTH);
     box.phisicTransparent = true;
     box.xy = [xShift, (Y + 3) * window.WHBeton[1]];
     box.wh[0] *= 0.5;
-    box.wh[1] *= 0.5; 
+    box.wh[1] *= 0.5;
+    arr.push(box);
+  }
+  setGamesFactorBox(arr, Y, xShift) {
+    let box = new MapObj("x2", 2, this.textures.getGameFactor(0), window.X2);
+    box.phisicTransparent = true;
+    box.xy = [xShift, (Y + 3) * window.WHBeton[1]];
+    box.wh[0] *= 1.5;
+    box.wh[1] *= 1.5;
     arr.push(box);
   }
   //[0, 3, BETON];
