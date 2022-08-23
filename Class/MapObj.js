@@ -1,7 +1,8 @@
 export default class {
 
   //координаты обьекта устанавливаются при генерации карты
-  xy = [0, 0];
+  xy = [0, 0];  
+  wh = [window.WHBeton[0],window.WHBeton[1]];  
   needRemove = false;//удаление не требуется
   spriteFrameID = 0;//текущий кадр анимации
   spriteTimeNext = 0;//таймер следующей анимации
@@ -12,7 +13,7 @@ export default class {
   //для создания обьекта с параметрами
   constructor(name, value, texture, typeid) {
     this.name = name;
-    this.value = value;//устойчивость к повреждению
+    this.value = value;//возможное значение
     this.loaded = false;//готов  
     this.texture = texture;          
     this.typeid = typeid;
@@ -22,7 +23,7 @@ export default class {
   }
   isNeedRemove(map) {
     //удаление по причине выхода за карту
-    if (this.xy[0] > map.xyShift[0])
+    if (this.xy[0] < map.xyShift[0])
       return true;
     //по другой причине
     return this.needRemove;
@@ -44,7 +45,7 @@ export default class {
   }
 
   //Draw
-  Draw(ctx, map) {
+  Draw(ctx, mapX, mapY) {
     //рисуем обьект карты
     let xS = this.spriteFrameID * this.texture.imageWidthSprite; //First X on image
     let xE = this.texture.imageWidthSprite; //End X on image
@@ -58,10 +59,10 @@ export default class {
         xE, //End X on image
         this.texture.imageHeight, //End Y on image
 
-        -map.xyShift[0] + this.xy[0],//X on canvas
-        window.screenshiftY -map.xyShift[1] + this.xy[1],//Y on canvas /* window.screenshift */
-        window.widthBox, //Width on canvas
-        window.widthBox //Height on canvas
+        window.screenScale * (mapX + this.xy[0]),//X on canvas
+        window.screenScale * (mapY + this.xy[1]),//Y on canvas /* window.screenshift */
+        window.screenScale * (this.wh[0]), //Width on canvas
+        window.screenScale * (this.wh[1]) //Height on canvas
       );
   }  
 }
