@@ -36,8 +36,10 @@ export default class {
   //Life
   roundShiftLast = 0;
   Life(hero) {
+
     //auto speedUp
     this.autoSpeedUp();
+    
     //смещаем карту
     this.xyShift[0] += this.speedMap;
     //this.xyShift[1] = hero.xy[1];//следование за картой
@@ -69,9 +71,10 @@ export default class {
     });
   }
   autoSpeedUp() {
+
     if (this.xyShift[0] < this.speedMapUpNextShift)
       return;
-    if (this.speedMap > this.speedMapAutoMax)
+    if (this.speedMap > this.speedMapAutoMax)//максимальная скорость меняется в Life()
       return;
     this.speedMapUpNextShift += 2000;//каждый метр повышаем скорость
     this.speedMap += 1;
