@@ -197,7 +197,7 @@ html, body {
 	width: 50%;
 	height: 50%;
 	border: 1px solid #000;
-	font-size: 32px;
+	font-size: 6vh;
 	flex-direction: column;
 	background-color: #fff;
 }
@@ -205,12 +205,13 @@ html, body {
 	display: flex;
 	flex-direction: row;
 	width: 100%;
+	height: 25%;
 	/* height: 100px; */
 	align-items: center;
 	justify-content: center;
 }
 .finish-game-wrapper {
-	width: 100%;
+	width: 100vw;
 	height: 100vh;
 	display: flex;
 	justify-content: center;
@@ -222,36 +223,28 @@ html, body {
 	/* filter: blur(1px);  */
 }
 .finish-title {
-	height: 100px;
 }
 .finish-score {
-	height: 100px;
 	text-align: center;
 }
 .finish-btns {
-	height: 100px;
 	flex-direction: row;
 }
 .finish-btn {
 	border-radius: 50%;
 	display: flex;
 	flex-direction: row;
-	height: 60px;
-	width: 60px;
-	border: 4px solid #000;
+	height: 6vh;
+	width: 6vh;
+	border: 1vh solid #000;
 	justify-content: center;
 	align-items: center;
 }
 .finish-btn ~ .finish-btn {
-	margin-left: 7px;
+	margin-left: 2vh;
 }
 .rest > svg {
-	height: 66%;
-	width: 66%;
-	display: flex;
-	/* justify-content: center; */
-	margin-right: 5px;
-	align-items: center;
+	margin-right: 0.35vh;
 }
 .finish-btn > svg {
 	height: 66%;
@@ -286,7 +279,7 @@ html, body {
   .off {
 	display: none;
 }
-@media (max-height: 500px) {
+/* @media (max-height: 500px) {
 	.finish-game {
 		display: flex;
 		max-width: 580px;
@@ -331,4 +324,4 @@ html, body {
 		border: none;
 	}
 
-}
+} */
