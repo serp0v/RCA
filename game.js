@@ -62,6 +62,8 @@ const pause = document.getElementById('pause');
 const pauseMenu = document.getElementById('pauseMenu');
 
 //переменные для игры //////////////////////////////////
+const div_speed = document.getElementById('div_speed');
+const div_x2 = document.getElementById('div_x2');
 const UPDATE_TIME = 1000 / 60;
 var timer = null;
 window.WHBeton = [100, 100];//размер блока по умолчанию
@@ -74,7 +76,7 @@ import Hero from './Class/Hero.js';//class героя
 // var mapBack = new MapBack();//создание заднего фона
 var textures = new Textures();//для загрузки всех текстур 1 раз
 var map;//карта
-var hero;// гг
+var hero = new Hero();// гг
 
 //startGame
 var isPause = true;//
@@ -90,7 +92,7 @@ function restartGame() {
 		map = new Map(20, 10, textures);//карта
 	else
 		map = new Map(35, 10, textures);//карта
-	hero = new Hero(health, 200 / window.screenScale, 400, "images/rubicAsep.png", textures);// гг
+	hero = new Hero(health, 400 / window.screenScale, 400, "images/rubicAsep.png", textures);// гг
 	isPause = false;
 	//hide show form
 	pause.classList.remove("off");
@@ -98,6 +100,7 @@ function restartGame() {
 	finishGameWrapper.classList.add('off');
 	welcomeContainer.classList.add('off');
 	topContainer.classList.add('off');
+	div_x2.classList.add("off"); 
 }
 ///keyboard game event
 document.addEventListener("keydown", function Move(e) {
@@ -188,9 +191,12 @@ var currentTime;
 function Lifes() {
 	//карта
 	map.Life(hero);
+	div_speed.innerText = map.speedMap;
+
 	//живем героя
-	hero.Life(map, score);
-	// restartGame(),
+	hero.Life(map, div_x2);
+	
+	//герой die
 	if (hero.health < 0) {
 		Stop();
 		pause.classList.add("off");

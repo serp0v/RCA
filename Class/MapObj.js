@@ -23,7 +23,7 @@ export default class {
   }
   isNeedRemove(map) {
     //удаление по причине выхода за карту
-    if (this.xy[0] < map.xyShift[0])
+    if (this.xy[0] + window.WHBeton[0] < map.xyShift[0])
       return true;
     //по другой причине
     return this.needRemove;
