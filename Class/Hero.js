@@ -14,6 +14,9 @@ export default class {
     healthDom;
     bullets = [];
     bulletSpeed = 7;
+    curScoreFactor = 1;
+    curScoreFactorTime = 0;
+
     constructor(healthDom, x, y, imageFileName, textures) {
         this.textures = textures;
         this.healthDom = healthDom;
@@ -60,13 +63,8 @@ export default class {
                 map.speedMap = 20;
     }
     Left(map) {
-        if (window.testGameMode)
-            map.speedMap -= 10;
-        else
-            if (map.speedMap - 5 >= 5)
-                map.speedMap -= 5;
-            else
-                map.speedMap = 1;
+        if (map.speedMap - 5 > 10)
+            map.speedMap -= 5;
     }
     //выстрел
     Shot(map) {
@@ -104,13 +102,15 @@ export default class {
                 box.needRemove = true;
                 this.audioStar.play();
             }
+            if (box.typeid == window.X2) {
+                this.curScoreFactor = 2;
+                this.curScoreFactorTime = new Date().getDate() + 5000;
+                box.needRemove = true;
+                this.audioStar.play();
+            }
         });
-        //score        
-        this.score += 0.01;
-        score.innerHTML = Math.round(this.score);
-        // this.finishScore.innerHTML = this.score;
-        // this.finishScore += 0;
-        // this.finishScore.innerHTML = this.score;
+        //score                
+        this.setScoreAdd(0.01);
         //bullets
         this.bulletsLife(map);
     }
@@ -145,10 +145,8 @@ export default class {
             //далее обработка обьектов(оружие, здоровье, огонь и тд)
             colArr.forEach(box => {
                 if (box.typeid == window.KIRPICH) {
-
                     //пуля для удаления
                     bul.needRemove = true;
-
                     //удалим кирпич
                     box.needRemove = true;
                     //удалим все связаные кирпичи
@@ -156,7 +154,7 @@ export default class {
                     //box.linkedBox[1].needRemove = true;
                     //box.linkedBox[2].needRemove = true;
                     this.audioBooh.play();
-                    this.score += 10;//добавим очков
+                    this.setScoreAdd(10);
                 } else if (box.typeid == window.BETON) {
                     bul.needRemove = true;//пуля для удаления
                     this.audioBooh.play();
@@ -173,6 +171,13 @@ export default class {
             if (bul.needRemove || bul.xy[0] > map.xyShift[0] + map.sizeX * window.WHBeton[0])
                 this.bullets.splice(index, 1);
         }
+    }
+    setScoreAdd(sc) {
+        this.score += sc * this.curScoreFactor;//добавим очков        
+        score.innerHTML = Math.round(this.score);
+        if (this.curScoreFactor != 1)
+            if(this.curScoreFactorTime < new Date().getDate())
+                this.curScoreFactor = 1;
     }
     //обработка пересечения Bullet
     doCollisionMObjs_bullet(map, bul) {
