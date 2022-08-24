@@ -69,25 +69,28 @@ html, body {
 /* метрики */
 
 .metrics {
-	position: absolute;
-	z-index: 9997;
-	height: 3vh;
-	width: 40vh;
-	right: 8vw;
-	top: 0;
 	display: flex;
 	flex-direction: row;
+	top: 2vh;
+	/* height: 3vh; */
+	/* width: 40vh; */
+	left: 50%;
+	transform: translateX(-50%);
+	position: absolute;
+	z-index: 9997;
 }
 
 .metric_item {
-	width: 50%;
+	width: 25%;
 	height: 100%;
 	font-size: 5vh;
 	display: flex;
-	flex-wrap: wrap;
+	flex-direction:column;
+	/* flex-wrap: wrap; */
+	/* justify-content: end; */
 }
 .metric_item ~ .metric_item {
-	margin-left: 10vh;
+	/* margin-left: 10vh; */
 }
 .metric-title {
 	display: flex;
@@ -116,17 +119,25 @@ html, body {
 /* блок с паузой и вложенные в него кнопки */
 
 .pause {
-	position: absolute;
-	height: 6vh;
-	width: 12vh;
+	/* position: absolute; */
+	/* left: 0vw; */
+	height: 100%;
+	/* top: 36vh; */
+	width: 50%;
+	display: flex;
 }
 .pause-btn {
 	font-size: 6vh;
+	/* top: 2vh; */
+	/* height: 6vh;
+	width: 12vh; */
 	border: 0.1vh solid #000;
 	position: absolute;
 	z-index: 9999;
-	left: 5.5vw;
-	top: 3vh;
+	font-family: 'Pompiere', cursive;
+	font-weight: 200;
+	top: 2.5vh;
+	left: 8vh;
 }
 
 .pauseMenu-wrapper {
