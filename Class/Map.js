@@ -15,11 +15,14 @@ export default class {
   textures; //хранилище текстур карты
   healthLastShift = 2;//для генерации здоровья
   healthDistancePeriod = 3000;//каждые 3 метра генерим здоровье
-  x2LastShift = 10000;//для генерации x2
+  x2LastShift = 0;//10000;//для генерации x2
   x2DistancePeriod = 10000;//каждые 3 метра генерим x2
   speedMapUpNextShift = 1000;
-  speedMapAutoMax = 10;
-  
+
+  speedMapMax = 25;//максимальная скорость игрока
+  speedMapAuto = 10;//авто скорость игрока
+  speedMapMin = 10;//минимальная скорость игрока
+
   //текущий план расстановки блоков
   floor3 = [0, 5, window.NOTHING];
   floor2 = [0, 2, window.BETON];
@@ -39,7 +42,7 @@ export default class {
 
     //auto speedUp
     this.autoSpeedUp();
-    
+
     //смещаем карту
     this.xyShift[0] += this.speedMap;
     //this.xyShift[1] = hero.xy[1];//следование за картой
@@ -56,12 +59,7 @@ export default class {
       }
       this.roundShiftLast = roundShift;
       this.putMapRight(roundShift * window.WHBeton[0] + this.sizeX * window.WHBeton[0], hero);
-      
-      //увеличение максимальной скорости
-      if(this.xyShift[0] > 10000) 
-        this.speedMapAutoMax += 1;
-      else if(this.xyShift[0] > 20000) 
-        this.speedMapAutoMax = 20;
+
     }
     //даем пожить каждому элементу
     this.mapArray.forEach(function (item, index, array) {
@@ -71,13 +69,42 @@ export default class {
     });
   }
   autoSpeedUp() {
-
+    //приближаем к нужной скорости
     if (this.xyShift[0] < this.speedMapUpNextShift)
       return;
-    if (this.speedMap > this.speedMapAutoMax)//максимальная скорость меняется в Life()
+
+    //увеличение максимальной скорости
+    if (this.xyShift[0] > 30000)
+      this.speedMapAuto = this.speedMapMax;
+    else if (this.xyShift[0] > 20000)
+      this.speedMapAuto = 20;
+    else if (this.xyShift[0] < 10000)
+      if (this.speedMapAuto <= 15)//плавно подымаем до 15
+        this.speedMapAuto += 1;
+
+    if (this.speedMap >= this.speedMapAuto)
       return;
-    this.speedMapUpNextShift += 2000;//каждый метр повышаем скорость
+    this.speedMapUpNextShift += 500;//каждый метр повышаем скорость
     this.speedMap += 1;
+
+
+  }
+  setSpeedDelta(v) {
+    let speed = this.speedMap + v;
+
+    if (v < 0) {
+      if (speed <= this.speedMapMin)
+        this.speedMap = this.speedMapMin;
+      else
+        this.speedMap = speed;
+    }
+
+    if (v > 0) {
+      if (speed >= this.speedMapMax)
+        this.speedMap = this.speedMapMax;
+      else
+        this.speedMap = speed;
+    }
   }
 
   //переодичность проверки элементов

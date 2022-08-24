@@ -4,7 +4,7 @@ import MapObj from './MapObj.js';//class для работы с пулями
 export default class {
     xy = [0, 0];
     gravityCur = 0;//гравитация действующая на героя    
-    widthBox = 180;
+    widthBox = 100;
     speedReturn = 1;
     Xmax = 0;
     Ymax = 0;
@@ -49,22 +49,15 @@ export default class {
     }
     antiJump() {
         this.gravityCur = +45;
-        if (this.xy[1] < 100)
-            this.xy[1] = 110;
+        if (this.xy[1] < 170)
+            this.xy[1] = 170;
 
     }
     Right(map) {
-        if (window.testGameMode)
-            map.speedMap += 10;
-        else
-            if (map.speedMap + 5 <= 20)
-                map.speedMap += 5;
-            else
-                map.speedMap = 20;
+        map.setSpeedDelta(5);
     }
     Left(map) {
-        if (map.speedMap - 5 > 10)
-            map.speedMap -= 5;
+        map.setSpeedDelta(-5);
     }
     //выстрел
     Shot(map) {
@@ -81,15 +74,16 @@ export default class {
         this.healthDom.innerHTML = this.health;
     }
     //Life
-    Life(map, score) {
+    Life(map, div_x2) {
         //удар об верхний край карты
-        if (this.xy[1] < 100) {
-            this.xy[1] = 110;
+        if (this.xy[1] < 170) {
+            this.xy[1] = 170;
             this.gravityCur = 0;
         }
         //упал вниз
-        if (this.xy[1] > 1400)
+        if (this.xy[1] > 1400) {
             this.health = -1;
+        }
         //ушел за левый край
         if (this.xy[0] < 0)
             this.health = -1;
@@ -104,9 +98,10 @@ export default class {
             }
             if (box.typeid == window.X2) {
                 this.curScoreFactor = 2;
-                this.curScoreFactorTime = new Date().getDate() + 5000;
+                this.curScoreFactorTime = new Date().getTime() + 5000;
                 box.needRemove = true;
                 this.audioStar.play();
+                div_x2.classList.remove("off");
             }
         });
         //score                
@@ -175,9 +170,13 @@ export default class {
     setScoreAdd(sc) {
         this.score += sc * this.curScoreFactor;//добавим очков        
         score.innerHTML = Math.round(this.score);
-        if (this.curScoreFactor != 1)
-            if(this.curScoreFactorTime < new Date().getDate())
+        if (this.curScoreFactor != 1) {
+            let ctime = new Date().getTime();
+            if (this.curScoreFactorTime < ctime) {
+                div_x2.classList.add("off");
                 this.curScoreFactor = 1;
+            }
+        }
     }
     //обработка пересечения Bullet
     doCollisionMObjs_bullet(map, bul) {
@@ -249,8 +248,13 @@ export default class {
     doCollisionMObjs(map) {
 
         //новые xy для тестирования коллизии с ГГ
-        if (!window.testGameMode)
-            this.gravityCur += gravityEarth;//прибавим гравитацию        
+        if (!window.testGameMode) {
+            //прибавим гравитацию  
+            this.gravityCur += gravityEarth;
+            //ограничим гравитацию чтобы не проваливатся сквозь пол
+            if (this.gravityCur > window.WHBeton[1] * 0.45)
+                this.gravityCur = window.WHBeton[1] * 0.45;
+        }
         let xyHero = [
             this.xy[0] + (this.xy[0] < this.Xmax ? this.speedReturn : 0),
             this.xy[1] + this.gravityCur
@@ -258,7 +262,6 @@ export default class {
 
         //текущее смещение карты
         let xyShiftMap = map.xyShift;
-
         //проверим все элементы на карте по новым данным
         let colArr = [];
         for (let id = 0; id < map.mapArray.length; id++) {
@@ -336,6 +339,11 @@ export default class {
             xyHero[0] += collisionX * vecX;
         else {
             xyHero[1] += collisionY * vecY;
+
+            if (xyHero[1] >= 1400) {
+                this.gravityCur = this.gravityCur;
+            }
+
             //звук приземления и удара головой             
             if (gravityEarth < Math.abs(this.gravityCur)) {
                 if (vecY < 0) {
@@ -345,6 +353,10 @@ export default class {
                 } else
                     //удар головой
                     this.audioHead.play();
+            }
+            if (this.xy[1] > 1400) {
+                this.gravityCur = this.gravityCur;
+                //this.health = -1;
             }
             this.gravityCur = 0;//сброс скорости падения
         }
