@@ -4,7 +4,7 @@ import MapObj from './MapObj.js';//class для работы с пулями
 export default class {
     xy = [0, 0];
     gravityCur = 0;//гравитация действующая на героя    
-    widthBox = 180;
+    widthBox = 100;
     speedReturn = 1;
     Xmax = 0;
     Ymax = 0;
