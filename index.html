@@ -15,7 +15,7 @@
 	<!-- <meta name="apple-mobile-web-app-capable" content="yes"> -->
 	<meta name="HandheldFriendly" content="true" />	
 
-    <title>Пример страницы с синхронным подключением SDK</title>
+    <!-- <title>Пример страницы с синхронным подключением SDK</title> -->
     <script src="https://yandex.ru/games/sdk/v2"></script>
     <script>
         YaGames.init().then(ysdk => {
@@ -110,7 +110,7 @@
 		</canvas>
 		
 		<!-- управление, метрики и пауза -->
-		<div id="metricscontrolspause" class="off">
+		<div id="metricscontrolspause" style="height: 100%; width: 100%; position:absolute;" class="off">
 			<div id="controls" class="movement-shoot-cont">
 				<div class="hero-movement">
 					<div class="top" id="top"></div>
@@ -119,18 +119,25 @@
 				<div class="hero-shoot" id="shoot"></div>
 			</div>
 			<div id="metrics" class="metrics">
+				<div class="pause">
+					<button id="pause" class="pause-btn">Пауза</button>
+				</div>
 				<div class="health metric_item">
 					<div class="metric-title">Здоровье</div>
-					<!-- <div class="metric-icon"><img class="metric-icon-img" src="images/health n ammo.png" alt="123"></div> -->
 					<div id="health" class="metric-count-score">3</div>
 				</div>
 				<div class="score metric_item">
 					<div class="metric-title">Счет</div>
 					<div id="score"class="metric-count-score"></div>
 				</div>
-			</div>
-			<div class="pause">
-				<button id="pause" class="pause-btn">пауза</button>
+				<div class="score metric_item">
+					<div class="metric-title">Скорость</div>
+					<div id=""class="metric-count-score">0</div>
+				</div>
+				<div class="score metric_item">
+					<div class="metric-title">Икс</div>
+					<div id=""class="metric-count-score">0</div>
+				</div>
 			</div>
 			<div id="pauseMenu" class="pauseMenu-wrapper">
 				<div class="pauseMenu-container">

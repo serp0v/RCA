@@ -1,5 +1,6 @@
 console.log(window.navigator.userAgent); // узнать инфо о устройстве пользователя
 //получим элемент со страницы///////////////////////////
+const metrics = document.getElementById('metrics');
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d", { alpha: false });//вытащим из него холст для рисования
 ////фоновый канвас
@@ -11,24 +12,28 @@ window.addEventListener("resize", Resize);//при смене размера э�
 function Resize() {//меняем и размер элемента Canvas
 	let w = window.innerWidth;
 	let h = window.innerHeight;
-
+	// metrics.style.width = canvas.offsetWidth + 'px';
+	
+	
 	//ширина больше высоты
 	if (window.innerWidth >= window.innerHeight) {
 		w = window.innerHeight * 16 / 9;
 		if (window.innerWidth < w)
-			w = window.innerWidth;
+		w = window.innerWidth;
 	}
 	else {
 		//высота больше ширины
 		h = window.innerWidth * 9 / 16;
 		if (window.innerHeight < h)
-			h = window.innerHeight;
+		h = window.innerHeight;
 	}
 
 	canvasTmp.width = canvas.width = w;
 	canvasTmp.height = canvas.height = h;
 	window.screenScale = canvas.height / 1400;
 	window.screenshiftY = 0;
+	// metrics.style.width = canvas.offsetWidth + 'px';
+	new ResizeObserver(() => metrics.style.width = canvas.offsetWidth + 'px').observe(canvas);
 }
 ///audioFon
 var audioFon = new Audio();
@@ -47,7 +52,6 @@ const welcomePlayBtn = document.getElementById('welcomePlayBtn');
 const metricscontrolspause = document.getElementById('metricscontrolspause');
 const welcomeContainer = document.getElementById('welcomeContainer');
 const finishGameWrapper = document.getElementById('finishGameWrapper');
-
 // управление стрелками
 const top = document.getElementById('top');
 const bottom = document.getElementById('bottom');
