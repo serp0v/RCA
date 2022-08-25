@@ -16,8 +16,8 @@
 	<meta name="HandheldFriendly" content="true" />	
 
     <!-- <title>Пример страницы с синхронным подключением SDK</title> -->
-    <script src="https://yandex.ru/games/sdk/v2"></script>
-    <script>
+    <!-- <script src="https://yandex.ru/games/sdk/v2"></script> -->
+    <!-- <script>
         YaGames.init().then(ysdk => {
             ysdk.adv.showFullscreenAdv();
 
@@ -46,7 +46,7 @@
                 });
             });
         });
-    </script>
+    </script> -->
 
 	<title>Cubic RGame</title>
 	<link rel="stylesheet" href="htmlcsspages/welcome.css">
@@ -58,7 +58,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Pompiere&display=swap" rel="stylesheet">
 </head>
 
-<body>
+<body id = "body1">
 
 	<!-- создания экрана для рисования графики -->
 	<div class="wrapper">
@@ -96,7 +96,8 @@
 					<div class="welcome-social"></div>
 					<div class="welcome-social"></div>
 					<div class="welcome-social"></div>
-					<div data-fullscreen class="welcome-social"><svg data-fullscreen style="height: 90%; width: 90%;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path data-fullscreen d="M24 10.999v-10.999h-11l3.379 3.379-13.001 13-3.378-3.378v10.999h11l-3.379-3.379 13.001-13z"/></svg></div>
+					<div class="welcome-social"></div>
+					<!-- <div data-fullscreen class="welcome-social"><svg data-fullscreen style="height: 90%; width: 90%;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path data-fullscreen d="M24 10.999v-10.999h-11l3.379 3.379-13.001 13-3.378-3.378v10.999h11l-3.379-3.379 13.001-13z"/></svg></div> -->
 				</div>
 				<!-- <div class="welcome-rectangle-btns">
 					<div class="welcome-rectangle-btn"></div>
@@ -111,19 +112,32 @@
 		
 		<!-- управление, метрики и пауза -->
 		<div id="metricscontrolspause" style="height: 100%; width: 100%; position:absolute;" class="off">
+			<div id="movementHint" class="hero-movement-hint">
+				<div class="top-bottom-hint-cont">
+					<div class="top-hint">Вверх</div>
+					<div class="bottom-hint">Вниз</div>
+				</div>
+				<div class="top-bottom-hint-cont">
+					<div class="speed-hint">Скорость</div>
+					<div class="shoot-hint">Стрелять</div>
+				</div>
+			</div>
 			<div id="controls" class="movement-shoot-cont">
+				<!-- подсказки -->
+				<!--  -->
 				<div class="hero-movement">
 					<div class="top" id="top"></div>
 					<div class="bottom" id="bottom"></div>
 				</div>
 				<div class="hero-shoot" id="shoot"></div>
+				<div class="hero-shoot speed" id="div_speed_up"></div>
 			</div>
 			<div id="metrics" class="metrics">
 				<div class="pause">
 					<button id="pause" class="pause-btn">Пауза</button>
 				</div>
 				<div class="score metric_item">
-					<div id="div_x2" class="metric-count-score off" style="color:rgb(33, 214, 255)">X2</div>					
+					<div id="div_x2" class="metric-count-score off" style="color:rgb(33, 214, 255); font-size: 10vh;margin-top: 1.5vh;">X2</div>					
 				</div>
 				<div class="score metric_item">
 					<div class="metric-title">Скорость</div>
