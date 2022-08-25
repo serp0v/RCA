@@ -40,7 +40,6 @@ html, body {
 	z-index: 9997;
 	display: flex;
 	position: absolute;
-	bottom: 0;
 }
 
 .hero-movement {
@@ -50,21 +49,16 @@ html, body {
 	width: 50%;
 	flex-direction: column;
 }
-.top {
+.hero-movement > div {
+	display: flex;
 	width: 100%;
 	height: 50%;
-	display: flex;
+} 
+.top {
 }
 .bottom {
-	width: 100%;
-	height: 50%;
-	display: flex;
 }
 .hero-shoot {
-	display: flex;
-	height: 100%;
-	align-items: center;
-	width: 50%;
 }
 /* метрики */
 
