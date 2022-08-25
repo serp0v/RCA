@@ -1,6 +1,12 @@
 console.log(window.navigator.userAgent); // узнать инфо о устройстве пользователя
+window.mobileAndTabletCheck = function () {
+	let check = false;
+	(function (a) { if (/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test(a) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0, 4))) check = true; })(navigator.userAgent || navigator.vendor || window.opera);
+	return check;
+};
 //получим элемент со страницы///////////////////////////
 const metrics = document.getElementById('metrics');
+const movementHint = document.getElementById('movementHint');
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d", { alpha: false });//вытащим из него холст для рисования
 ////фоновый канвас
@@ -13,27 +19,30 @@ function Resize() {//меняем и размер элемента Canvas
 	let w = window.innerWidth;
 	let h = window.innerHeight;
 	// metrics.style.width = canvas.offsetWidth + 'px';
-	
-	
+
+
 	//ширина больше высоты
 	if (window.innerWidth >= window.innerHeight) {
 		w = window.innerHeight * 16 / 9;
 		if (window.innerWidth < w)
-		w = window.innerWidth;
+			w = window.innerWidth;
 	}
 	else {
 		//высота больше ширины
 		h = window.innerWidth * 9 / 16;
 		if (window.innerHeight < h)
-		h = window.innerHeight;
+			h = window.innerHeight;
 	}
 
 	canvasTmp.width = canvas.width = w;
-	canvasTmp.height = canvas.height = h;
+	canvasTmp.height = canvas.height = h;	
 	window.screenScale = canvas.height / 1400;
 	window.screenshiftY = 0;
+	window.startHeroX = Math.round(canvasTmp.width / 3); 
+
 	// metrics.style.width = canvas.offsetWidth + 'px';
 	new ResizeObserver(() => metrics.style.width = canvas.offsetWidth + 'px').observe(canvas);
+	new ResizeObserver(() => movementHint.style.width = canvas.offsetWidth + 'px').observe(canvas);
 }
 ///audioFon
 var audioFon = new Audio();
@@ -46,6 +55,9 @@ audioFon.addEventListener("canplaythrough", function () {
 audioFon.addEventListener('ended', (event) => {
 	audioFon.play();
 });
+window.onblur = function () {
+	clickPauseSet(true);
+};
 
 // start game 
 const welcomePlayBtn = document.getElementById('welcomePlayBtn');
@@ -55,6 +67,7 @@ const finishGameWrapper = document.getElementById('finishGameWrapper');
 // управление стрелками
 const top = document.getElementById('top');
 const bottom = document.getElementById('bottom');
+const div_speed_up = document.getElementById('div_speed_up');
 const shoot = document.getElementById('shoot');
 const health = document.getElementById('health');
 const score = document.getElementById('score');
@@ -76,23 +89,28 @@ import Hero from './Class/Hero.js';//class героя
 // var mapBack = new MapBack();//создание заднего фона
 var textures = new Textures();//для загрузки всех текстур 1 раз
 var map;//карта
-var hero = new Hero();// гг
+var hero;// гг
 
 //startGame
 var isPause = true;//
 window.testGameMode = false;
 function restartGame() {
-	if (true && !audioFon.isplay) {
-		audioFon.isplay = true;
-		audioFon.play();
-	}
+	let isMobile = window.mobileAndTabletCheck();
+	if(!isMobile)
+		movementHint.style.opacity = "0";
+		
+
+	startMusic();
 	Stop();
 	timer = setInterval(Update, UPDATE_TIME);
 	if (window.testGameMode)
 		map = new Map(20, 10, textures);//карта
 	else
 		map = new Map(35, 10, textures);//карта
-	hero = new Hero(health, 400 / window.screenScale, 400, "images/rubicAsep.png", textures);// гг
+
+	hero = new Hero(health, window.startHeroX /* / window.screenScale */, 400, textures);// гг
+	hero.editHealth(0);
+
 	isPause = false;
 	//hide show form
 	pause.classList.remove("off");
@@ -100,7 +118,13 @@ function restartGame() {
 	finishGameWrapper.classList.add('off');
 	welcomeContainer.classList.add('off');
 	topContainer.classList.add('off');
-	div_x2.classList.add("off"); 
+	div_x2.classList.add("off");
+}
+function startMusic() {
+	if (!audioFon.isplay) {
+		audioFon.isplay = true;
+		audioFon.play();
+	}
 }
 ///keyboard game event
 document.addEventListener("keydown", function Move(e) {
@@ -127,8 +151,8 @@ document.addEventListener("keydown", function Move(e) {
 		else if (e.key == ' ')  //' ' - Space
 			hero.Shot(map);
 		else if (e.key == 'Escape') {//Escape
-			clickPause(),
-				pause.classList.toggle("off");///переключает
+			clickPause();
+			pause.classList.toggle("off");///переключает
 		}
 	}
 
@@ -148,15 +172,13 @@ requestAnimationFrame
 top.onclick = function (event) {
 	hero.Jump();	//shoot.innerHTML = 
 }
-// right.onclick = function(event){
-// 	hero.Right();
-// }
 bottom.onclick = function (event) {
 	hero.antiJump();
 }
-// left.onclick = function(event){
-// 	hero.Left();
-// }
+div_speed_up.onclick = function (event) {
+	hero.Right(map);
+}
+
 
 //выстрел
 shoot.onclick = function (event) {
@@ -165,13 +187,21 @@ shoot.onclick = function (event) {
 // пауза
 pauseMenu.style.visibility = "hidden";
 pause.onclick = () => clickPause();
+function clickPauseSet(p) {
+	isPause = !p;
+	clickPause();
+}
 function clickPause() {
 	isPause = !isPause;
-	if (isPause)
+	if (isPause) {
 		pauseMenu.style.visibility = "visible";
-	// pause.classList.toggle("off");
-	else
+		audioFon.pause();
+		audioFon.isplay = false;
+	}
+	else {
+		startMusic();
 		pauseMenu.style.visibility = "hidden";
+	}
 }
 /////////////////////////////////////////////////
 //для остановки игры 
@@ -195,7 +225,7 @@ function Lifes() {
 
 	//живем героя
 	hero.Life(map, div_x2);
-	
+
 	//герой die
 	if (hero.health < 0) {
 		Stop();
@@ -278,23 +308,12 @@ welcomePlayBtn.onclick = () => {
 }
 
 // customization
-
-const customization = document.getElementById('customization');
-
-customization.onclick = () => {
-	welcomeContainer.classList.add('off');
-}
-
+// const customization = document.getElementById('customization');
 // shop
+// const shop = document.getElementById('shop');
 
-const shop = document.getElementById('shop');
-
-shop.onclick = () => {
-	welcomeContainer.classList.add('off');
-}
 
 // top
-
 const topContainer = document.getElementById('topContainer');
 // score
 var topScore = [
@@ -340,15 +359,15 @@ function getDataTop() {
 		console.log('Error: ' + e.message);
 		alert("Ошибка доступа к серверу PlayerTop. \nПроверте наличие интернета.");
 		//hide toploader
-		toploader.classList.add('preloader_hidden') 
+		toploader.classList.add('preloader_hidden')
 	}).then(function (response) {
 
 		//ошибка доступа к серверу
-		if(response==undefined)
+		if (response == undefined)
 			return;
 
 		// response.text().then(function (topArray) {
-		response.json().then(function (topArray) {			
+		response.json().then(function (topArray) {
 
 			let playertopNumber = document.getElementById('playertopNumber');
 			//console.log(topArray);
@@ -413,7 +432,7 @@ function sendScoreToServer(hero) {
 			//ответ сервера
 			console.log(topArray);
 		});
-	});	
+	});
 }
 
 // вернуться в главное меню
@@ -473,20 +492,20 @@ function Form_Top_Exit() {
 
 // fullscreen
 
-document.addEventListener('onclick', function (event) {
+// document.addEventListener('onclick', function (event) {
 
-	// Игнорируем клики, которые не относятся к нашей кнопке
-	if (!event.target.hasAttribute('data-fullscreen')) return;
+// 	// Игнорируем клики, которые не относятся к нашей кнопке
+// 	if (!event.target.hasAttribute('data-fullscreen')) return;
 
-	// Если уже в полном, выйти
-	// Иначе, снова открыть полный экран
-	if (document.fullscreenElement) {
-		document.exitFullscreen();
-	} else {
-		document.documentElement.requestFullscreen();
-	}
+// 	// Если уже в полном, выйти
+// 	// Иначе, снова открыть полный экран
+// 	if (document.fullscreenElement) {
+// 		document.exitFullscreen();
+// 	} else {
+// 		document.documentElement.requestFullscreen();
+// 	}
 
-}, false);
+// }, false);
 
 // window.addEventListener('load', () => { /* Страница загружена, включая все ресурсы */
 // const preloader = document.querySelector('.preloader') /* находим блок Preloader */

@@ -15,15 +15,21 @@ export default class {
     bullets = [];
     bulletSpeed = 7;
     curScoreFactor = 1;
-    curScoreFactorTime = 0;
+    curScoreFactorTime = 0;    
 
-    constructor(healthDom, x, y, imageFileName, textures) {
+    arrTextureHero;//текстуры главного героя
+    currTextureHeroID = 2;
+
+    constructor(healthDom, x, y, textures) {
+        
+        this.arrTextureHero = textures.arrTextureHero;
         this.textures = textures;
+        
         this.healthDom = healthDom;
         this.xy[0] = this.Xmax = x;
         this.xy[1] = this.Ymax = y;
-        this.image = new Image();
-        this.image.src = imageFileName;
+        // this.image = new Image();
+        // this.image.src = imageFileName;
 
         this.audioStep = new Audio();
         this.audioStep.preload = 'auto';
@@ -43,6 +49,7 @@ export default class {
         this.audioBooh.src = './sound/booh.mp3';
 
     }
+
     //прыгнуть
     Jump() {
         this.gravityCur = -45;
@@ -72,6 +79,10 @@ export default class {
     editHealth(delta) {
         this.health += delta;//отнимаем
         this.healthDom.innerHTML = this.health;
+        if(delta > 0 && this.currTextureHeroID < this.arrTextureHero.length)
+            this.currTextureHeroID = this.health - 1;
+        else if(delta < 0 && this.currTextureHeroID >= 1)
+            this.currTextureHeroID = this.health - 1;
     }
     //Life
     Life(map, div_x2) {
@@ -370,14 +381,17 @@ export default class {
             bul.Draw(ctx, mapX, mapY);
         });
 
+        let textureHero = this.arrTextureHero[this.currTextureHeroID];
+        
         //hero
         ctx.drawImage(
-            this.image, //Image
+            //this.image, //Image
+            textureHero.image,
 
             0, //First X on image
             0, //First Y on image
-            this.image.width, //End X on image
-            this.image.height, //End Y on image
+            textureHero.image.width, //End X on image
+            textureHero.image.height, //End Y on image
 
             Math.floor(window.screenScale * this.xy[0]),//X on canvas
             Math.floor(window.screenScale * (window.screenshiftY + this.xy[1])),//Y on canvas
