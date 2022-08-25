@@ -213,6 +213,7 @@ function Stop() {
 function Update() {
 	//во время паузы только пререрисовываются
 	if (isPause){
+		//fix black render
 		Draws();
 		return;
 	}
