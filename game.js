@@ -38,7 +38,7 @@ function Resize() {//меняем и размер элемента Canvas
 	canvasTmp.height = canvas.height = h;	
 	window.screenScale = canvas.height / 1400;
 	window.screenshiftY = 0;
-	window.startHeroX = Math.round(canvasTmp.width / 3); 
+	window.startHeroX = Math.round(canvasTmp.width / 3.5) / window.screenScale; 
 
 	// metrics.style.width = canvas.offsetWidth + 'px';
 	new ResizeObserver(() => metrics.style.width = canvas.offsetWidth + 'px').observe(canvas);

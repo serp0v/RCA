@@ -54,12 +54,12 @@ html, body {
 	width: 100%;
 	height: 50%;
 } 
-.top {
+/* .top {
 }
 .bottom {
 }
 .hero-shoot {
-}
+} */
 /* метрики */
 
 .metrics {
@@ -213,8 +213,8 @@ html, body {
 	/* border: 1px solid #000; */
 	/* filter: blur(1px);  */
 }
-.finish-title {
-}
+/* .finish-title {
+} */
 .finish-score {
 	text-align: center;
 }
@@ -256,8 +256,8 @@ html, body {
 	transform: translateX(-50%);
 	left: 50%;
 }
-.hero-movement-hint ~ .hero-movement-hint {
-}
+/* .hero-movement-hint ~ .hero-movement-hint {
+} */
 
 .top-bottom-hint-cont {
 	display: flex;
