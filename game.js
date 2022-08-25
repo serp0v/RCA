@@ -76,7 +76,7 @@ import Hero from './Class/Hero.js';//class героя
 // var mapBack = new MapBack();//создание заднего фона
 var textures = new Textures();//для загрузки всех текстур 1 раз
 var map;//карта
-var hero = new Hero();// гг
+var hero;// гг
 
 //startGame
 var isPause = true;//
@@ -92,7 +92,9 @@ function restartGame() {
 		map = new Map(20, 10, textures);//карта
 	else
 		map = new Map(35, 10, textures);//карта
-	hero = new Hero(health, 400 / window.screenScale, 400, "images/rubicAsep.png", textures);// гг
+
+	hero = new Hero(health, 400 / window.screenScale, 400,  textures);// гг
+	
 	isPause = false;
 	//hide show form
 	pause.classList.remove("off");

@@ -8,6 +8,16 @@ export default class {
         this.arrTechno = this.loadImagesTechno();
         this.arrHealth = this.loadImagesHealth();
         this.arrBullet = this.loadImagesBullet();
+        this.arrTextureHero = this.loadTextureHero();
+    }
+    loadTextureHero() {
+        let arr = [];
+        arr.push(this.loadTexture("images/hps/rubicAsep1hp.png", 1));
+        arr.push(this.loadTexture("images/hps/rubicAsep2hp.png", 1));
+        arr.push(this.loadTexture("images/hps/rubicAsep3hp.png", 1));
+        arr.push(this.loadTexture("images/hps/rubicAsep4hp.png", 1));
+        arr.push(this.loadTexture("images/hps/rubicAsep6hp.png", 1));
+        return arr;
     }
     loadTexture(fileName, spriteCount) {
         return new Texture(fileName, spriteCount);
