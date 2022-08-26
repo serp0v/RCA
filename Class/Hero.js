@@ -115,8 +115,8 @@ export default class {
                 div_x2.classList.remove("off");
             }
         });
-        //score                
-        this.setScoreAdd(0.01);
+        //score
+        this.setScoreAdd(0.01 * map.speedMap); 
         //bullets
         this.bulletsLife(map);
     }
