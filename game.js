@@ -211,8 +211,12 @@ function Stop() {
 }
 //обновление и рисование всех обьектов
 function Update() {
-	if (isPause)
+	//во время паузы только пререрисовываются
+	if (isPause){
+		//fix black render
+		Draws();
 		return;
+	}
 	Lifes();
 	Draws();
 }
