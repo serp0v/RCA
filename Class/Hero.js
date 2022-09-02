@@ -116,7 +116,7 @@ export default class {
             }
         });
         //score
-        this.setScoreAdd(0.01 * map.speedMap); 
+        this.setScoreAdd(0.01 * map.speedMap);
         //bullets
         this.bulletsLife(map);
     }
