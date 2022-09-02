@@ -35,29 +35,65 @@ function Resize() {//меняем и размер элемента Canvas
 	}
 
 	canvasTmp.width = canvas.width = w;
-	canvasTmp.height = canvas.height = h;	
+	canvasTmp.height = canvas.height = h;
 	window.screenScale = canvas.height / 1400;
 	window.screenshiftY = 0;
-	window.startHeroX = Math.round(canvasTmp.width / 3.5) / window.screenScale; 
+	window.startHeroX = Math.round(canvasTmp.width / 3.5) / window.screenScale;
 
 	// metrics.style.width = canvas.offsetWidth + 'px';
 	new ResizeObserver(() => metrics.style.width = canvas.offsetWidth + 'px').observe(canvas);
 	new ResizeObserver(() => movementHint.style.width = canvas.offsetWidth + 'px').observe(canvas);
 }
-///audioFon
-var audioFon = new Audio();
-audioFon.preload = 'auto';
-audioFon.src = './sound/music1.mp3';
-audioFon.isplay = false;
-audioFon.addEventListener("canplaythrough", function () {
-	audioFon.ready = true;
+///music Web Audio API
+var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+var audioSource;
+getDataMusic();
+function getDataMusic() {
+	audioSource = audioCtx.createBufferSource();
+	audioSource.isplay = false;
+	var request = new XMLHttpRequest();  
+	request.open('GET', './sound/music1.mp3', true);  
+	request.responseType = 'arraybuffer';
+	request.onload = function() {
+	  var audioData = request.response;  
+	  audioCtx.decodeAudioData(audioData, function(buffer) {
+		  audioSource.buffer = buffer;  
+		  audioSource.connect(audioCtx.destination);
+		  audioSource.loop = true;
+		},  
+		function(e){
+			"Error with decoding audio data" + e.err
+		});  
+	}  
+	request.send();
+  }
+// btn_musicOn
+const btn_musicOn = document.getElementById('btn_musicOn');
+btn_musicOn.isOn = true;
+btn_musicOn.src = "./images/music.png";
+btn_musicOn.addEventListener('click', () => {
+	btn_musicOn.isOn = !btn_musicOn.isOn;
+	clickPauseSet(!btn_musicOn.isOn);
+	if (btn_musicOn.isOn)
+		btn_musicOn.src = "./images/music.png";
+	else
+		btn_musicOn.src = "./images/musicOff.png";
 }, false);
-audioFon.addEventListener('ended', (event) => {
-	audioFon.play();
-});
+//пауза при потере фокуса
 window.onblur = function () {
 	clickPauseSet(true);
 };
+function startMusic() {
+	if (!audioSource.isplay && btn_musicOn.isOn) {
+		getDataMusic(); //тут ставится audioSource.isplay = false;
+		audioSource.start(0);			
+		audioSource.isplay = true;
+	}
+}
+function stopMusic() {
+	audioSource.stop(0);
+	audioSource.isplay = false;
+}
 
 // start game 
 const welcomePlayBtn = document.getElementById('welcomePlayBtn');
@@ -96,9 +132,9 @@ var isPause = true;//
 window.testGameMode = false;
 function restartGame() {
 	let isMobile = window.mobileAndTabletCheck();
-	if(!isMobile)
+	if (!isMobile)
 		movementHint.style.opacity = "0";
-		
+
 
 	startMusic();
 	Stop();
@@ -120,12 +156,7 @@ function restartGame() {
 	topContainer.classList.add('off');
 	div_x2.classList.add("off");
 }
-function startMusic() {
-	if (!audioFon.isplay) {
-		audioFon.isplay = true;
-		audioFon.play();
-	}
-}
+
 ///keyboard game event
 document.addEventListener("keydown", function Move(e) {
 	if (e.repeat)
@@ -195,8 +226,7 @@ function clickPause() {
 	isPause = !isPause;
 	if (isPause) {
 		pauseMenu.style.visibility = "visible";
-		audioFon.pause();
-		audioFon.isplay = false;
+		stopMusic();
 	}
 	else {
 		startMusic();
@@ -212,7 +242,7 @@ function Stop() {
 //обновление и рисование всех обьектов
 function Update() {
 	//во время паузы только пререрисовываются
-	if (isPause){
+	if (isPause) {
 		//fix black render
 		Draws();
 		return;
