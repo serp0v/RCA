@@ -7,9 +7,9 @@
 
 <head>
 	<title>Cubic RGame</title>
-	<link rel="stylesheet" href="htmlcsspages/welcome.css">
-	<link rel="stylesheet" href="htmlcsspages/top.css">
-	<link rel="stylesheet" href="htmlcsspages/preloader.css">
+	<link rel="stylesheet" href="css/welcome.css">
+	<link rel="stylesheet" href="css/top.css">
+	<link rel="stylesheet" href="css/preloader.css">
 	<link rel="stylesheet" href="style.css">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -55,9 +55,7 @@
 			<main>
 				<div class="welcome-PlayCustomizationEmpty">
 					<div id="customization" class="welcome-customization"></div>
-					<div id="welcomePlayBtn" class="welcome-play">Играть
-						<!-- <svg clip-rule="evenodd" fill-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="m2.095 19.882 9.248-16.5c.133-.237.384-.384.657-.384.272 0 .524.147.656.384l9.248 16.5c.064.115.096.241.096.367 0 .385-.309.749-.752.749h-18.496c-.44 0-.752-.36-.752-.749 0-.126.031-.252.095-.367zm1.935-.384h15.939l-7.97-14.22z" fill-rule="nonzero"/></svg> -->
-					</div>
+					<div id="welcomePlayBtn" class="welcome-play">Играть</div>
 					<div id="shop" class="welcome-shop"></div>
 				</div>
 			</main>
@@ -92,12 +90,7 @@
 						<img id="btn_musicOn" src="/images/music.png" style="height: 90%; width: 90%">
 					</div>
 					<div class="welcome-social"></div>
-					<!-- <div data-fullscreen class="welcome-social"><svg data-fullscreen style="height: 90%; width: 90%;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path data-fullscreen d="M24 10.999v-10.999h-11l3.379 3.379-13.001 13-3.378-3.378v10.999h11l-3.379-3.379 13.001-13z"/></svg></div> -->
 				</div>
-				<!-- <div class="welcome-rectangle-btns">
-					<div class="welcome-rectangle-btn"></div>
-					<div class="welcome-rectangle-btn"></div>
-				</div> -->
 			</footer>
 		</div>
 		<!--  -->
@@ -108,14 +101,14 @@
 		<!-- управление, метрики и пауза -->
 		<div id="metricscontrolspause" style="height: 100%; width: 100%; position:absolute;" class="off">
 			<div id="movementHint" class="hero-movement-hint">
-				<div class="top-bottom-hint-cont">
+				<!-- <div class="top-bottom-hint-cont">
 					<div class="top-hint">Вверх</div>
 					<div class="bottom-hint">Вниз</div>
 				</div>
 				<div class="top-bottom-hint-cont">
 					<div class="speed-hint">Скорость</div>
 					<div class="shoot-hint">Стрелять</div>
-				</div>
+				</div> -->
 			</div>
 
 			<div id="controls" class="movement-shoot-cont">
@@ -270,15 +263,6 @@
 					<div class="top-score" id="playerTopScore">---</div>
 				</li>
 			</div>
-			<!-- <div class="checkbox-wrapper">
-				<label class="checkbox-ios">
-					<input type="checkbox">
-					<span class="checkbox-ios-switch"></span>
-				</label>
-				<div class="top-bottom-text">
-					Не показывать топ после завершения игры
-				</div>
-			</div> -->
 		</div>
 		<div id="finishGameWrapper" class="finish-game-wrapper off">
 			<div class="finish-game">
@@ -328,8 +312,6 @@
 
 	<!-- запуск кода игры -->
 	<script type="module" src="game.js"></script>
-
-
 </body>
 
 </html>
