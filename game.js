@@ -201,27 +201,27 @@ document.addEventListener("keydown", function Move(e) {
 	}
 });
 requestAnimationFrame
-top.onclick = function (event) {
+top.onmousedown = function (event) {
 	hero.Jump();	//shoot.innerHTML = 
 }
-bottom.onclick = function (event) {
+bottom.onmousedown = function (event) {
 	hero.antiJump();
 }
-div_speed_up.onclick = function (event) {
+div_speed_up.onmousedown = function (event) {
 	hero.Right(map);
 }
-div_speed_down.onclick = function (event) {
+div_speed_down.onmousedown = function (event) {
 	hero.Left(map);
 }
 
 
 //выстрел
-shoot.onclick = function (event) {
+shoot.onmousedown = function (event) {
 	hero.Shot(map);
 }
 // пауза
 pauseMenu.style.visibility = "hidden";
-pause.onclick = () => clickPause();
+pause.onmousedown = () => clickPause();
 function clickPauseSet(p) {
 	isPause = !p;
 	clickPause();
@@ -296,12 +296,12 @@ function UpdateAnima() {
 ///////////////////////////////////////////////////////////////
 const restart = document.getElementById('restart');
 const home = document.getElementById('home');
-home.onclick = () => {
+home.onmousedown = () => {
 	welcomeContainer.classList.remove('off');
 	canvas.classList.add('off');
 	metricscontrolspause.classList.add('off');
 }
-restart.onclick = () => {
+restart.onmousedown = () => {
 	restartGame();
 }
 
@@ -336,7 +336,7 @@ function render() {
 
 
 
-welcomePlayBtn.onclick = () => {
+welcomePlayBtn.onmousedown = () => {
 	canvas.classList.remove('off');
 	metricscontrolspause.classList.remove('off');
 	welcomeContainer.classList.add('off');
@@ -477,13 +477,13 @@ function sendScoreToServer(hero) {
 const backToWelcome = document.getElementById('backToWelcome');
 const backToGame = document.getElementById('backToGame');
 
-backToWelcome.onclick = () => {
+backToWelcome.onmousedown = () => {
 	welcomeContainer.classList.remove('off');
 	canvas.classList.add('off');
 	metricscontrolspause.classList.add('off');
 
 }
-backToGame.onclick = () => {
+backToGame.onmousedown = () => {
 	pauseMenu.style.visibility = "hidden";
 	isPause = !isPause;
 	// Start();
@@ -499,9 +499,9 @@ const topbtn = document.getElementById('topbtn');
 const pauseTopBtn = document.getElementById('pauseTopBtn');
 const fgw_btn_openTop = document.getElementById('fgw_btn_openTop');
 
-topbtn.onclick = () => Form_Top_Show(welcomeContainer);
-pauseTopBtn.onclick = () => Form_Top_Show(pauseMenu);
-fgw_btn_openTop.onclick = () => Form_Top_Show(finishGameWrapper);
+topbtn.onmousedown = () => Form_Top_Show(welcomeContainer);
+pauseTopBtn.onmousedown = () => Form_Top_Show(pauseMenu);
+fgw_btn_openTop.onmousedown = () => Form_Top_Show(finishGameWrapper);
 function Form_Top_Show(parentForm) {
 	getDataTop();//get data top from server
 	parentForm.classList.add("off");
@@ -513,7 +513,7 @@ function Form_Top_Show(parentForm) {
 }
 //закрываем топ
 let closeTopMenu = document.getElementById('closeTopMenu');
-closeTopMenu.onclick = () => Form_Top_Exit();
+closeTopMenu.onmousedown = () => Form_Top_Exit();
 function Form_Top_Exit() {
 	topContainer.parentForm.classList.remove("off");
 
