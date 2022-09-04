@@ -34,32 +34,65 @@ html, body {
 }
 
 /* управление */
-.movement-shoot-cont {
-	height: 100%;
-	width: 100%;
-	z-index: 9997;
+.up-and-down {
+	height: 60vh;
+	width: calc(50% - 7.2vh);
 	display: flex;
-	position: absolute;
-}
-
-.hero-movement {
-	display: flex;
-	height: 100%;
-	align-items: center;
-	width: 50%;
 	flex-direction: column;
+	position: absolute;
+	bottom: 0;
 }
-.hero-movement > div {
-	display: flex;
-	width: 100%;
+.up-and-down > div {
 	height: 50%;
+	width: 100%;
+	display: flex;
+	/* padding-top: 5vh; */
+
+}
+.left {
+	padding-left: 7.2vh;
+}
+.right {
+	right: 0;
+	padding-right: 7.2vh;
+	/* justify-content: end; */
+	/* align-items: end; */
+}
+.control-btn {
+	height: 17vh;
+	width: 17vh;
+	border: 0.5vh solid #000;
+	border-radius: 2vh;
+	justify-content: center;
+	align-items: center;
+	display: flex;
+	background-color: #fff;
+}
+.control-btn ~ .control-btn {
+	margin-left: 8.5vh
+}
+.control-btn > svg {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	width: 100%;
+}
+.down-arrow {
+	transform: rotate(180deg);
+}
+.minus-speed {
+	transform: rotate(270deg);
 } 
-/* .top {
+.plus-speed {
+	transform: rotate(90deg);
+
 }
-.bottom {
+.speed-btns {
+	display: flex;
+	flex-direction: row;
+	justify-content: end;
 }
-.hero-shoot {
-} */
 /* метрики */
 
 .metrics {

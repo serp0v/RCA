@@ -104,6 +104,7 @@ const finishGameWrapper = document.getElementById('finishGameWrapper');
 const top = document.getElementById('top');
 const bottom = document.getElementById('bottom');
 const div_speed_up = document.getElementById('div_speed_up');
+const div_speed_down = document.getElementById('div_speed_down');
 const shoot = document.getElementById('shoot');
 const health = document.getElementById('health');
 const score = document.getElementById('score');
@@ -208,6 +209,9 @@ bottom.onclick = function (event) {
 }
 div_speed_up.onclick = function (event) {
 	hero.Right(map);
+}
+div_speed_down.onclick = function (event) {
+	hero.Left(map);
 }
 
 
