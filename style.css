@@ -53,9 +53,10 @@ html, body {
 	padding-left: 7.2vh;
 }
 .right {
+	position: absolute;
 	right: 0;
 	padding-right: 7.2vh;
-	/* justify-content: end; */
+	justify-content: end;
 	/* align-items: end; */
 }
 .control-btn {
