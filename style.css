@@ -69,7 +69,6 @@ html, body {
 	justify-content: center;
 	align-items: center;
 	display: flex;
-	background-color: #fff;
 }
 .control-btn ~ .control-btn {
 	margin-left: 8.5vh
