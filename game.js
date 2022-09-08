@@ -111,6 +111,7 @@ welcomeBgControlsVisible.onclick = function() {
 	welcomeBgControlsVisible.classList.toggle('welcome-control-btn-fill');
 
 }
+<<<<<<< HEAD
 
 // const btn_musicOn = document.getElementById('btn_musicOn');
 // btn_musicOn.isOn = true;
@@ -136,6 +137,8 @@ welcomeBgControlsVisible.onclick = function() {
 // 		btn_musicOn.src = "./images/musicOff.png";
 // }, false);
 
+=======
+>>>>>>> 77d813696fbfa4a99e356c2f57056f6e1f10a205
 //пауза при потере фокуса
 
 window.onblur = function () {
@@ -170,6 +173,7 @@ const health = document.getElementById('health');
 const score = document.getElementById('score');
 const pause = document.getElementById('pause');
 const pauseMenu = document.getElementById('pauseMenu');
+const controls = document.getElementById('controls');
 
 //переменные для игры //////////////////////////////////
 const div_speed = document.getElementById('div_speed');
@@ -194,8 +198,7 @@ window.testGameMode = false;
 function restartGame() {
 	let isMobile = window.mobileAndTabletCheck();
 	if (!isMobile)
-		movementHint.style.opacity = "0";
-
+		controls.style.opacity = "0";
 
 	startMusic();
 	Stop();
@@ -210,7 +213,9 @@ function restartGame() {
 
 	isPause = false;
 	//hide show form
+	metricscontrolspause.classList.remove('off');
 	pause.classList.remove("off");
+	pauseMenu.classList.add("off");
 	canvas.classList.remove('off');
 	finishGameWrapper.classList.add('off');
 	welcomeContainer.classList.add('off');
@@ -244,7 +249,6 @@ document.addEventListener("keydown", function Move(e) {
 			hero.Shot(map);
 		else if (e.key == 'Escape') {//Escape
 			clickPause();
-			pause.classList.toggle("off");///переключает
 		}
 	}
 
@@ -280,7 +284,7 @@ shoot.onmousedown = function (event) {
 	hero.Shot(map);
 }
 // пауза
-pauseMenu.style.visibility = "hidden";
+// pauseMenu.style.visibility = "hidden";
 pause.onmousedown = () => clickPause();
 function clickPauseSet(p) {
 	isPause = !p;
@@ -289,12 +293,16 @@ function clickPauseSet(p) {
 function clickPause() {
 	isPause = !isPause;
 	if (isPause) {
-		pauseMenu.style.visibility = "visible";
+		pause.classList.add("off");//прячем пауза
+		pauseMenu.classList.remove("off");
+		// pauseMenu.style.visibility = "visible";
 		stopMusic();
 	}
 	else {
+		pause.classList.remove("off");//показывем пауза
+		pauseMenu.classList.add("off");
 		startMusic();
-		pauseMenu.style.visibility = "hidden";
+		// pauseMenu.style.visibility = "hidden";
 	}
 }
 /////////////////////////////////////////////////
@@ -394,13 +402,11 @@ function render() {
 	requestAnimationFrame(render);
 }
 
-
-
 welcomePlayBtn.onmousedown = () => {
 	canvas.classList.remove('off');
 	metricscontrolspause.classList.remove('off');
 	welcomeContainer.classList.add('off');
-	pauseMenu.style.visibility = 'hidden';
+	pauseMenu.classList.add('off');
 	///start game
 	restartGame();
 }
@@ -544,14 +550,16 @@ backToWelcome.onmousedown = () => {
 
 }
 backToGame.onmousedown = () => {
-	pauseMenu.style.visibility = "hidden";
-	isPause = !isPause;
+	// pauseMenu.classList.add('off');
+	// isPause = !isPause;
+	clickPauseSet(false);
 	// Start();
 	// welcomeContainer.classList.remove('off');
 	// canvas.classList.add('off');
 	// metricscontrolspause.classList.add('off');
 	// console.log(123)
 	// Update()
+
 }
 
 ////открытие топа из 3 разных кнопки/////////////
