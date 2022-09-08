@@ -72,13 +72,13 @@ html, body {
 .control-btn ~ .control-btn {
 	margin-left: 8.5vh
 }
-.control-btn > svg {
+/* .control-btn > svg {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	height: 100%;
 	width: 100%;
-}
+} */
 .down-arrow {
 	transform: rotate(180deg);
 }
@@ -251,17 +251,17 @@ html, body {
 .finish-btn ~ .finish-btn {
 	margin-left: 2vh;
 }
-.rest > svg {
+/* .rest > svg {
 	margin-right: 0.35vh;
-}
-.finish-btn > svg {
+} */
+/* .finish-btn > svg {
 	height: 66%;
 	width: 66%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-}
-  .off {
+} */
+.off {
 	display: none;
 }
 /* hint */
