@@ -142,6 +142,7 @@ const health = document.getElementById('health');
 const score = document.getElementById('score');
 const pause = document.getElementById('pause');
 const pauseMenu = document.getElementById('pauseMenu');
+const controls = document.getElementById('controls');
 
 //переменные для игры //////////////////////////////////
 const div_speed = document.getElementById('div_speed');
@@ -166,8 +167,7 @@ window.testGameMode = false;
 function restartGame() {
 	let isMobile = window.mobileAndTabletCheck();
 	if (!isMobile)
-		movementHint.style.opacity = "0";
-
+		controls.style.opacity = "0";
 
 	startMusic();
 	Stop();
