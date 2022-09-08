@@ -66,7 +66,13 @@ function getDataMusic() {
 			});
 	}
 	request.send();
-}
+  }
+
+// welcome footer btns
+
+const welcomeControlsVisible = document.getElementById('welcomeControlsVisible');
+const welcomeBgControlsVisible = document.getElementById('welcomeBgControlsVisible');
+
 // btn_musicOn
 const btn_musicOn = document.getElementById('btn_musicOn');
 btn_musicOn.isOn = true;
@@ -83,7 +89,53 @@ btn_musicOn.addEventListener('click', () => {
 		btn_musicOn.src = "./images/musicOff.png";
 	}
 }, false);
+
+// btn controls visible
+
+welcomeControlsVisible.onclick = function() {
+	controls.classList.toggle('welcome-control-btns');
+	welcomeControlsVisible.classList.toggle('welcome-control-btn-fill');
+
+}
+welcomeBgControlsVisible.onclick = function() {
+	// костыль
+	// controls.classList.toggle('welcome-control-btns');
+	top.classList.toggle('welcome-control-btn-fill-bg');
+	shoot.classList.toggle('welcome-control-btn-fill-bg');
+	bottom.classList.toggle('welcome-control-btn-fill-bg');
+	div_speed_down.classList.toggle('welcome-control-btn-fill-bg');
+	div_speed_up.classList.toggle('welcome-control-btn-fill-bg');
+	welcomeBgControlsVisible.classList.toggle('welcome-control-btn-fill');
+
+}
+// // btn bg controls visible
+
+// const btn_musicOn = document.getElementById('btn_musicOn');
+// btn_musicOn.isOn = true;
+// btn_musicOn.src = "./images/music.png";
+// btn_musicOn.addEventListener('click', () => {
+// 	btn_musicOn.isOn = !btn_musicOn.isOn;
+// 	clickPauseSet(!btn_musicOn.isOn);
+// 	if (btn_musicOn.isOn)
+// 		btn_musicOn.src = "./images/music.png";
+// 	else
+// 		btn_musicOn.src = "./images/musicOff.png";
+// }, false);
+
+// const btn_musicOn = document.getElementById('btn_musicOn');
+// btn_musicOn.isOn = true;
+// btn_musicOn.src = "./images/music.png";
+// btn_musicOn.addEventListener('click', () => {
+// 	btn_musicOn.isOn = !btn_musicOn.isOn;
+// 	clickPauseSet(!btn_musicOn.isOn);
+// 	if (btn_musicOn.isOn)
+// 		btn_musicOn.src = "./images/music.png";
+// 	else
+// 		btn_musicOn.src = "./images/musicOff.png";
+// }, false);
+
 //пауза при потере фокуса
+
 window.onblur = function () {
 	clickPauseSet(true);
 };

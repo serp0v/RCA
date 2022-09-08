@@ -114,6 +114,31 @@ footer > div {
   width: 90%;
   display: flex;
 }
+.controls-bg-btn {
+  height: 75%;
+  width: 75%;
+  font-size: 2vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color: rgb(255, 255, 255); */
+  border-radius: 1vh;
+  border: 0.5vh solid #000;
+}
+.welcome-control-btns {
+  display: none;
+}
+.welcome-control-btn-fill {
+  background-color: black;
+  border-radius: 1vh;
+}
+.welcome-control-btn-fill > path {
+  background-color: black;
+  border-radius: 1vh;
+}
+.welcome-control-btn-fill-bg {
+  background-color: #fff;
+}
 .welcome-socials > div ~ div {
   margin-left: 2vh;
 }
