@@ -108,32 +108,6 @@ welcomeBgControlsVisible.onclick = function() {
 	welcomeBgControlsVisible.classList.toggle('welcome-control-btn-fill');
 
 }
-// // btn bg controls visible
-
-// const btn_musicOn = document.getElementById('btn_musicOn');
-// btn_musicOn.isOn = true;
-// btn_musicOn.src = "./images/music.png";
-// btn_musicOn.addEventListener('click', () => {
-// 	btn_musicOn.isOn = !btn_musicOn.isOn;
-// 	clickPauseSet(!btn_musicOn.isOn);
-// 	if (btn_musicOn.isOn)
-// 		btn_musicOn.src = "./images/music.png";
-// 	else
-// 		btn_musicOn.src = "./images/musicOff.png";
-// }, false);
-
-// const btn_musicOn = document.getElementById('btn_musicOn');
-// btn_musicOn.isOn = true;
-// btn_musicOn.src = "./images/music.png";
-// btn_musicOn.addEventListener('click', () => {
-// 	btn_musicOn.isOn = !btn_musicOn.isOn;
-// 	clickPauseSet(!btn_musicOn.isOn);
-// 	if (btn_musicOn.isOn)
-// 		btn_musicOn.src = "./images/music.png";
-// 	else
-// 		btn_musicOn.src = "./images/musicOff.png";
-// }, false);
-
 //пауза при потере фокуса
 
 window.onblur = function () {
