@@ -86,7 +86,7 @@ footer > div {
   justify-content: center;
   align-items: center;
 }
-.welcome-circle-btn >svg {
+.welcome-circle-btn > svg {
   height: 70%;
   width: 70%;
   display: flex;
@@ -100,9 +100,6 @@ footer > div {
   justify-content: center;
   align-items: center;
 }
-.welcome-socials > div ~ div {
-  margin-left: 2vh;
-}
 .welcome-social {
   height: 6vh;
   width: 6vh;
@@ -111,6 +108,14 @@ footer > div {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+.welcome-social > svg {
+  height: 90%;
+  width: 90%;
+  display: flex;
+}
+.welcome-socials > div ~ div {
+  margin-left: 2vh;
 }
 a {
   height: 100%;
