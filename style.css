@@ -59,7 +59,6 @@ html, body {
 	right: 0;
 	padding-right: 7.2vh;
 	justify-content: end;
-	/* align-items: end; */
 }
 .control-btn {
 	height: 17vh;
@@ -101,8 +100,6 @@ html, body {
 	display: flex;
 	flex-direction: row;
 	top: 2vh;
-	/* height: 3vh; */
-	/* width: 40vh; */
 	left: 50%;
 	transform: translateX(-50%);
 	position: absolute;
@@ -118,11 +115,6 @@ html, body {
 	display: flex;
 	flex-direction:column;
 	align-items: center;
-	/* flex-wrap: wrap; */
-	/* justify-content: end; */
-}
-.metric_item ~ .metric_item {
-	/* margin-left: 10vh; */
 }
 .metric-title {
 	display: flex;
@@ -133,10 +125,8 @@ html, body {
 	width: 100%;
 	display: flex;
 	flex-direction: row;
-	/* height: 70px; */
 	justify-content: center;
 	align-items: center;
-	/* margin-left: -30%; */
 
 }
 .metric-count-score {
@@ -154,10 +144,7 @@ html, body {
 /* блок с паузой и вложенные в него кнопки */
 
 .pause {
-	/* position: absolute; */
-	/* left: 0vw; */
 	height: 100%;
-	/* top: 36vh; */
 	width: 50%;
 	display: flex;
 }
@@ -186,7 +173,6 @@ html, body {
 	font-size: 200px;
 	font-family: 'Pompiere', cursive;
 	font-weight: 200;
-	/* filter: blur(1px);  */
 }
 .pauseMenu > p {
 	border: 1px solid #000;
@@ -232,7 +218,6 @@ html, body {
 	flex-direction: row;
 	width: 100%;
 	height: 25%;
-	/* height: 100px; */
 	align-items: center;
 	justify-content: center;
 }
@@ -244,9 +229,6 @@ html, body {
 	align-items: center;
 	position: absolute;
 	z-index:9999;
-	/* font-size: 200px; */
-	/* border: 1px solid #000; */
-	/* filter: blur(1px);  */
 }
 /* .finish-title {
 } */
@@ -301,7 +283,6 @@ html, body {
 	width: 50%;
 	opacity: 0;
 	border: 1px solid rgb(255, 0, 0);
-	animation: opac 3s linear;
 }
 .top-bottom-hint-cont > div {
 	height: 50%;
@@ -310,20 +291,4 @@ html, body {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-}
-@keyframes opac {
-	0% {
-		opacity: 1;
-	}
-	100% {
-		opacity: 0;
-	}
-}
-@keyframes metropac {
-	0% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 1;
-	}
 }

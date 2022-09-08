@@ -97,6 +97,9 @@ welcomeControlsVisible.onclick = function() {
 	welcomeControlsVisible.classList.toggle('welcome-control-btn-fill');
 
 }
+
+// // btn bg controls visible
+
 welcomeBgControlsVisible.onclick = function() {
 	// костыль
 	// controls.classList.toggle('welcome-control-btns');
@@ -108,7 +111,6 @@ welcomeBgControlsVisible.onclick = function() {
 	welcomeBgControlsVisible.classList.toggle('welcome-control-btn-fill');
 
 }
-// // btn bg controls visible
 
 // const btn_musicOn = document.getElementById('btn_musicOn');
 // btn_musicOn.isOn = true;
