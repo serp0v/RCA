@@ -51,20 +51,20 @@ getDataMusic();
 function getDataMusic() {
 	audioSource = audioCtx.createBufferSource();
 	audioSource.isplay = false;
-	var request = new XMLHttpRequest();  
-	request.open('GET', './sound/music1.mp3', true);  
+	var request = new XMLHttpRequest();
+	request.open('GET', './sound/music1.mp3', true);
 	request.responseType = 'arraybuffer';
-	request.onload = function() {
-	  var audioData = request.response;  
-	  audioCtx.decodeAudioData(audioData, function(buffer) {
-		  audioSource.buffer = buffer;  
-		  audioSource.connect(audioCtx.destination);
-		  audioSource.loop = true;
-		},  
-		function(e){
-			"Error with decoding audio data" + e.err
-		});  
-	}  
+	request.onload = function () {
+		var audioData = request.response;
+		audioCtx.decodeAudioData(audioData, function (buffer) {
+			audioSource.buffer = buffer;
+			audioSource.connect(audioCtx.destination);
+			audioSource.loop = true;
+		},
+			function (e) {
+				"Error with decoding audio data" + e.err
+			});
+	}
 	request.send();
   }
 
@@ -79,11 +79,15 @@ btn_musicOn.isOn = true;
 btn_musicOn.src = "./images/music.png";
 btn_musicOn.addEventListener('click', () => {
 	btn_musicOn.isOn = !btn_musicOn.isOn;
-	clickPauseSet(!btn_musicOn.isOn);
-	if (btn_musicOn.isOn)
+	//clickPauseSet(!btn_musicOn.isOn);
+	if (btn_musicOn.isOn) {
+		startMusic();
 		btn_musicOn.src = "./images/music.png";
-	else
+	}
+	else {
+		stopMusic();
 		btn_musicOn.src = "./images/musicOff.png";
+	}
 }, false);
 
 // btn controls visible
@@ -138,13 +142,15 @@ window.onblur = function () {
 function startMusic() {
 	if (!audioSource.isplay && btn_musicOn.isOn) {
 		getDataMusic(); //тут ставится audioSource.isplay = false;
-		audioSource.start(0);			
+		audioSource.start(0);
 		audioSource.isplay = true;
 	}
 }
 function stopMusic() {
-	audioSource.stop(0);
-	audioSource.isplay = false;
+	if (audioSource.isplay) {
+		audioSource.stop(0);
+		audioSource.isplay = false;
+	}
 }
 
 // start game 
